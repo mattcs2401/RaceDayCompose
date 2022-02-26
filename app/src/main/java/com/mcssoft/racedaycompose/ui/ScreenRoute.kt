@@ -1,6 +1,11 @@
 package com.mcssoft.racedaycompose.ui
 
 sealed class ScreenRoute(val route: String) {
-    object MeetingListScreen: ScreenRoute("meeting_list_screen")
-//    object CoinDetailScreen: ScreenRoute("coin_detail_screen")
+
+    object SplashScreen: ScreenRoute("splash_screen")
+
+    object MeetingsScreen: ScreenRoute("meetings_screen")
+
+    object RacesScreen: ScreenRoute("races_screen")
+
 }

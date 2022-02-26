@@ -21,7 +21,7 @@ interface IDbRepo {
 //    suspend fun insertMeetings(meetings: List<Meeting>)
 
     @Query("select * from Meeting")
-    fun getMeetings(): Flow<List<Meeting>>
+    suspend fun getMeetings(): List<Meeting>
 
     @Query("delete from meeting")
     suspend fun deleteMeetings()                // CASCADE should take care of Races/Runners etc.

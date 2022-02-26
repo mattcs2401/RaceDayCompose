@@ -8,6 +8,7 @@ import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.GetMeetings
+import com.mcssoft.racedaycompose.domain.use_case.GetRaces
 import com.mcssoft.racedaycompose.domain.use_case.Initialisation
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants
@@ -75,7 +76,8 @@ object AppModule {
     fun provideUseCases(remote: IRemoteRepo, local: IDbRepo): RaceDayUseCases {
         return RaceDayUseCases(
             initialisation = Initialisation(remote, local),
-            getMeetings = GetMeetings(local)
+            getMeetings = GetMeetings(local),
+            getRaces = GetRaces(local)
         )
     }
 }

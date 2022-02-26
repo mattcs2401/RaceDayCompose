@@ -3,10 +3,14 @@ package com.mcssoft.racedaycompose.ui.meetings
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
+import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,18 +21,30 @@ class MeetingsViewModel @Inject constructor(
     private val _state = mutableStateOf(MeetingsState())
     val state: State<MeetingsState> = _state
 
-    private var initialiseJob: Job? = null
-
     init {
-        val date = DateUtils().getDateToday()
-        initialise(date)
+        getMeetings()
+    }
+
+    private fun getMeetings() {
+        raceDayUseCases.getMeetings().onEach { result ->
+            when(result) {
+                is DataResult.Loading -> {
+                    _state.value = MeetingsState(isLoading = true)
+                }
+                is DataResult.Error -> {
+                    _state.value = MeetingsState(
+                        error = result.message ?: "[getMeetings()]: An unexpected error occurred."
+                    )
+                }
+                is DataResult.Success -> {
+                    _state.value = MeetingsState(meetings = result.data ?: emptyList())
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun onEvent(event: MeetingsEvent) {
         when(event) {
-            is MeetingsEvent.Initialising -> {
-                // Clean start; delete every thing, GET, and (re-)populate the Db.
-            }
             is MeetingsEvent.Loading -> {
                 //
             }
@@ -36,23 +52,6 @@ class MeetingsViewModel @Inject constructor(
                 //
             }
         }
-    }
-
-    private fun initialise(date: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-        raceDayUseCases.initialisation(date)
-//            .onEach { mtgDto ->
-//                _state.value = state.value.copy(
-//                    meetings = mtgDto.
-//                )
-//            }
-////            .onEach { notes ->
-////                _state.value = state.value.copy(
-////                    notes = notes,
-////                    noteOrder = noteOrder
-////                )
-////            }//.launchIn(viewModelScope)
-        val bp = "bp"
     }
 
 

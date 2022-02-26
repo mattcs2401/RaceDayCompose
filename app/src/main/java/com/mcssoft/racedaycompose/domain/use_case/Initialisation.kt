@@ -6,10 +6,16 @@ import com.mcssoft.racedaycompose.domain.dto.MeetingDto
 import com.mcssoft.racedaycompose.domain.dto.RaceDto
 import com.mcssoft.racedaycompose.domain.dto.toMeeting
 import com.mcssoft.racedaycompose.domain.dto.toRace
+import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
+import com.mcssoft.racedaycompose.utility.DataResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -19,8 +25,7 @@ import javax.inject.Inject
  * 3. Re-populate the database.
  * @note: The single action "Initialisation" via the invoke() operator actually comprises several
  *        elements, because we are also using the database as a cache, and need to establish that
- *        from the Api result. Subsequent calls for the UI screen data will initially get from the
- *        database.
+ *        from the Api result. Subsequent calls for UI screen data will get from the database.
  */
 class Initialisation @Inject constructor(
     private val iRemoteRepo: IRemoteRepo,
@@ -30,9 +35,12 @@ class Initialisation @Inject constructor(
     /**
      * @param mtgDate: The date to use in the Api Url.
      * @param mtgType: The MeetingType to filter on, defaults to "R" (but "G and "T" also possible).
+     * @return A Flow of DataResult (basically just signify; loading, success or failure).
      */
-    operator fun invoke (mtgDate: String, mtgType: String = "R") {
-        CoroutineScope(Dispatchers.IO).launch {
+    operator fun invoke (mtgDate: String, mtgType: String = "R"): Flow<DataResult<String>> = flow {
+        try {
+            emit(DataResult.Loading())
+
             // Delete whatever is there (CASCADE should take care of Race/Runner etc).
             iDbRepo.deleteMeetings()
             // GET from the Api.
@@ -43,6 +51,11 @@ class Initialisation @Inject constructor(
                 val mId = populateMeeting(dtoMeeting)
                 populateRaces(mId, dtoMeeting.Races)
             }
+
+            emit(DataResult.Success(""))
+
+        } catch(ex: Exception) {
+            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
         }
     }
 

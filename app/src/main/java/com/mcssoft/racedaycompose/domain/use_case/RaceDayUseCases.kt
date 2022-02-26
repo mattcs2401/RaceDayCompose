@@ -2,6 +2,6 @@ package com.mcssoft.racedaycompose.domain.use_case
 
 data class RaceDayUseCases(
     val initialisation: Initialisation,
-    val getMeetings: GetMeetings
-) {
-}
+    val getMeetings: GetMeetings,
+    val getRaces: GetRaces
+)

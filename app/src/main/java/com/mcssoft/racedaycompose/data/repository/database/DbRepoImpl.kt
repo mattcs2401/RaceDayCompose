@@ -17,7 +17,7 @@ class DbRepoImpl @Inject constructor(
 //        dao.insertMeetings(meetings)
 //    }
 
-    override fun getMeetings(): Flow<List<Meeting>> {
+    override suspend fun getMeetings(): List<Meeting> {
         return dao.getMeetings()
     }
 
