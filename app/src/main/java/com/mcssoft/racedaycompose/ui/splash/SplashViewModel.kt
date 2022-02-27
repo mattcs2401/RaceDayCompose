@@ -22,11 +22,12 @@ class SplashViewModel @Inject constructor(
 
     init {
         val date = DateUtils().getDateToday()
-        initialise(date)
+        initialise(date, true)
+        // TODO - Replace useFromDb with a Preference ?
     }
 
-    private fun initialise(date: String) {
-        raceDayUseCases.initialisation(date).onEach { result ->
+    private fun initialise(date: String, useFromDb: Boolean) {
+        raceDayUseCases.initialisation(date, useFromDb).onEach { result ->
             when(result) {
                 is DataResult.Loading -> {
                     _state.value = SplashState(

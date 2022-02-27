@@ -1,5 +1,7 @@
 package com.mcssoft.racedaycompose.domain.use_case
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.domain.dto.MeetingDto
@@ -9,6 +11,7 @@ import com.mcssoft.racedaycompose.domain.dto.toRace
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.utility.DataResult
+import com.mcssoft.racedaycompose.utility.DbUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -34,22 +37,17 @@ class Initialisation @Inject constructor(
     // TODO - add try/catch, some sort or error notification ?
     /**
      * @param mtgDate: The date to use in the Api Url.
+     * @param useFromDb: A flag to indicate get from existing database data, or reload completely.
      * @param mtgType: The MeetingType to filter on, defaults to "R" (but "G and "T" also possible).
      * @return A Flow of DataResult (basically just signify; loading, success or failure).
      */
-    operator fun invoke (mtgDate: String, mtgType: String = "R"): Flow<DataResult<String>> = flow {
+    operator fun invoke (mtgDate: String, useFromDb: Boolean, mtgType: String = "R"): Flow<DataResult<String>> = flow {
         try {
             emit(DataResult.Loading())
 
-            // Delete whatever is there (CASCADE should take care of Race/Runner etc).
-            iDbRepo.deleteMeetings()
-            // GET from the Api.
-            val rdDto = iRemoteRepo.getRaceDay(mtgDate).RaceDay
-            // Loop through the list of MeetingDto.
-            rdDto.Meetings.filter { it.MeetingType == mtgType }
-            .forEach { dtoMeeting ->
-                val mId = populateMeeting(dtoMeeting)
-                populateRaces(mId, dtoMeeting.Races)
+            val count = meetingCount()
+            if((useFromDb && count < 1) || (!useFromDb)) {
+                DbUtils(iRemoteRepo, iDbRepo).refresh(mtgDate, mtgType)
             }
 
             emit(DataResult.Success(""))
@@ -59,17 +57,7 @@ class Initialisation @Inject constructor(
         }
     }
 
-    private suspend fun populateMeeting(dtoMeeting: MeetingDto): Long {
-        return iDbRepo.insertMeeting(dtoMeeting.toMeeting())
+    private suspend fun meetingCount(): Int {
+        return iDbRepo.meetingCount()
     }
-
-    private suspend fun populateRaces(mId: Long, dtoRaces: List<RaceDto>): List<Long> {
-        val lRaces = mutableListOf<Race>()
-        dtoRaces.forEach { dtoRace ->
-            val race = dtoRace.toRace(mId)
-            lRaces.add(race)
-        }
-        return iDbRepo.insertRaces(lRaces)
-    }
-
 }

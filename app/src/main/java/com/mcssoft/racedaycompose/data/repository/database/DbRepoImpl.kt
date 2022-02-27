@@ -9,13 +9,10 @@ class DbRepoImpl @Inject constructor(
     private val dao: IDbRepo
 ) : IDbRepo {
 
+    //<editor-fold default state="collapsed" desc="Region: Meeting related.">
     override suspend fun insertMeeting(meeting: Meeting): Long {
         return dao.insertMeeting(meeting)
     }
-
-//    override suspend fun insertMeetings(meetings: List<Meeting>) {
-//        dao.insertMeetings(meetings)
-//    }
 
     override suspend fun getMeetings(): List<Meeting> {
         return dao.getMeetings()
@@ -25,7 +22,15 @@ class DbRepoImpl @Inject constructor(
         return dao.deleteMeetings()
     }
 
+    override suspend fun meetingCount(): Int {
+        return dao.meetingCount()
+    }
+    //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Race related.">
     override suspend fun insertRaces(races: List<Race>): List<Long> {
         return dao.insertRaces(races)
     }
+
+    //</editor-fold>
 }

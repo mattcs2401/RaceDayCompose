@@ -7,12 +7,10 @@ import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
-import com.mcssoft.racedaycompose.domain.use_case.GetMeetings
-import com.mcssoft.racedaycompose.domain.use_case.GetRaces
-import com.mcssoft.racedaycompose.domain.use_case.Initialisation
-import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
+import com.mcssoft.racedaycompose.domain.use_case.*
 import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.DateUtils
+import com.mcssoft.racedaycompose.utility.DbUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -77,7 +75,14 @@ object AppModule {
         return RaceDayUseCases(
             initialisation = Initialisation(remote, local),
             getMeetings = GetMeetings(local),
+            refreshMeetings = RefreshMeetings(remote, local),
             getRaces = GetRaces(local)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDbUtils(remote: IRemoteRepo, local: IDbRepo): DbUtils {
+        return DbUtils(remote, local)
     }
 }
