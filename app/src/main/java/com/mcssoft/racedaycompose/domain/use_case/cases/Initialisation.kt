@@ -1,24 +1,11 @@
-package com.mcssoft.racedaycompose.domain.use_case
+package com.mcssoft.racedaycompose.domain.use_case.cases
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
-import com.mcssoft.racedaycompose.domain.dto.MeetingDto
-import com.mcssoft.racedaycompose.domain.dto.RaceDto
-import com.mcssoft.racedaycompose.domain.dto.toMeeting
-import com.mcssoft.racedaycompose.domain.dto.toRace
-import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DbUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -41,7 +28,10 @@ class Initialisation @Inject constructor(
      * @param mtgType: The MeetingType to filter on, defaults to "R" (but "G and "T" also possible).
      * @return A Flow of DataResult (basically just signify; loading, success or failure).
      */
-    operator fun invoke (mtgDate: String, useFromDb: Boolean, mtgType: String = "R"): Flow<DataResult<String>> = flow {
+    operator fun invoke (mtgDate: String,
+                         useFromDb: Boolean,
+                         mtgType: String = "R"
+    ): Flow<DataResult<String>> = flow {
         try {
             emit(DataResult.Loading())
 

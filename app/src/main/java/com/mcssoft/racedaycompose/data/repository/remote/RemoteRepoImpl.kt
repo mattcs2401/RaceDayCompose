@@ -1,9 +1,7 @@
 package com.mcssoft.racedaycompose.data.repository.remote
 
-import com.mcssoft.racedaycompose.domain.dto.BaseDto
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
-import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
-import com.mcssoft.racedaycompose.domain.model.RaceDay
+import com.mcssoft.racedaycompose.domain.dto.BaseDto
 import javax.inject.Inject
 
 /**

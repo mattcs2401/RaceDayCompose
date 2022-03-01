@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.domain.use_case
+package com.mcssoft.racedaycompose.domain.use_case.cases
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import javax.inject.Inject

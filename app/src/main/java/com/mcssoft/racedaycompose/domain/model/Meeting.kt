@@ -13,13 +13,18 @@ data class Meeting(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
 
-    var mtgId: Long = 0,
     var meetingId: Int? = null,
     var abandoned: Boolean = false,     //
     var meetingCode: String = "",       //
     var meetingType: String = "",       //
     var venueName: String = ""         //
 ) {
-//    // Adapter flag, if true, the view in the adapter is in an expanded view.
-//    var isExpanded: Boolean = false
+    /* Derived after construction, from the 1st associated RaceDto. The details are not part of the
+       MeetingDto object. Info is used as a type of "meeting summary" in the view.
+    */
+    var meetingTime: String = ""       // time of 1st Race, used as the "meeting time" in the view.
+    var racesNo: Int = 0               // the number of Races in the Meeting.
+    var weatherCond: String = ""       // e.g. Overcast.
+    var trackCond: String = ""         // Good
+    var trackRating: Int = 0           // e.g. 3
 }

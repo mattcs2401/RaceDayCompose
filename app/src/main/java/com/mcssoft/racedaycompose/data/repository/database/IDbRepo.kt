@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IDbRepo {

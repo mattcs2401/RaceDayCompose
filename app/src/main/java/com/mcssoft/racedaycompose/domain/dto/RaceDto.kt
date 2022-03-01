@@ -14,12 +14,12 @@ data class RaceDto(
     val Status: String = "",
 //    val Tips: List<TipDto>,
 //    val TrackChanged: Boolean,
-    val TrackCondition: String = "",
+    val TrackCondition: String = "",   // Good
 //    val TrackConditionLevel: Int,
-    val TrackRating: Int = 0,
+    val TrackRating: Int = 0,          // e.g. 3
 //    val TrackRatingChanged: Boolean,
 //    val WeatherChanged: Boolean,
-    val WeatherCondition: String = ""
+    val WeatherCondition: String = ""  // e.g. Overcast.
 //    val WeatherConditionLevel: Int
 )
 

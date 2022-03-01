@@ -5,7 +5,7 @@ import java.util.*
 class DateUtils {
 
     /**
-     * Get today's date in format "YYYY/MM/DD".
+     * Get today's date in format "YYYY/M(M)/D(D)".
      * @return The formatted string.
      */
     fun getDateToday(): String {
@@ -17,6 +17,15 @@ class DateUtils {
         return  "$year/$month/$day/"
     }
 
+    /**
+     * Get the time component (HH:MM) from the given date/time value.
+     * @param dateTime: A value in the format "YYYY-MM-DDTHH:MM:SS".
+     * @return Time value formatted as "HH:MI".
+     */
+    fun getTime(dateTime: String): String {
+        val time = dateTime.split("T")[1].split(":")
+        return "${time[0]}:${time[1]}"
+    }
 }
 /*
 Notes:

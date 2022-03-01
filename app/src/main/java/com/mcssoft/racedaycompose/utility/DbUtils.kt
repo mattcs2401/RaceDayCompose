@@ -23,20 +23,35 @@ class DbUtils @Inject constructor(
 
         // Loop through the list of MeetingDto.
         rdDto.Meetings.filter { it.MeetingType == mtgType }
-            .forEach { dtoMeeting ->
-                val mId = populateMeeting(dtoMeeting)
-                populateRaces(mId, dtoMeeting.Races)
+            .forEach { meetingDto ->
+                // Detail in the 1st Race used for Meeting (all other Races will have the same
+                // detail).
+                val raceDto = meetingDto.Races[0]
+                // Write Meeting details.
+                val mId = populateMeeting(meetingDto, raceDto)
+                // Write Race details.
+                populateRaces(mId, meetingDto.Races)
             }
     }
 
     /**
      * Populate (insert) a Meeting into the database.
-     * @param dtoMeeting: The Meeting to insert (mapped from Dto domain to Model by extension
+     * @param meetingDto: The Meeting to insert (mapped from Dto domain to Model by extension
      *                    function on the Dto object).
+     * @param raceDto:
      * @return The row _id of the inserted Meeting.
      */
-    private suspend fun populateMeeting(dtoMeeting: MeetingDto): Long {
-        return local.insertMeeting(dtoMeeting.toMeeting())
+    private suspend fun populateMeeting(meetingDto: MeetingDto, raceDto: RaceDto): Long {
+        // Initial create of the Meeting.
+        val meeting = meetingDto.toMeeting()
+        // Add in the additional "summary" values.
+        meeting.meetingTime = DateUtils().getTime(raceDto.RaceTime)
+        meeting.racesNo = meetingDto.Races.count()
+        meeting.weatherCond = raceDto.WeatherCondition
+        meeting.trackCond = raceDto.TrackCondition
+        meeting.trackRating = raceDto.TrackRating
+        // Insert.
+        return local.insertMeeting(meeting)
     }
 
     /**
