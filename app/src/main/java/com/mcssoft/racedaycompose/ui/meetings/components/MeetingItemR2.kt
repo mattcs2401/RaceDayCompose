@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.meetings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -18,10 +18,8 @@ fun MeetingItemR2(meeting: Meeting,
         modifier = Modifier
             .padding(top = 48.dp) // simply to give room for the top row.
             .clickable { onItemClick(meeting) },
-
     ) {
-
-        val (idAbandoned, idRacesNo, idWeatherCond, idTrackCond, idTrackeRating) = createRefs()
+        val (idAbandoned, idRacesNo, idWeatherCond, idTrackCond, idTrackRating) = createRefs()
 
         Text("Abandoned: ${if(meeting.abandoned) "Y" else "N"}",
             Modifier.constrainAs(idAbandoned) {
@@ -30,7 +28,6 @@ fun MeetingItemR2(meeting: Meeting,
                 bottom.linkTo(parent.bottom, margin = 16.dp)
             },
             fontSize = 12.sp
-
         )
 
         Text("Races: ${meeting.racesNo}",
@@ -57,19 +54,16 @@ fun MeetingItemR2(meeting: Meeting,
             fontSize = 12.sp
         )
 
-        Text(meeting.trackRating.toString(),
-            Modifier.constrainAs(idTrackeRating) {
-                start.linkTo(idTrackCond.end, margin = 8.dp)
-                top.linkTo(idTrackCond.top, margin = 0.dp)
-            },
-            fontSize = 12.sp
-        )
+        if(meeting.trackRating > 0) {
+            Text(
+                meeting.trackRating.toString(),
+                Modifier.constrainAs(idTrackRating) {
+                    start.linkTo(idTrackCond.end, margin = 8.dp)
+                    top.linkTo(idTrackCond.top, margin = 0.dp)
+                },
+                fontSize = 12.sp
+            )
+        }
 
     }
 }
-
-//@Preview
-//@Composable
-//fun MeetingItemR2Preview() {
-//    MeetingItemR2(meeting, onItemClick = {})
-//}

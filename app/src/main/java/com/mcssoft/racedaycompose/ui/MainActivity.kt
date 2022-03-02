@@ -11,27 +11,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-//            val materialBlue700= Color(0xFF1976D2)
-//            val scaffoldState = rememberScaffoldState()
-//            Scaffold(
-//                scaffoldState = scaffoldState,
-//                topBar = {
-//                    TopAppBar(title = {
-//                        Text("TopAppBar")
-//                    },
-//                    backgroundColor = materialBlue700)
-//                },
-//                content = {
-                    Root(window = window)
-//                },
-//                bottomBar = {
-//                    BottomAppBar(backgroundColor = materialBlue700) {
-//                        Text("BottomAppBar")
-//                    }
-//                }
-//
-//            )
+            Root(window = window)
         }
     }
 

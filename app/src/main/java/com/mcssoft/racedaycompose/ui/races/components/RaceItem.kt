@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.races.components
 
 import androidx.compose.runtime.Composable
 import com.mcssoft.racedaycompose.domain.model.Race

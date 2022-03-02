@@ -17,8 +17,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.HandleBackPressed
-import com.mcssoft.racedaycompose.ui.components.MeetingItem
+import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 
 @Composable()
 fun MeetingsScreen(navController: NavController,
@@ -35,9 +36,9 @@ fun MeetingsScreen(navController: NavController,
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-            title = { Text("Meetings") },
-            backgroundColor = MaterialTheme.colors.primary,
-            actions = {
+                title = { Text("Meetings") },
+                backgroundColor = MaterialTheme.colors.primary,
+                actions = {
                 IconButton(onClick = { viewModel.onEvent(MeetingsEvent.Refresh()) }) {
                     Icon(Icons.Default.Refresh, "Refresh")
                 }
@@ -46,14 +47,15 @@ fun MeetingsScreen(navController: NavController,
         backgroundColor = Color.LightGray
     ) {
         Box(modifier = Modifier.fillMaxSize().background(Color.Gray)) {
-            LazyColumn(modifier = Modifier.fillMaxSize()/*, verticalArrangement = Arrangement.spacedBy(0.dp)*/) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
                     items = state.meetings
                 ) { meeting ->
                     MeetingItem(
                         meeting = meeting,
                         onItemClick = {
-//                        navController.navigate(ScreenRoute.CoinDetailScreen.route + "/${coin.id}")
+                            navController.navigate(ScreenRoute.RacesScreen.route +
+                                    "meetingId=${meeting._id}")
                         }
                     )
                 }
