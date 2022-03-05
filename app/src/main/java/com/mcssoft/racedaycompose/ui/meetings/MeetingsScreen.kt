@@ -18,19 +18,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.HandleBackPressed
+import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 
 @Composable()
 fun MeetingsScreen(navController: NavController,
-                   viewModel: MeetingsViewModel = hiltViewModel(),
-                   backPressedDispatcher: OnBackPressedDispatcher
+                   viewModel: MeetingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-
-    HandleBackPressed(backPressedDispatcher = backPressedDispatcher)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -39,7 +36,10 @@ fun MeetingsScreen(navController: NavController,
                 title = { Text("Meetings") },
                 backgroundColor = MaterialTheme.colors.primary,
                 actions = {
-                IconButton(onClick = { viewModel.onEvent(MeetingsEvent.Refresh()) }) {
+                IconButton(onClick = {
+                    viewModel.onEvent(MeetingsEvent.Refresh())
+                })
+                {
                     Icon(Icons.Default.Refresh, "Refresh")
                 }
             }
@@ -72,7 +72,7 @@ fun MeetingsScreen(navController: NavController,
                 )
             }
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Loading("Loading ...")
             }
         }
     }

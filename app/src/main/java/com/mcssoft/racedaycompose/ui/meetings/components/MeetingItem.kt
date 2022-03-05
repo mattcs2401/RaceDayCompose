@@ -52,7 +52,7 @@ fun MeetingItem(meeting: Meeting,
             Text(meeting.meetingCode, Modifier.constrainAs(idMCode) {
                 top.linkTo(parent.top, margin = 16.dp)
                 start.linkTo(parent.start, margin = 16.dp)
-            })//, fontSize = 16.sp
+            })
 
             Text(meeting.venueName, Modifier.constrainAs(idVenueName) {
                 start.linkTo(idMCode.end, margin = 16.dp)

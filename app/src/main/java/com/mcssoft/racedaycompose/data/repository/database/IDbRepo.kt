@@ -30,6 +30,13 @@ interface IDbRepo {
     suspend fun getMeetings(): List<Meeting>
 
     /**
+     * Select all from Meetings.
+     * @return A list of Meeting.
+     */
+    @Query("select * from Meeting where meetingCode= :code")
+    suspend fun getMeetings(code: String): List<Meeting>
+
+    /**
      * Delete all from Meetings.
      */
     @Query("delete from meeting")
@@ -50,6 +57,9 @@ interface IDbRepo {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRaces(races: List<Race>): List<Long>
+
+    @Query("select * from race where mtgId= :mtgId")
+    suspend fun getRaces(mtgId: Long): List<Race>
 
     //</editor-fold>
 

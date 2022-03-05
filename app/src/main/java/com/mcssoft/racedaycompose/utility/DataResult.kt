@@ -2,9 +2,11 @@ package com.mcssoft.racedaycompose.utility
 
 sealed class DataResult<T> (
     val data: T? = null,
-    val message: String? = null
+
+    // Default to an empty string so we can check if it was populated by an exception message or
+    // some some sort of informational message, e.g. nothing found.
+    val message: String = ""
 ) {
-    // Parameter is nullable so we have the option to either pass Null, or some sort of result.
     class Success<T>(data: T) : DataResult<T>(data)
 
     class Error<T>(message: String, data: T? = null) : DataResult<T>(data, message)
@@ -12,8 +14,4 @@ sealed class DataResult<T> (
     class Loading<T>(data: T? = null) : DataResult<T>(data)
 
 }
-/*
-class Success<T>(data: T) : Resource<T>(data)
-class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
-class Loading<T>(data: T? = null) : Resource<T>(data)
-*/
+

@@ -1,17 +1,21 @@
 package com.mcssoft.racedaycompose.domain.use_case
 
-import com.mcssoft.racedaycompose.domain.use_case.cases.GetMeetings
-import com.mcssoft.racedaycompose.domain.use_case.cases.GetRaces
-import com.mcssoft.racedaycompose.domain.use_case.cases.Initialisation
-import com.mcssoft.racedaycompose.domain.use_case.cases.RefreshMeetings
+import com.mcssoft.racedaycompose.domain.use_case.cases.*
 
 data class RaceDayUseCases(
-    // App first run initialisation.
-    val initialisation: Initialisation,
-    // Get a list of Meetings.
+
+    // Get the base set of data from the Api.
+    val getFromApi: GetFromApi,
+
+    // Save a filtered set of the base data to the database.
+    val saveFromApi: SaveFromApi,
+
+    // Get a list of Meetings from the database..
     val getMeetings: GetMeetings,
-    // Refresh the list of Meetings (get from Api and rewrite the database).
-    val refreshMeetings: RefreshMeetings,
-    // Get a list of the Races.
-    val getRaces: GetRaces
+
+    // Get a list of the Races from the database.
+    val getRaces: GetRaces,
+
+    //
+    val getRunners: GetRunners
 )

@@ -17,6 +17,10 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetings()
     }
 
+    override suspend fun getMeetings(code: String): List<Meeting> {
+        return  dao.getMeetings()
+    }
+
     override suspend fun deleteMeetings() {
         return dao.deleteMeetings()
     }
@@ -29,6 +33,10 @@ class DbRepoImpl @Inject constructor(
     //<editor-fold default state="collapsed" desc="Region: Race related.">
     override suspend fun insertRaces(races: List<Race>): List<Long> {
         return dao.insertRaces(races)
+    }
+
+    override suspend fun getRaces(mtgId: Long): List<Race> {
+        return dao.getRaces(mtgId)
     }
 
     //</editor-fold>

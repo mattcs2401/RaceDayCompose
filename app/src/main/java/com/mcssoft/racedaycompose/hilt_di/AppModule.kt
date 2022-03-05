@@ -8,10 +8,7 @@ import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.*
-import com.mcssoft.racedaycompose.domain.use_case.cases.GetMeetings
-import com.mcssoft.racedaycompose.domain.use_case.cases.GetRaces
-import com.mcssoft.racedaycompose.domain.use_case.cases.Initialisation
-import com.mcssoft.racedaycompose.domain.use_case.cases.RefreshMeetings
+import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.DateUtils
 import com.mcssoft.racedaycompose.utility.DbUtils
@@ -77,16 +74,17 @@ object AppModule {
     @Singleton
     fun provideUseCases(remote: IRemoteRepo, local: IDbRepo): RaceDayUseCases {
         return RaceDayUseCases(
-            initialisation = Initialisation(remote, local),
+            getFromApi = GetFromApi(remote),
+            saveFromApi = SaveFromApi(local),
             getMeetings = GetMeetings(local),
-            refreshMeetings = RefreshMeetings(remote, local),
-            getRaces = GetRaces(local)
+            getRaces = GetRaces(local),
+            getRunners = GetRunners(local)
         )
     }
 
     @Provides
     @Singleton
-    fun provideDbUtils(remote: IRemoteRepo, local: IDbRepo): DbUtils {
-        return DbUtils(remote, local)
+    fun provideDbUtils(local: IDbRepo): DbUtils {
+        return DbUtils(local)
     }
 }
