@@ -5,8 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.ui.meetings.MeetingsEvent
-import com.mcssoft.racedaycompose.ui.meetings.MeetingsState
 import com.mcssoft.racedaycompose.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -37,7 +35,7 @@ class RacesViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = RacesState(
-                        error = result.message ?: "[getRaces()]: An unexpected error occurred."
+                        error = result.message
                     )
                 }
                 is DataResult.Success -> {

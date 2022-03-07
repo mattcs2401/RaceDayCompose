@@ -1,17 +1,10 @@
 package com.mcssoft.racedaycompose.utility
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
-import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
-import com.mcssoft.racedaycompose.domain.dto.MeetingDto
-import com.mcssoft.racedaycompose.domain.dto.RaceDto
-import com.mcssoft.racedaycompose.domain.dto.toMeeting
-import com.mcssoft.racedaycompose.domain.dto.toRace
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.utility.Constants.NO_MEETINGS
 import com.mcssoft.racedaycompose.utility.Constants.NO_RACES
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class DbUtils @Inject constructor(
@@ -30,10 +23,10 @@ class DbUtils @Inject constructor(
             return DataResult.Error(ex.localizedMessage ?:
                 "DbUtils.getMeetings(): An unexpected error occurred.")
         }
-        if(meetings.count() > 0) {
-            return DataResult.Success(meetings)
+        return if(meetings.count() > 0) {
+            DataResult.Success(meetings)
         } else {
-            return DataResult.Error(NO_MEETINGS)
+            DataResult.Error(NO_MEETINGS)
         }
     }
 
@@ -46,10 +39,10 @@ class DbUtils @Inject constructor(
             return DataResult.Error(ex.localizedMessage ?:
             "DbUtils.getRaces(): An unexpected error occurred.")
         }
-        if(races.count() > 0) {
-            return DataResult.Success(races)
+        return if(races.count() > 0) {
+            DataResult.Success(races)
         } else {
-            return DataResult.Error(NO_RACES)
+            DataResult.Error(NO_RACES)
         }
     }
 

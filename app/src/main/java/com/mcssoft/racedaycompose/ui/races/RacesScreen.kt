@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.races
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,16 +15,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.TopBar
-import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
@@ -34,7 +28,9 @@ fun RacesScreen(navController: NavController,
                 viewModel: RacesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    // Update RacesState with the Meeting's id.
     viewModel.state.value.mId = meetingId
+    // Send event to get the list of Races, returned in the state.
     viewModel.onEvent(RacesEvent.GetRaces())
 
     val scaffoldState = rememberScaffoldState()
@@ -48,9 +44,6 @@ fun RacesScreen(navController: NavController,
         backgroundColor = Color.LightGray
     ) {
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)) {
-
-//            Toast.makeText(LocalContext.current, "Meeting id: $meetingId", Toast.LENGTH_SHORT).show()
-
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(items = state.races) { race ->
                     RaceItem(

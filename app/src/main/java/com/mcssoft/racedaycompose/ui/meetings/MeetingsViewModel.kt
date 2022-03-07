@@ -1,19 +1,18 @@
 package com.mcssoft.racedaycompose.ui.meetings
 
-import javax.inject.Inject
-import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.launchIn
-import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import dagger.hilt.android.lifecycle.HiltViewModel
-import com.mcssoft.racedaycompose.utility.DateUtils
-import com.mcssoft.racedaycompose.utility.DataResult
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
-import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
+import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
+import com.mcssoft.racedaycompose.utility.DataResult
+import com.mcssoft.racedaycompose.utility.DateUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
@@ -55,7 +54,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState(
-                        error = result.message ?: "[getFromApi()]: An unexpected error occurred."
+                        error = result.message
                     )
                 }
                 is DataResult.Success -> {
@@ -79,7 +78,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState(
-                        error = result.message ?: "[getFromApi()]: An unexpected error occurred."
+                        error = result.message
                     )
                 }
                 is DataResult.Success -> {
@@ -104,7 +103,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState(
-                        error = result.message ?: "[getMeetings()]: An unexpected error occurred."
+                        error = result.message
                     )
                 }
                 is DataResult.Success -> {
