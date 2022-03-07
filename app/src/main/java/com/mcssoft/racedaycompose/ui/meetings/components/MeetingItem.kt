@@ -8,15 +8,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mcssoft.racedaycompose.domain.model.Meeting
@@ -31,6 +29,12 @@ fun MeetingItem(meeting: Meeting,
         targetValue = if (expandedState) 180f else 0f
     )
 
+    var backgroundColour = Color.White
+
+    if(meeting.abandoned) {
+        backgroundColour = MaterialTheme.colors.error
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()  // important for placement of the arrow icon.
@@ -40,7 +44,7 @@ fun MeetingItem(meeting: Meeting,
             ),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
-        //backgroundColor = Col
+        backgroundColor = backgroundColour
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -64,19 +68,21 @@ fun MeetingItem(meeting: Meeting,
                 end.linkTo(idArrow.start, margin = 16.dp)
             })
 
-            IconButton(
-                onClick = { expandedState = !expandedState  },
-                Modifier
-                    .constrainAs(idArrow) {
-                        end.linkTo(parent.absoluteRight)
-                        centerVerticallyTo(parent)
+                IconButton(
+                    onClick = { expandedState = !expandedState },
+                    Modifier
+                        .constrainAs(idArrow) {
+                            end.linkTo(parent.absoluteRight)
+                            centerVerticallyTo(parent)
+                        }
+                        .rotate(rotationState)
+                ) {
+                    if(!meeting.abandoned) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop-Down Arrow"
+                        )
                     }
-                    .rotate(rotationState)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Drop-Down Arrow"
-                )
             }
         }
         if (expandedState) {

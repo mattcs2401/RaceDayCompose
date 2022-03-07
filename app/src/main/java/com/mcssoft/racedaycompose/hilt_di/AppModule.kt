@@ -87,4 +87,5 @@ object AppModule {
     fun provideDbUtils(local: IDbRepo): DbUtils {
         return DbUtils(local)
     }
+
 }

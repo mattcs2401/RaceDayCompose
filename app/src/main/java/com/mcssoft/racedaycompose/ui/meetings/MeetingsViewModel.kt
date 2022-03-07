@@ -32,6 +32,9 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Called from the Meetings screen. Do a complete reload of the Api data.
+     */
     fun onEvent(event: MeetingsEvent) {
         when(event) {
             is MeetingsEvent.Refresh -> {
@@ -40,6 +43,10 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Use case: GetFromApi.
+     * Get the raw data from the Api.
+     */
     private fun getFromApi(date: String) {
         raceDayUseCases.getFromApi(date).onEach { result ->
             when(result) {
@@ -60,6 +67,10 @@ class MeetingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Use case: SaveFromApi.
+     * Populate Meeting/Race info from data retrieved from the Api.
+     */
     private fun saveFromApi(raceDayDto: RaceDayDto, mtgType: String) {
         raceDayUseCases.saveFromApi(raceDayDto, mtgType).onEach { result ->
             when(result) {
@@ -81,6 +92,7 @@ class MeetingsViewModel @Inject constructor(
     }
 
     /**
+     * Use case: GetMeetings.
      * Get a list of Meetings from the database.
      * @note Database is already populated.
      */

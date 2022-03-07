@@ -6,5 +6,6 @@ import com.mcssoft.racedaycompose.domain.model.Race
 data class RacesState(
     val races: List<Race> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String = ""
+    val error: String = "",
+    var mId: Long = 0
 )

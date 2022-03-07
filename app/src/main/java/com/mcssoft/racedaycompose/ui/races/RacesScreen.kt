@@ -34,6 +34,9 @@ fun RacesScreen(navController: NavController,
                 viewModel: RacesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    viewModel.state.value.mId = meetingId
+    viewModel.onEvent(RacesEvent.GetRaces())
+
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -44,7 +47,7 @@ fun RacesScreen(navController: NavController,
         },
         backgroundColor = Color.LightGray
     ) {
-        Box(modifier = Modifier.fillMaxSize().background(Color.Gray)) {
+        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)) {
 
 //            Toast.makeText(LocalContext.current, "Meeting id: $meetingId", Toast.LENGTH_SHORT).show()
 

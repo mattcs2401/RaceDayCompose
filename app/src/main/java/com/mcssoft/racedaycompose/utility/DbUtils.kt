@@ -9,6 +9,7 @@ import com.mcssoft.racedaycompose.domain.dto.toRace
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.utility.Constants.NO_MEETINGS
+import com.mcssoft.racedaycompose.utility.Constants.NO_RACES
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -18,7 +19,7 @@ class DbUtils @Inject constructor(
 ) {
 
     suspend fun getMeetings(mtgType: String = ""): DataResult<List<Meeting>> {
-        var meetings = listOf<Meeting>()
+        val meetings: List<Meeting>
         try {
             meetings = if(mtgType == "") {
                 iDbRepo.getMeetings()
@@ -36,20 +37,21 @@ class DbUtils @Inject constructor(
         }
     }
 
-//    suspend fun getRaces(mtgId: Long): Flow<DataResult<List<Race>>> = flow {
-//        try {
-//            var races = listOf<Race>()
-//
-//            emit(DataResult.Loading())
-//
-//            races = iDbRepo.getRaces(mtgId)
-//
-//            emit(DataResult.Success(races))
-//
-//        } catch(ex: Exception) {
-//            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
-//        }
-//    }
+    suspend fun getRaces(mtgId: Long): DataResult<List<Race>> {
+        val races: List<Race>
+        try {
+            races = iDbRepo.getRaces(mtgId)
+
+        } catch(ex: Exception) {
+            return DataResult.Error(ex.localizedMessage ?:
+            "DbUtils.getRaces(): An unexpected error occurred.")
+        }
+        if(races.count() > 0) {
+            return DataResult.Success(races)
+        } else {
+            return DataResult.Error(NO_RACES)
+        }
+    }
 
     // TODO - get Runners.
 }

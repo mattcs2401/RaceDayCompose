@@ -3,6 +3,7 @@ package com.mcssoft.racedaycompose.domain.model
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 /**
  * Cache adaptation of domain.dto.MeetingDto.
