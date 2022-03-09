@@ -11,6 +11,18 @@ class DbUtils @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
 
+    suspend fun getMeeting(mId: Long): DataResult<Meeting> {
+        var meeting: Meeting
+        try {
+            meeting = iDbRepo.getMeeting(mId)
+
+        } catch(ex: Exception) {
+            return DataResult.Error(ex.localizedMessage ?:
+            "DbUtils.getMeeting(): An unexpected error occurred.")
+        }
+        return DataResult.Success(meeting)
+    }
+
     suspend fun getMeetings(mtgType: String = ""): DataResult<List<Meeting>> {
         val meetings: List<Meeting>
         try {

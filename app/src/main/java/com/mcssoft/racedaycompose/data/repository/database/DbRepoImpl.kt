@@ -13,6 +13,10 @@ class DbRepoImpl @Inject constructor(
         return dao.insertMeeting(meeting)
     }
 
+    override suspend fun getMeeting(mId: Long): Meeting {
+        return dao.getMeeting(mId)
+    }
+
     override suspend fun getMeetings(): List<Meeting> {
         return dao.getMeetings()
     }

@@ -10,7 +10,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
 fun Loading(text: String = "") {
-
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {

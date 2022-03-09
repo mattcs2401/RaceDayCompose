@@ -20,19 +20,29 @@ fun Navigate() {
                 navController = navController
             )
         }
+//        composable(
+//            route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
+//            arguments = listOf(navArgument("meetingId") {
+//                type = NavType.LongType
+//                defaultValue = 0
+//            })
+//        ) { entry ->
+//            val meetingId = entry.arguments?.getLong("meetingId") ?: 0
+//            RacesScreen(
+//                navController = navController,
+//                meetingId = meetingId
+//            )
+//        }
         composable(
             route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType
-                defaultValue = 0
+//                defaultValue = 0
             })
-        ) { entry ->
-            val meetingId = entry.arguments?.getLong("meetingId") ?: 0
-            RacesScreen(
-                navController = navController,
-                meetingId = meetingId
-            )
+        ) {
+            RacesScreen(navController = navController)
         }
+
     }
 
 }

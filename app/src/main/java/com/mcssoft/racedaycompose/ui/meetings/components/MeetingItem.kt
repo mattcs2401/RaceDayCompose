@@ -14,10 +14,10 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mcssoft.racedaycompose.domain.model.Meeting
+import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
 fun MeetingItem(meeting: Meeting,
@@ -29,7 +29,7 @@ fun MeetingItem(meeting: Meeting,
         targetValue = if (expandedState) 180f else 0f
     )
 
-    var backgroundColour = Color.White
+    var backgroundColour = MaterialTheme.colors.primaryVariant
 
     if(meeting.abandoned) {
         backgroundColour = MaterialTheme.colors.error
@@ -38,11 +38,11 @@ fun MeetingItem(meeting: Meeting,
     Card(
         modifier = Modifier
             .fillMaxWidth()  // important for placement of the arrow icon.
-            .padding(4.dp)
+            .padding(MaterialTheme.spacing.extraSmall)
             .animateContentSize(
                 animationSpec = tween(durationMillis = 250, easing = LinearOutSlowInEasing)
             ),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(MaterialTheme.spacing.small),
         elevation = 4.dp,
         backgroundColor = backgroundColour
     ) {

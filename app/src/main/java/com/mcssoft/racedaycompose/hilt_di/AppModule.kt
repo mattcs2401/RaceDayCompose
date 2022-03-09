@@ -76,6 +76,7 @@ object AppModule {
         return RaceDayUseCases(
             getFromApi = GetFromApi(remote),
             saveFromApi = SaveFromApi(local),
+            getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
             getRunners = GetRunners(local)

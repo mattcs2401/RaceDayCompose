@@ -10,6 +10,7 @@ import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -102,9 +103,7 @@ class MeetingsViewModel @Inject constructor(
                     _state.value = MeetingsState(isLoading = true)
                 }
                 is DataResult.Error -> {
-                    _state.value = MeetingsState(
-                        error = result.message
-                    )
+                    _state.value = MeetingsState(error = result.message)
                 }
                 is DataResult.Success -> {
                     _state.value = MeetingsState(meetings = result.data ?: emptyList())

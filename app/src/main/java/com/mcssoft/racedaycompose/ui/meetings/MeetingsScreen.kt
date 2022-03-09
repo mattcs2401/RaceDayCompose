@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
+import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
 fun MeetingsScreen(navController: NavController,
@@ -29,7 +30,7 @@ fun MeetingsScreen(navController: NavController,
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -38,17 +39,18 @@ fun MeetingsScreen(navController: NavController,
                 title = { Text("Meetings") },
                 backgroundColor = MaterialTheme.colors.primary,
                 actions = {
-                IconButton(onClick = {
-                    viewModel.onEvent(MeetingsEvent.Refresh())
-                })
-                {
-                    Icon(Icons.Default.Refresh, "Refresh")
+                    IconButton(onClick = { viewModel.onEvent(MeetingsEvent.Refresh()) }
+                    ) {
+                        Icon(Icons.Default.Refresh, "Refresh")
+                    }
                 }
-            }
-        )},
-        backgroundColor = Color.LightGray
+        )}
+        //, backgroundColor = Color.DarkGray
     ) {
-        Box(modifier = Modifier.fillMaxSize().background(Color.Gray)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)) {
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
                     items = state.meetings
@@ -56,8 +58,11 @@ fun MeetingsScreen(navController: NavController,
                     MeetingItem(
                         meeting = meeting,
                         onItemClick = {
-                            navController.navigate(ScreenRoute.RacesScreen.route +
-                                    "meetingId=${meeting._id}")
+                            if (!meeting.abandoned) {
+                                navController.navigate(
+                                    ScreenRoute.RacesScreen.route + "meetingId=${meeting._id}"
+                                )
+                            }
                         }
                     )
                 }
@@ -69,7 +74,7 @@ fun MeetingsScreen(navController: NavController,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                        .padding(MaterialTheme.spacing.medium)
                         .align(Alignment.Center)
                 )
             }

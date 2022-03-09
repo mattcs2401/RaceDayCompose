@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.theme
+package com.mcssoft.racedaycompose.ui.theme.framework
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

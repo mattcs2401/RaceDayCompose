@@ -10,7 +10,10 @@ data class RaceDayUseCases(
     // Save a filtered set of the base data to the database.
     val saveFromApi: SaveFromApi,
 
-    // Get a list of Meetings from the database..
+    // Get a single Meeting from the database.
+    val getMeeting: GetMeeting,
+
+    // Get a list of Meetings from the database.
     val getMeetings: GetMeetings,
 
     // Get a list of the Races from the database.

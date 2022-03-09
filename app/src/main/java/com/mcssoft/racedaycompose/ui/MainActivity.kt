@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import com.mcssoft.racedaycompose.ui.components.Navigate
-import com.mcssoft.racedaycompose.ui.theme.RaceDayComposeTheme
+import com.mcssoft.racedaycompose.ui.theme.framework.RaceDayComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.races
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +12,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,17 +24,14 @@ import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
 fun RacesScreen(navController: NavController,
-                meetingId: Long,
                 viewModel: RacesViewModel = hiltViewModel()
 ) {
+    Log.d("TAG","Entering RacesScreen.")
+
     val state = viewModel.state.value
-    // Update RacesState with the Meeting's id.
-    viewModel.state.value.mId = meetingId
-    // Send event to get the list of Races, returned in the state.
-    viewModel.onEvent(RacesEvent.GetRaces())
 
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -43,7 +40,9 @@ fun RacesScreen(navController: NavController,
         },
         backgroundColor = Color.LightGray
     ) {
-        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.secondary)) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(items = state.races) { race ->
                     RaceItem(
@@ -65,16 +64,9 @@ fun RacesScreen(navController: NavController,
                         .align(Alignment.Center)
                 )
             }
-            if (state.isLoading) {
+            if (state.loading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
     }
 }
-/*
-//                actions = {
-//                    IconButton(onClick = { /*viewModel.onEvent(MeetingsEvent.Refresh())*/ }) {
-//                        Icon(Icons.Default.ArrowBack, "Refresh")
-//                    }
-
- */
