@@ -26,12 +26,8 @@ class GetRaces @Inject constructor(
             result = DbUtils(iDbRepo).getRaces(mId)
 
             when {
-                // No exception, but no Meetings populated either.
-                result.message == Constants.NO_RACES -> {
-                    emit(DataResult.Error(result.message))
-                }
                 // An exception was thrown.
-                result.message != "" && result.message != Constants.NO_RACES -> {
+                result.message != "" -> {
                     emit(DataResult.Error(result.message))
                 }
                 // All good.

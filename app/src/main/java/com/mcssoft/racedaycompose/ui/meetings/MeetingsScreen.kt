@@ -11,12 +11,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.ui.ScreenRoute
@@ -30,7 +27,6 @@ fun MeetingsScreen(navController: NavController,
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
-//    val scope = rememberCoroutineScope()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -78,7 +74,7 @@ fun MeetingsScreen(navController: NavController,
                         .align(Alignment.Center)
                 )
             }
-            if (state.isLoading) {
+            if (state.loading) {
                 Loading("Loading ...")
             }
         }

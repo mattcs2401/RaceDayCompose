@@ -1,9 +1,11 @@
 package com.mcssoft.racedaycompose.hilt_di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
+import com.mcssoft.racedaycompose.data.repository.RaceDayPreferences
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
@@ -15,6 +17,7 @@ import com.mcssoft.racedaycompose.utility.DbUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -87,6 +90,12 @@ object AppModule {
     @Singleton
     fun provideDbUtils(local: IDbRepo): DbUtils {
         return DbUtils(local)
+    }
+
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext context: Context): RaceDayPreferences {
+        return RaceDayPreferences(context)
     }
 
 }

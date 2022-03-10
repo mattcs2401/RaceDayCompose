@@ -2,12 +2,7 @@ package com.mcssoft.racedaycompose.ui.races
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -19,19 +14,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mcssoft.racedaycompose.ui.components.MeetingHeader
+import com.mcssoft.racedaycompose.ui.components.RacesList
 import com.mcssoft.racedaycompose.ui.components.TopBar
-import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
 fun RacesScreen(navController: NavController,
                 viewModel: RacesViewModel = hiltViewModel()
 ) {
-    Log.d("TAG","Entering RacesScreen.")
+//    Log.d("TAG","Entering RacesScreen.")
 
     val state = viewModel.state.value
 
     val scaffoldState = rememberScaffoldState()
-//    val scope = rememberCoroutineScope()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -43,14 +38,23 @@ fun RacesScreen(navController: NavController,
         Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.secondary)) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(items = state.races) { race ->
-                    RaceItem(
-                        race = race,
-                        onItemClick = {
-                            // TBA>
-                        }
-                    )
+
+            Column(modifier = Modifier
+                .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+
+                // Races listing header.
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                ) {
+                    state.meeting?.let { meeting ->
+                        MeetingHeader(meeting = meeting, MaterialTheme.colors.background) }
+                }
+                // Races listing.
+                Row(modifier = Modifier.fillMaxWidth()
+                ) {
+                    RacesList(races = state.races, onItemClick = {})
                 }
             }
             if (state.error.isNotBlank()) {

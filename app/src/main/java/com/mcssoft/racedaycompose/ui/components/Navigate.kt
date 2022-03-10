@@ -20,24 +20,11 @@ fun Navigate() {
                 navController = navController
             )
         }
-//        composable(
-//            route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
-//            arguments = listOf(navArgument("meetingId") {
-//                type = NavType.LongType
-//                defaultValue = 0
-//            })
-//        ) { entry ->
-//            val meetingId = entry.arguments?.getLong("meetingId") ?: 0
-//            RacesScreen(
-//                navController = navController,
-//                meetingId = meetingId
-//            )
-//        }
         composable(
+            /* See notes below. */
             route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType
-//                defaultValue = 0
             })
         ) {
             RacesScreen(navController = navController)
@@ -46,3 +33,11 @@ fun Navigate() {
     }
 
 }
+/*
+Notes:
+- This creates a deeplink, don't have to explicitly pass the parameter to the RacesScreen.
+- The SavedHandleState in the RacesViewModel constructor handles this.
+
+From Logcat:
+RacesViewModel.init()-savedStateHandle=[meetingId, android-support-nav:controller:deepLinkIntent]
+*/

@@ -10,7 +10,6 @@ import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -23,13 +22,10 @@ class MeetingsViewModel @Inject constructor(
     private val _state = mutableStateOf(MeetingsState())
     val state: State<MeetingsState> = _state
 
+    // TODO - whether to get from the Api, or from local should be a preference.
+
     init {
-        // Kick it all off.
-        if(!_state.value.saved) {
-            getFromApi(DateUtils().getDateToday())
-        } else {
-            getMeetings()
-        }
+        getFromApi(DateUtils().getDateToday())
     }
 
     /**
@@ -51,17 +47,14 @@ class MeetingsViewModel @Inject constructor(
         raceDayUseCases.getFromApi(date).onEach { result ->
             when(result) {
                 is DataResult.Loading -> {
-                    _state.value = MeetingsState(isLoading = true)
+                    _state.value = MeetingsState(loading = true)
                 }
                 is DataResult.Error -> {
-                    _state.value = MeetingsState(
-                        error = result.message
-                    )
+                    _state.value = MeetingsState(error = result.message)
                 }
                 is DataResult.Success -> {
-                    _state.value = MeetingsState(raw = result.data!!)
                     // Raw data has been fetched from the Api, so now save to database.
-                    saveFromApi(_state.value.raw!!, MEETING_TYPE)
+                    saveFromApi(result.data!!, MEETING_TYPE)
                 }
             }
         }.launchIn(viewModelScope)
@@ -75,15 +68,12 @@ class MeetingsViewModel @Inject constructor(
         raceDayUseCases.saveFromApi(raceDayDto, mtgType).onEach { result ->
             when(result) {
                 is DataResult.Loading -> {
-                    _state.value = MeetingsState(isLoading = true)
+                    _state.value = MeetingsState(loading = true)
                 }
                 is DataResult.Error -> {
-                    _state.value = MeetingsState(
-                        error = result.message
-                    )
+                    _state.value = MeetingsState(error = result.message)
                 }
                 is DataResult.Success -> {
-                    _state.value = MeetingsState(saved = true)
                     // Data saved to database, so now get list of Meetings.
                     getMeetings()
                 }
@@ -100,7 +90,7 @@ class MeetingsViewModel @Inject constructor(
         raceDayUseCases.getMeetings().onEach { result ->
             when(result) {
                 is DataResult.Loading -> {
-                    _state.value = MeetingsState(isLoading = true)
+                    _state.value = MeetingsState(loading = true)
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState(error = result.message)

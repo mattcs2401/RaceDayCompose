@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases
 
+import android.util.Log
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,6 +17,7 @@ class SaveFromApi @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     operator fun invoke(raceDayDto: RaceDayDto, mtgType: String): Flow<DataResult<String>> = flow {
+        Log.d("TAG","SaveFromApi.invoke()")
         try {
 
             emit(DataResult.Loading())

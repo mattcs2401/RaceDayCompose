@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases
 
+import android.util.Log
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,6 +21,7 @@ class GetFromApi @Inject constructor(
      * @return A Flow of DataResult<RaceDayDto>.
      */
     operator fun invoke (mtgDate: String): Flow<DataResult<RaceDayDto>> = flow {
+        Log.d("TAG","GetFromApi.invoke()")
         try {
             emit(DataResult.Loading())
 

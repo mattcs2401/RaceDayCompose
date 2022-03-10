@@ -2,7 +2,6 @@ package com.mcssoft.racedaycompose.domain.use_case.cases
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.utility.Constants.NO_MEETINGS
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DbUtils
 import kotlinx.coroutines.flow.Flow

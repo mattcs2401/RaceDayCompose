@@ -1,8 +1,8 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases
 
+import android.util.Log
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.utility.Constants.NO_MEETINGS
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DbUtils
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +17,7 @@ class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     operator fun invoke (): Flow<DataResult<List<Meeting>>> = flow {
+        Log.d("TAG","GetMeetings.invoke()")
         val result: DataResult<List<Meeting>>?
 
         try {
@@ -25,20 +26,12 @@ class GetMeetings @Inject constructor(
             // Get from the flow.
             result = DbUtils(iDbRepo).getMeetings()
 
-            when {
-                // No exception, but no Meetings populated either.
-                result.message == NO_MEETINGS -> {
-                    emit(DataResult.Error(result.message))
-                }
-                // An exception was thrown.
-                result.message != "" && result.message != NO_MEETINGS -> {
-                    emit(DataResult.Error(result.message))
-                }
-                // All good.
-                else -> {
-                    emit(DataResult.Success(result.data!!))
-                }
+            if(result.message != "") {
+                emit(DataResult.Error(result.message))
+            } else {
+                emit(DataResult.Success(result.data!!))
             }
+
         } catch(ex: Exception) {
             emit(DataResult.Error(ex.localizedMessage ?: "GetMeetings.invoke: An unexpected error occurred."))
         }
