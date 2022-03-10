@@ -1,5 +1,8 @@
 package com.mcssoft.racedaycompose.ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,15 +21,22 @@ import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
 fun MeetingHeader(meeting: Meeting, colour: Color) {
-    Card(
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(MaterialTheme.spacing.extraSmall),
+//        shape = RoundedCornerShape(MaterialTheme.spacing.default),
+//        elevation = 4.dp,
+//        backgroundColor = colour
+//
+//    )
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.spacing.extraSmall),
-        shape = RoundedCornerShape(MaterialTheme.spacing.default),
-        elevation = 4.dp,
-        backgroundColor = colour
-
-    ){
+            .background(colour)
+            .border(width = 2.dp, color = Color.Blue)
+    )
+    {
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
         ) {

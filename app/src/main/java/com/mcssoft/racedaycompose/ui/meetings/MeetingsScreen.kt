@@ -10,7 +10,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.RefreshDialog
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
@@ -28,6 +32,8 @@ fun MeetingsScreen(navController: NavController,
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
 
+    var showRefreshDialog = remember { mutableStateOf(false) }
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -35,11 +41,17 @@ fun MeetingsScreen(navController: NavController,
                 title = { Text("Meetings") },
                 backgroundColor = MaterialTheme.colors.primary,
                 actions = {
-                    IconButton(onClick = { viewModel.onEvent(MeetingsEvent.Refresh()) }
-                    ) {
+                    IconButton(onClick = {
+                        showRefreshDialog.value = true
+                        //viewModel.onEvent(MeetingsEvent.Refresh())
+                    }) {
                         Icon(Icons.Default.Refresh, "Refresh")
                     }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Default.Settings, "Settings")
+                    }
                 }
+
         )}
         //, backgroundColor = Color.DarkGray
     ) {
@@ -76,6 +88,16 @@ fun MeetingsScreen(navController: NavController,
             }
             if (state.loading) {
                 Loading("Loading ...")
+            }
+            if(showRefreshDialog.value) {
+                RefreshDialog(onConfirmClicked = {
+                    showRefreshDialog.value = !showRefreshDialog.value
+
+                    viewModel.onEvent(MeetingsEvent.Refresh())
+                },
+                onDismiss = {
+                        showRefreshDialog.value = !showRefreshDialog.value
+                })
             }
         }
     }

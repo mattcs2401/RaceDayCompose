@@ -26,7 +26,7 @@ class GetRaces @Inject constructor(
             result = DbUtils(iDbRepo).getRaces(mId)
 
             when {
-                // An exception was thrown.
+                // An exception was thrown from DbUtils.
                 result.message != "" -> {
                     emit(DataResult.Error(result.message))
                 }

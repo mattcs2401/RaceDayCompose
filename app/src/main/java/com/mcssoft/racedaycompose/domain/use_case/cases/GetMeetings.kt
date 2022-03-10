@@ -26,12 +26,16 @@ class GetMeetings @Inject constructor(
             // Get from the flow.
             result = DbUtils(iDbRepo).getMeetings()
 
-            if(result.message != "") {
-                emit(DataResult.Error(result.message))
-            } else {
-                emit(DataResult.Success(result.data!!))
+            when {
+                // An exception was thrown from DbUtils.
+                result.message != "" -> {
+                    emit(DataResult.Error(result.message))
+                }
+                // All good.
+                else -> {
+                    emit(DataResult.Success(result.data!!))
+                }
             }
-
         } catch(ex: Exception) {
             emit(DataResult.Error(ex.localizedMessage ?: "GetMeetings.invoke: An unexpected error occurred."))
         }
