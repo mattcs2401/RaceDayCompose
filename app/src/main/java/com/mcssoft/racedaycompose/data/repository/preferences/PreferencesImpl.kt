@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.data.repository
+package com.mcssoft.racedaycompose.data.repository.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,13 +7,14 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
  * Class to set app preferences in a datastore.
  */
-class RaceDayPreferences @Inject constructor (context: Context) {
+class PreferencesImpl @Inject constructor (context: Context): IPreferences {
 
     private val Context.dataStore: DataStore<Preferences>
         by preferencesDataStore(name = "settings")
@@ -52,9 +53,8 @@ class RaceDayPreferences @Inject constructor (context: Context) {
      * val fromDb = datastore.getFromDb.collectAsState(initial = false)
      * if(fromDb.value!!) { do something }
      */
-    var getFromDb: Flow<Boolean> = dsPrefs.data
-        .map { preferences ->
-            preferences[fromDbKey] ?: false
+    override suspend fun getFromDbPref(): Boolean {
+        return dsPrefs.data.first()[fromDbKey] ?: false
     }
 
     /**
@@ -62,7 +62,7 @@ class RaceDayPreferences @Inject constructor (context: Context) {
      * @param value: The value to set.
      * @notes Must be called from within a (coroutine) scope.
      */
-    suspend fun setFromDb(value: Boolean) {
+    override suspend fun saveFromDbPref(value: Boolean) {
         dsPrefs.edit { preferences ->
             preferences[fromDbKey] = value
         }

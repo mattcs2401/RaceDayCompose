@@ -5,8 +5,9 @@ import android.content.Context
 import androidx.room.Room
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
-import com.mcssoft.racedaycompose.data.repository.RaceDayPreferences
+import com.mcssoft.racedaycompose.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
+import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.*
@@ -73,16 +74,24 @@ object AppModule {
         return DateUtils()
     }
 
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext context: Context): IPreferences {
+        return PreferencesImpl(context)
+    }
+
     @Provides
     @Singleton
-    fun provideUseCases(remote: IRemoteRepo, local: IDbRepo): RaceDayUseCases {
+    fun provideUseCases(remote: IRemoteRepo, local: IDbRepo, prefs: IPreferences): RaceDayUseCases {
         return RaceDayUseCases(
             getFromApi = GetFromApi(remote),
             saveFromApi = SaveFromApi(local),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
-            getRunners = GetRunners(local)
+            getRunners = GetRunners(local),
+            getSettings = GetSettings(prefs),
+            saveSettings = SaveSettings(prefs)
         )
     }
 
@@ -92,10 +101,5 @@ object AppModule {
         return DbUtils(local)
     }
 
-    @Singleton
-    @Provides
-    fun providePreferences(@ApplicationContext context: Context): RaceDayPreferences {
-        return RaceDayPreferences(context)
-    }
 
 }

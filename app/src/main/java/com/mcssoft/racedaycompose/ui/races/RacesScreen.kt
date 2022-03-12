@@ -37,8 +37,8 @@ fun RacesScreen(navController: NavController,
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.secondary)) {
-
+            .background(MaterialTheme.colors.secondary))
+        {
             Column(modifier = Modifier
                 .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally) {

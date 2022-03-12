@@ -19,6 +19,12 @@ data class RaceDayUseCases(
     // Get a list of the Races from the database.
     val getRaces: GetRaces,
 
-    //
-    val getRunners: GetRunners
+    // Get a list of the Runners from the database.
+    val getRunners: GetRunners,
+
+    // Get Settings.
+    val getSettings: GetSettings,
+
+    // Save Settings.
+    val saveSettings: SaveSettings
 )

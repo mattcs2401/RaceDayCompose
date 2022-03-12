@@ -32,7 +32,7 @@ fun MeetingsScreen(navController: NavController,
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
 
-    var showRefreshDialog = remember { mutableStateOf(false) }
+    val showRefreshDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -43,11 +43,12 @@ fun MeetingsScreen(navController: NavController,
                 actions = {
                     IconButton(onClick = {
                         showRefreshDialog.value = true
-                        //viewModel.onEvent(MeetingsEvent.Refresh())
                     }) {
                         Icon(Icons.Default.Refresh, "Refresh")
                     }
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        navController.navigate(ScreenRoute.SettingsScreen.route)
+                    }) {
                         Icon(Icons.Default.Settings, "Settings")
                     }
                 }

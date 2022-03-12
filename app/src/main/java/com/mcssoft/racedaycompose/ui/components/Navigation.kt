@@ -9,13 +9,16 @@ import androidx.navigation.navArgument
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsScreen
 import com.mcssoft.racedaycompose.ui.races.RacesScreen
+import com.mcssoft.racedaycompose.ui.settings.SettingsScreen
 
 @Composable
-fun Navigate() {
+fun Navigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = ScreenRoute.MeetingsScreen.route) {
-        composable(route = ScreenRoute.MeetingsScreen.route) {
+        composable(
+            route = ScreenRoute.MeetingsScreen.route
+        ) {
             MeetingsScreen(
                 navController = navController
             )
@@ -27,9 +30,17 @@ fun Navigate() {
                 type = NavType.LongType
             })
         ) {
-            RacesScreen(navController = navController)
+            RacesScreen(
+                navController = navController
+            )
         }
-
+        composable(
+            route = ScreenRoute.SettingsScreen.route
+        ) {
+            SettingsScreen(
+                navController = navController
+            )
+        }
     }
 
 }
