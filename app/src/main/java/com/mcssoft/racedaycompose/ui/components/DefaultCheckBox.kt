@@ -18,7 +18,7 @@ fun DefaultCheckBox(
     selected: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-        val interactionSource = remember { MutableInteractionSource() }
+    //val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,34 +43,3 @@ fun DefaultCheckBox(
         )
     }
 }
-/*
-@Composable
- fun CheckBoxWithTextRippleFullRow(
-    label: String,
-    state: Boolean,
-    onStateChange: (Boolean) -> Unit
-) {
-
-    // Checkbox with text on right side
-    val interactionSource = remember { MutableInteractionSource() }
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(40.dp)
-        .clickable(
-            role = Role.Checkbox,
-            onClick = {
-                onStateChange(!state)
-            }
-        )
-        .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = state,
-            onCheckedChange = null
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = label)
-    }
-}
- */

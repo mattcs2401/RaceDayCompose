@@ -4,19 +4,21 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
-    private val raceDayUseCases: RaceDayUseCases
+    private val raceDayUseCases: RaceDayUseCases,
+    private val prefs: IPreferences
 ) : ViewModel() {
 
     private val _state = mutableStateOf(MeetingsState())
@@ -25,7 +27,15 @@ class MeetingsViewModel @Inject constructor(
     // TODO - whether to get from the Api, or from local should be a preference.
 
     init {
-        getFromApi(DateUtils().getDateToday())
+        viewModelScope.launch {
+//            preferenceCheck().collect { checked ->
+                if(prefs.getFromDbPref()) {
+                    getMeetings()
+                } else {
+                    getFromApi(DateUtils().getDateToday())
+                }
+//            }
+       }
     }
 
     /**
@@ -102,4 +112,7 @@ class MeetingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun preferenceCheck(): Flow<Boolean> = flow {
+        emit(prefs.getFromDbPref())
+    }
 }

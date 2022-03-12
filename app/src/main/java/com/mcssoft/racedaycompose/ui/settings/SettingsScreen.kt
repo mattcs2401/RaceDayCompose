@@ -15,6 +15,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.ui.components.DefaultCheckBox
+import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
@@ -22,7 +23,7 @@ import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 fun SettingsScreen(navController: NavController,
                    viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state//.value
+    val state = viewModel.state
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -38,7 +39,7 @@ fun SettingsScreen(navController: NavController,
         {
             ConstraintLayout {
 
-                val (idLabel, idCBox) = createRefs()
+                val (idCBox) = createRefs()
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -51,28 +52,10 @@ fun SettingsScreen(navController: NavController,
                         text = "Load From DB",
                         selected = state.value.fromDbPref,
                         onCheckedChange = { checked ->
-                            //state.value = SettingsState(fromDbPref = checked)
                             viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
                         }
                     )
                 }
-
-//                Text(text = "Load From DB",
-//                    modifier = Modifier.constrainAs(idLabel) {
-//                        top.linkTo(parent.top, margin = 16.dp)
-//                        start.linkTo(parent.start, margin = 16.dp)
-//                })
-//
-//                Checkbox(
-//                    checked = state.fromDbPref,
-//                    onCheckedChange = { state.fromDbPref = it
-//                        viewModel.onEvent(SettingsEvent.SaveFromDbPref()) },
-//                    modifier = Modifier.constrainAs(idCBox) {
-//                        top.linkTo(parent.top, margin = 16.dp)
-//                        start.linkTo(idLabel.end, margin = 16.dp)
-//                    },
-//
-//                )
             }
             if (state.value.error.isNotBlank()) {
                 Text(
@@ -85,8 +68,8 @@ fun SettingsScreen(navController: NavController,
                         .align(Alignment.Center)
                 )
             }
-            if(state.value.fromDbPref) {
-                // TBA
+            if(state.value.loading) {
+                Loading("Loading ...")
             }
         }
     }

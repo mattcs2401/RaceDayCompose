@@ -9,9 +9,11 @@ import javax.inject.Inject
 class SaveSettings @Inject constructor (
     private val preferences: IPreferences
 ) {
+    /**
+     * Save the FromDb preference to the datastore.
+     * @param fromDb: The value to save.
+     */
     operator fun invoke(fromDb: Boolean): Flow<DataResult<Any>> = flow {
-        val result: DataResult<Any>
-
         try {
             preferences.saveFromDbPref(fromDb)
 

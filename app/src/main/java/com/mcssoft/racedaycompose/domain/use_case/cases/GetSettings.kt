@@ -12,8 +12,6 @@ class GetSettings @Inject constructor (
     private val preferences: IPreferences
 ) {
     operator fun invoke(): Flow<DataResult<Any>> = flow {
-        //val result: DataResult<Any>
-
         try {
             val result = preferences.getFromDbPref()
 
