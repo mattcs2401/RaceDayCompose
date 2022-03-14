@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 
@@ -35,7 +37,7 @@ fun DefaultCheckBox(
         Spacer(modifier = Modifier.width(16.dp))
         Checkbox(
             checked = selected,
-            onCheckedChange = null,//onCheckedChange,
+            onCheckedChange = onCheckedChange,
             colors = CheckboxDefaults.colors(
                 checkedColor = MaterialTheme.colors.primary,
                 checkmarkColor = MaterialTheme.colors.onBackground

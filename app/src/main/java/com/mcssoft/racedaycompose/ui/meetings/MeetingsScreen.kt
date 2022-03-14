@@ -16,12 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.Loading
-import com.mcssoft.racedaycompose.ui.components.RefreshDialog
+import com.mcssoft.racedaycompose.ui.components.DefaultDialog
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
@@ -91,14 +93,19 @@ fun MeetingsScreen(navController: NavController,
                 Loading("Loading ...")
             }
             if(showRefreshDialog.value) {
-                RefreshDialog(onConfirmClicked = {
-                    showRefreshDialog.value = !showRefreshDialog.value
-
-                    viewModel.onEvent(MeetingsEvent.Refresh())
-                },
-                onDismiss = {
+                DefaultDialog(
+                    dialogTitle =  stringResource(id = R.string.dlg_refresh_title),
+                    dialogText = stringResource(id = R.string.dlg_refresh_text),
+                    confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
+                    dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
+                    onConfirmClicked = {
                         showRefreshDialog.value = !showRefreshDialog.value
-                })
+                        // Trigger Refresh event through the ViewModel.
+                        viewModel.onEvent(MeetingsEvent.Refresh())
+                    },
+                    onDismissClicked = {
+                        showRefreshDialog.value = !showRefreshDialog.value
+                    })
             }
         }
     }

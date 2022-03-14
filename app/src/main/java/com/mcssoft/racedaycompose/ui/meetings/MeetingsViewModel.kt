@@ -24,8 +24,6 @@ class MeetingsViewModel @Inject constructor(
     private val _state = mutableStateOf(MeetingsState())
     val state: State<MeetingsState> = _state
 
-    // TODO - whether to get from the Api, or from local should be a preference.
-
     init {
         viewModelScope.launch {
 //            preferenceCheck().collect { checked ->

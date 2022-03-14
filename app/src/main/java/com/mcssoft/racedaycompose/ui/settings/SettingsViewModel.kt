@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.settings
 
+import android.provider.Settings
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,12 @@ class SettingsViewModel @Inject constructor(
             }
             is SettingsEvent.SaveFromDbPref -> {
                 saveFromDbPref(event.fromDb)
+            }
+            is SettingsEvent.GetOnlyAuPref -> {
+
+            }
+            is SettingsEvent.SaveOnlyAuPref -> {
+
             }
         }
     }

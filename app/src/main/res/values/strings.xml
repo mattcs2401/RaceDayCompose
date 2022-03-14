@@ -1,3 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RaceDayCompose</string>
+
+    <!-- Button labels. -->
+    <string name="lbl_btn_ok">OK</string>
+    <string name="lbl_btn_cancel" tools:ignore="ButtonCase">CANCEL</string>
+
+    <!-- Dialog text. -->
+    <string name="dlg_refresh_title">Refresh Data</string>
+    <string name="dlg_refresh_text">Delete all backing data and recreate ?</string>
+
+
 </resources>

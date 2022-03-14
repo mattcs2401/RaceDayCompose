@@ -39,11 +39,11 @@ fun SettingsScreen(navController: NavController,
         {
             ConstraintLayout {
 
-                val (idCBox) = createRefs()
+                val (idFromDb, idOnlyAu) = createRefs()
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .constrainAs(idCBox) {
+                    .constrainAs(idFromDb) {
                         top.linkTo(parent.top, margin = 8.dp)
                         start.linkTo(parent.start, margin = 8.dp)
                     }
@@ -53,6 +53,21 @@ fun SettingsScreen(navController: NavController,
                         selected = state.value.fromDbPref,
                         onCheckedChange = { checked ->
                             viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
+                        }
+                    )
+                }
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(idOnlyAu) {
+                        top.linkTo(idFromDb.bottom, margin = 16.dp)
+                        start.linkTo(idFromDb.start, margin = 0.dp)
+                    }
+                ) {
+                    DefaultCheckBox(
+                        text = "Only AU/NZ Races",
+                        selected = state.value.onlyAuPref,
+                        onCheckedChange = { checked ->
+                            viewModel.onEvent(SettingsEvent.SaveOnlyAuPref(checked))
                         }
                     )
                 }

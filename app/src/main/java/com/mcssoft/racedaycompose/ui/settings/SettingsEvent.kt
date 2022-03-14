@@ -12,4 +12,11 @@ sealed class SettingsEvent {
      * @param fromDb: The value to save.
      */
     data class SaveFromDbPref(val fromDb: Boolean): SettingsEvent()
+
+
+    object GetOnlyAuPref: SettingsEvent()
+
+    data class SaveOnlyAuPref(val onlyAu: Boolean): SettingsEvent()
+
+
 }
