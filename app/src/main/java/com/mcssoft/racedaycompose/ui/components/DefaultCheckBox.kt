@@ -20,28 +20,36 @@ fun DefaultCheckBox(
     selected: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    //val interactionSource = remember { MutableInteractionSource() }
+    // A Row with two columns.
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(40.dp)
+            .wrapContentHeight()
             .clickable(
-                role = Role.Checkbox,
                 onClick = {
                     onCheckedChange(!selected)
-            })
+                })
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = text, style = MaterialTheme.typography.body1)
-        Spacer(modifier = Modifier.width(16.dp))
-        Checkbox(
-            checked = selected,
-            onCheckedChange = onCheckedChange,
-            colors = CheckboxDefaults.colors(
-                checkedColor = MaterialTheme.colors.primary,
-                checkmarkColor = MaterialTheme.colors.onBackground
+        // Column one, the text for the checkbox label.
+        Column(modifier = Modifier
+            .fillMaxWidth(0.4f),
+            horizontalAlignment = Alignment.Start) {
+            Text(text = text, style = MaterialTheme.typography.body1)
+        }
+        // Column two, the checkbox.
+        Column(modifier = Modifier
+            .fillMaxWidth(0.6f),
+            horizontalAlignment = Alignment.Start) {
+            Checkbox(
+                checked = selected,
+                onCheckedChange = onCheckedChange,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colors.primary,
+                    checkmarkColor = MaterialTheme.colors.onBackground
+                )
             )
-        )
+        }
     }
 }

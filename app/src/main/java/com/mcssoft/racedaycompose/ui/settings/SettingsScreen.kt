@@ -9,11 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.DefaultCheckBox
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.TopBar
@@ -49,7 +51,7 @@ fun SettingsScreen(navController: NavController,
                     }
                 ) {
                     DefaultCheckBox(
-                        text = "Load From DB",
+                        text = stringResource(id = R.string.pref_load_from_db),
                         selected = state.value.fromDbPref,
                         onCheckedChange = { checked ->
                             viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
@@ -64,7 +66,7 @@ fun SettingsScreen(navController: NavController,
                     }
                 ) {
                     DefaultCheckBox(
-                        text = "Only AU/NZ Races",
+                        text = stringResource(id = R.string.pref_only_au),
                         selected = state.value.onlyAuPref,
                         onCheckedChange = { checked ->
                             viewModel.onEvent(SettingsEvent.SaveOnlyAuPref(checked))
