@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
 import com.mcssoft.racedaycompose.ui.components.RacesList
 import com.mcssoft.racedaycompose.ui.components.TopBar
@@ -31,7 +33,12 @@ fun RacesScreen(navController: NavController,
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-             TopBar("Races", MaterialTheme.colors.primary, navController, Icons.Default.ArrowBackIos)
+             TopBar(
+                 "Races",
+                 MaterialTheme.colors.primary,
+                 onBackPressed = { navController.popBackStack() },
+                 Icons.Filled.ArrowBack
+             )
         },
         backgroundColor = Color.LightGray
     ) {

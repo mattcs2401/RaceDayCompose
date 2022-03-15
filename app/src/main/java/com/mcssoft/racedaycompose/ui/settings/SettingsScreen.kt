@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,7 +33,12 @@ fun SettingsScreen(navController: NavController,
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar("Settings", MaterialTheme.colors.primary, navController, Icons.Default.ArrowBackIos)
+            TopBar(
+                "Settings",
+                MaterialTheme.colors.primary,
+                onBackPressed = { navController.popBackStack() },
+                Icons.Filled.ArrowBack
+            )
         },
         backgroundColor = Color.LightGray
     ) {

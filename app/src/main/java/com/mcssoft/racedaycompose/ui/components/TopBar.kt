@@ -6,21 +6,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 
+/**
+ * Implement a custom TopAppBar component.
+ * @note onBackPressed and navIcon should implemented together.
+ */
 @Composable
 fun TopBar(title: String,                        // title, required.
            bkgColour: Color,                     // background colour, required.
-           navController: NavController? = null, // nav controller, optional.
-           navIcon: ImageVector? = null          // nav icon, optional.
+           onBackPressed: () -> Unit = {},       // onClick handler (optional).
+           navIcon: ImageVector? = null          // nav icon (optional).
 ) {
     TopAppBar(
         title = { Text(title) },
         backgroundColor = bkgColour,
-        // Parameters 'navController' and 'navIcon' must both be not Null for back nav action.
         navigationIcon = {
-            if(navController != null && navIcon != null) {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                }) {
+            if(onBackPressed != {} && navIcon != null) {
+                IconButton(onClick = onBackPressed) {
                     Icon(navIcon, navIcon.toString())
                 }
             }
