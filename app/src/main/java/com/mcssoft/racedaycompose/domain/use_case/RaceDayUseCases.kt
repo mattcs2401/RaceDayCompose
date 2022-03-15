@@ -23,8 +23,8 @@ data class RaceDayUseCases(
     val getRunners: GetRunners,
 
     // Get Settings.
-    val getSettings: GetSettings,
+    val getPreferences: GetPreferences,
 
     // Save Settings.
-    val saveSettings: SaveSettings
+    val savePreferences: SavePreferences
 )

@@ -13,4 +13,7 @@
     <string name="pref_load_from_db">Load From DB</string>
     <string name="pref_only_au">Only AU/NZ Races</string>
 
+    <string name="pref_from_db_key">fromDbKey</string>
+    <string name="pref_only_aunz_key">onlyAuNzKey</string>
+
 </resources>

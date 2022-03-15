@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
@@ -25,7 +24,9 @@ import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 fun SettingsScreen(navController: NavController,
                    viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
+    val fromDbState = viewModel.fromDbState
+    val onlyAuNzState = viewModel.onlyAuNzState
+
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -39,20 +40,18 @@ fun SettingsScreen(navController: NavController,
             .fillMaxSize()
             .background(MaterialTheme.colors.secondary))
         {
-            ConstraintLayout {
-
-                val (idFromDb, idOnlyAu) = createRefs()
-
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .constrainAs(idFromDb) {
-                        top.linkTo(parent.top, margin = 8.dp)
-                        start.linkTo(parent.start, margin = 8.dp)
-                    }
+                    .wrapContentHeight()
                 ) {
                     DefaultCheckBox(
                         text = stringResource(id = R.string.pref_load_from_db),
-                        selected = state.value.fromDbPref,
+                        selected = fromDbState.value.preference,
                         onCheckedChange = { checked ->
                             viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
                         }
@@ -60,23 +59,20 @@ fun SettingsScreen(navController: NavController,
                 }
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .constrainAs(idOnlyAu) {
-                        top.linkTo(idFromDb.bottom, margin = 16.dp)
-                        start.linkTo(idFromDb.start, margin = 0.dp)
-                    }
+                    .wrapContentHeight()
                 ) {
                     DefaultCheckBox(
                         text = stringResource(id = R.string.pref_only_au),
-                        selected = state.value.onlyAuPref,
+                        selected = onlyAuNzState.value.preference,
                         onCheckedChange = { checked ->
-                            viewModel.onEvent(SettingsEvent.SaveOnlyAuPref(checked))
+                            viewModel.onEvent(SettingsEvent.SaveOnlyAuNzPref(checked))
                         }
                     )
                 }
             }
-            if (state.value.error.isNotBlank()) {
+            if (fromDbState.value.error.isNotBlank()) {
                 Text(
-                    text = state.value.error,
+                    text = fromDbState.value.error,
                     color = MaterialTheme.colors.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -85,7 +81,7 @@ fun SettingsScreen(navController: NavController,
                         .align(Alignment.Center)
                 )
             }
-            if(state.value.loading) {
+            if(fromDbState.value.loading) {
                 Loading("Loading ...")
             }
         }

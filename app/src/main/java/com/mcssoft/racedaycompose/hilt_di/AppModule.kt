@@ -42,7 +42,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRaceDayDao(db: RaceDayDb): IDbRepo { //RaceDayDao {
+    fun provideRaceDayDao(db: RaceDayDb): IDbRepo {
         return db.getRaceDayDao()
     }
 
@@ -90,8 +90,8 @@ object AppModule {
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
             getRunners = GetRunners(local),
-            getSettings = GetSettings(prefs),
-            saveSettings = SaveSettings(prefs)
+            getPreferences = GetPreferences(prefs),
+            savePreferences = SavePreferences(prefs)
         )
     }
 

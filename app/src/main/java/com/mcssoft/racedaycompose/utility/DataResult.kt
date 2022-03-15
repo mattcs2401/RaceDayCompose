@@ -1,7 +1,7 @@
 package com.mcssoft.racedaycompose.utility
 
 sealed class DataResult<T> (
-    val data: T? = null,
+    var data: T? = null,
 
     // Default to an empty string so we can check if it was populated by an exception message or
     // some some sort of informational message, e.g. nothing found.

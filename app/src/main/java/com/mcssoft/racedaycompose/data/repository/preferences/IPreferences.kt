@@ -1,11 +1,8 @@
 package com.mcssoft.racedaycompose.data.repository.preferences
 
-import kotlinx.coroutines.flow.Flow
-
 interface IPreferences {
 
-    suspend fun getFromDbPref(): Boolean
+    suspend fun getPreference(prefType: PreferenceType): Any
 
-    suspend fun saveFromDbPref(value: Boolean)
-
+    suspend fun setPreference(prefType: PreferenceType, value: Any)
 }

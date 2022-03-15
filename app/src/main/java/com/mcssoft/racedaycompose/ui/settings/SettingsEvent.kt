@@ -13,10 +13,15 @@ sealed class SettingsEvent {
      */
     data class SaveFromDbPref(val fromDb: Boolean): SettingsEvent()
 
+    /**
+     * Get the OnlyAuNz preference.
+     */
+    object GetOnlyAuNzPref: SettingsEvent()
 
-    object GetOnlyAuPref: SettingsEvent()
-
-    data class SaveOnlyAuPref(val onlyAu: Boolean): SettingsEvent()
-
+    /**
+     * Save the OnlyAuNz preference.
+     * @param onlyAuNz: The value to save.
+     */
+    data class SaveOnlyAuNzPref(val onlyAuNz: Boolean): SettingsEvent()
 
 }

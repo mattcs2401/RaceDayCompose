@@ -18,14 +18,15 @@ fun TopBar(title: String,                        // title, required.
         // Parameters 'navController' and 'navIcon' must both be not Null for back nav action.
         navigationIcon = {
             if(navController != null && navIcon != null) {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = {
+                    navController.popBackStack()
+                }) {
                     Icon(navIcon, navIcon.toString())
                 }
             }
         },
         actions = {
-            
-        }
         // TODO - Any actions ?
+        }
     )
 }

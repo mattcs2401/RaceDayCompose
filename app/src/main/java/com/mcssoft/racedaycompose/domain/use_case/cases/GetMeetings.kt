@@ -16,7 +16,7 @@ import javax.inject.Inject
 class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke (): Flow<DataResult<List<Meeting>>> = flow {
+    operator fun invoke (onlyAuNz: Boolean): Flow<DataResult<List<Meeting>>> = flow {
         Log.d("TAG","GetMeetings.invoke()")
         val result: DataResult<List<Meeting>>?
 
@@ -25,6 +25,14 @@ class GetMeetings @Inject constructor(
 
             // Get from the flow.
             result = DbUtils(iDbRepo).getMeetings()
+
+            // Filter if required.
+            if(onlyAuNz) {
+                val value = result.data?.filter { meeting ->
+                    meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
+                }
+                result.data = value
+            }
 
             when {
                 // An exception was thrown from DbUtils.

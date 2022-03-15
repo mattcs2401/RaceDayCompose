@@ -28,18 +28,20 @@ fun DefaultCheckBox(
             .clickable(
                 onClick = {
                     onCheckedChange(!selected)
-                })
-            .padding(8.dp),
+                }),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Column one, the text for the checkbox label.
         Column(modifier = Modifier
+            .wrapContentHeight()
             .fillMaxWidth(0.4f),
-            horizontalAlignment = Alignment.Start) {
+            horizontalAlignment = Alignment.Start
+        ){
             Text(text = text, style = MaterialTheme.typography.body1)
         }
         // Column two, the checkbox.
         Column(modifier = Modifier
+            .wrapContentHeight()
             .fillMaxWidth(0.6f),
             horizontalAlignment = Alignment.Start) {
             Checkbox(

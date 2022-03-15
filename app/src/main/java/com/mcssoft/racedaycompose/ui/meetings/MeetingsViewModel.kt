@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
+import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
@@ -26,13 +27,14 @@ class MeetingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-//            preferenceCheck().collect { checked ->
-                if(prefs.getFromDbPref()) {
-                    getMeetings()
-                } else {
-                    getFromApi(DateUtils().getDateToday())
-                }
-//            }
+            val fromDbPref = prefs.getPreference(PreferenceType.FromDbPref) as Boolean
+            if(fromDbPref) {
+                val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
+                getMeetings(onlyAuNzPref)
+            } else {
+                val date = DateUtils().getDateToday()
+                getFromApi(date)
+            }
        }
     }
 
@@ -83,7 +85,8 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Success -> {
                     // Data saved to database, so now get list of Meetings.
-                    getMeetings()
+                    val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
+                    getMeetings(onlyAuNzPref)
                 }
             }
         }.launchIn(viewModelScope)
@@ -94,8 +97,8 @@ class MeetingsViewModel @Inject constructor(
      * Get a list of Meetings from the database.
      * @note Database is already populated.
      */
-    private fun getMeetings() {
-        raceDayUseCases.getMeetings().onEach { result ->
+    private fun getMeetings(onlyAuNz: Boolean) {
+        raceDayUseCases.getMeetings(onlyAuNz).onEach { result ->
             when(result) {
                 is DataResult.Loading -> {
                     _state.value = MeetingsState(loading = true)
@@ -110,7 +113,5 @@ class MeetingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun preferenceCheck(): Flow<Boolean> = flow {
-        emit(prefs.getFromDbPref())
-    }
+
 }
