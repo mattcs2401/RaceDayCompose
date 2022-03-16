@@ -16,4 +16,12 @@
     <string name="pref_from_db_key">fromDbKey</string>
     <string name="pref_only_aunz_key">onlyAuNzKey</string>
 
+    <!-- TopBar labels. -->
+    <string name="label_meetings">Meetings</string>
+    <string name="label_races">Races</string>
+    <string name="label_runners">Runners</string>
+    <string name="label_preferences">Preferences</string>
+
+    <!-- Component labels. -->
+    <string name="label_loading">Loading…</string>
 </resources>

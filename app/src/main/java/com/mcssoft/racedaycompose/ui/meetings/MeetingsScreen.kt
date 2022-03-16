@@ -40,7 +40,7 @@ fun MeetingsScreen(navController: NavController,
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text("Meetings") },
+                title = { Text(stringResource(id = R.string.label_meetings)) },
                 backgroundColor = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
@@ -54,9 +54,8 @@ fun MeetingsScreen(navController: NavController,
                         Icon(Icons.Default.Settings, "Settings")
                     }
                 }
-
-        )}
-        //, backgroundColor = Color.DarkGray
+            )
+        }
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
@@ -90,7 +89,7 @@ fun MeetingsScreen(navController: NavController,
                 )
             }
             if (state.loading) {
-                Loading("Loading ...")
+                Loading(stringResource(id = R.string.label_loading))
             }
             if(showRefreshDialog.value) {
                 DefaultDialog(

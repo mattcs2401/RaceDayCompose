@@ -2,12 +2,14 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
+import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
@@ -19,13 +21,22 @@ import javax.inject.Inject
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
-    private val prefs: IPreferences
+    private val prefs: IPreferences,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = mutableStateOf(MeetingsState())
     val state: State<MeetingsState> = _state
 
     init {
+
+//        savedStateHandle.get<Boolean>(Constants.PARAM_PREF_ID).let { value ->
+//            if(value == true) {
+//                // There was a change in the Preferences, need to update state.
+//                val bp = ""
+//            }
+//        }
+
         viewModelScope.launch {
             val fromDbPref = prefs.getPreference(PreferenceType.FromDbPref) as Boolean
             if(fromDbPref) {

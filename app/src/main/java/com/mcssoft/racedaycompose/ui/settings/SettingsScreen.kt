@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
+import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.DefaultCheckBox
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.TopBar
@@ -34,9 +35,12 @@ fun SettingsScreen(navController: NavController,
         scaffoldState = scaffoldState,
         topBar = {
             TopBar(
-                "Settings",
+                title = stringResource(id = R.string.label_preferences),
                 MaterialTheme.colors.primary,
-                onBackPressed = { navController.popBackStack() },
+                onBackPressed = { navController.navigate(
+                    ScreenRoute.MeetingsScreen.route /* + "key=${value}"*/) {
+                    popUpTo(ScreenRoute.MeetingsScreen.route) { inclusive = true }
+                }},
                 Icons.Filled.ArrowBack
             )
         },
@@ -88,7 +92,7 @@ fun SettingsScreen(navController: NavController,
                 )
             }
             if(fromDbState.value.loading) {
-                Loading("Loading ...")
+                Loading(stringResource(id = R.string.label_loading))
             }
         }
     }

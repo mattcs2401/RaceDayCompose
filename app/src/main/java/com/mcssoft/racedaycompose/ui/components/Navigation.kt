@@ -10,12 +10,19 @@ import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsScreen
 import com.mcssoft.racedaycompose.ui.races.RacesScreen
 import com.mcssoft.racedaycompose.ui.settings.SettingsScreen
+import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ScreenRoute.MeetingsScreen.route) {
+    NavHost(navController = navController, startDestination = ScreenRoute.SplashScreen.route) {
+        composable(
+            route = ScreenRoute.SplashScreen.route
+        ){
+            // "Dummy" starting point.
+            SplashScreen(navController = navController)
+        }
         composable(
             route = ScreenRoute.MeetingsScreen.route
         ) {

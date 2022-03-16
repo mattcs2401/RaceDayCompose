@@ -13,7 +13,10 @@ fun Loading(text: String = "") {
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
     ) {
-
+        /*
+          Note: Done as constraint layout as example. Could also be done; Box with a column and two
+                rows in the column.
+         */
         val (idCPInd, txtLoading) = createRefs()
 
         CircularProgressIndicator(

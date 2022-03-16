@@ -11,4 +11,6 @@ sealed class ScreenRoute(val route: String) {
     object SummaryScreen: ScreenRoute("summary_screen")    // TBA.
 
     object SettingsScreen: ScreenRoute("settings_screen")
+
+    object SplashScreen: ScreenRoute("splash_screen")
 }

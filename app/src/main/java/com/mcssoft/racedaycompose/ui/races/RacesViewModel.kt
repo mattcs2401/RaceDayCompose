@@ -24,7 +24,7 @@ class RacesViewModel @Inject constructor(
     val state: State<RacesState> = _state
 
     init {
-        Log.d("TAG","RacesViewModel.init()-savedStateHandle=${savedStateHandle.keys()}")
+//        Log.d("TAG","RacesViewModel.init()-savedStateHandle=${savedStateHandle.keys()}")
 
         savedStateHandle.get<Long>(Constants.PARAM_MEETING_ID)?.let { meetingId ->
             getMeeting(meetingId)

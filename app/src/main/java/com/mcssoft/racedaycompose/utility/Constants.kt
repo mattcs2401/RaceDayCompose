@@ -5,6 +5,8 @@ object Constants {
     // The "key" for the parameter passed from the MeetingsScreen to the RacesScreen.
     const val PARAM_MEETING_ID: String = "meetingId"
 
+    const val PARAM_PREF_ID: String = "prefChange"
+
     // The Api end point, without date (and meeting code) qualification.
     const val BASE_URL: String = "https://api.tatts.com/sales/vmax/web/data/racing/"
 

@@ -1,21 +1,25 @@
 package com.mcssoft.racedaycompose.ui.races
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBackIos
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
 import com.mcssoft.racedaycompose.ui.components.RacesList
 import com.mcssoft.racedaycompose.ui.components.TopBar
@@ -24,19 +28,20 @@ import com.mcssoft.racedaycompose.ui.components.TopBar
 fun RacesScreen(navController: NavController,
                 viewModel: RacesViewModel = hiltViewModel()
 ) {
-//    Log.d("TAG","Entering RacesScreen.")
-
     val state = viewModel.state.value
-
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
              TopBar(
-                 "Races",
+                 title = stringResource(id = R.string.label_races),
                  MaterialTheme.colors.primary,
-                 onBackPressed = { navController.popBackStack() },
+                 onBackPressed = { navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                     popUpTo(ScreenRoute.MeetingsScreen.route) {
+                         inclusive = true
+                     }
+                 } },
                  Icons.Filled.ArrowBack
              )
         },
@@ -76,7 +81,7 @@ fun RacesScreen(navController: NavController,
                 )
             }
             if (state.loading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Loading(stringResource(id = R.string.label_loading))
             }
         }
     }
