@@ -37,12 +37,15 @@ interface IDbRepo {
     @Query("select * from Meeting where _Id = :mId")
     suspend fun getMeeting(mId: Long): Meeting
 
+    @Query("select meetingCode from Meeting")
+    suspend fun getMeetingCodes(): List<String>
+
     /**
      * Select all from Meetings.
      * @return A list of Meeting.
      */
-    @Query("select * from Meeting where meetingCode= :code")
-    suspend fun getMeetings(code: String): List<Meeting>
+//    @Query("select * from Meeting where meetingCode= :code")
+//    suspend fun getMeetings(code: String): List<Meeting>
 
     /**
      * Delete all from Meetings.

@@ -16,6 +16,11 @@ import com.mcssoft.racedaycompose.utility.DateUtils
 class SaveFromApi @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
+    /**
+     * Save the Meetings and Races from the Api download.
+     * @param raceDayDto: The "raw" Api data.
+     * @param mtgType: The meeting's type (defaults to "R" ATT).
+     * */
     operator fun invoke(raceDayDto: RaceDayDto, mtgType: String): Flow<DataResult<String>> = flow {
         Log.d("TAG","SaveFromApi.invoke()")
         try {
@@ -40,9 +45,30 @@ class SaveFromApi @Inject constructor(
             emit(DataResult.Success(""))
 
         } catch (ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
+            emit(DataResult.Error(ex.localizedMessage ?:
+                "[SaveFromApi] An unexpected error occurred (Meetings and Races)."))
         }
+    }
 
+    operator fun invoke(raceDayDto: RaceDayDto): Flow<DataResult<String>> = flow {
+        try {
+
+            emit(DataResult.Loading())
+
+            val meetingDto = raceDayDto.Meetings[0]        // should only be one Meeting.
+            val racesDto = meetingDto.Races
+            // Loop through eac Race in the Meeting.
+            racesDto.forEach { race ->
+                // Loop through each set of Runners for the Race.
+                //val raceId = iDbRepo.
+                val runnersDto = race.Runners
+
+            }
+
+        } catch (ex: Exception) {
+            emit(DataResult.Error(ex.localizedMessage ?:
+                "[SaveFromApi] An unexpected error occurred (Runners)."))
+        }
     }
 
     /**
@@ -58,8 +84,8 @@ class SaveFromApi @Inject constructor(
         // Add in the additional "summary" values.
         meeting.meetingTime = DateUtils().getTime(raceDto.RaceTime)
         meeting.racesNo = meetingDto.Races.count()
-        meeting.weatherCond = raceDto.WeatherCondition
-        meeting.trackCond = raceDto.TrackCondition
+        meeting.weatherCond = raceDto.WeatherCondition ?: ""
+        meeting.trackCond = raceDto.TrackCondition ?: ""
         meeting.trackRating = raceDto.TrackRating
         // Insert.
         return iDbRepo.insertMeeting(meeting)

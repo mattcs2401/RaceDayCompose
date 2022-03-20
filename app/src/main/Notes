@@ -1,0 +1,16 @@
+---------
+App Notes
+---------
+
+In no particular order:
+-----------------------
+
+-> If navigating back from preferences:
+   - include a boolean flag true if any preference was changed.
+   - the Meetings view model detects that and refreshes state accordingly.
+
+-> If navigating back from Races or Runners, there's no need for the Meetings view model to do the
+   preference check.
+
+-> xxx
+

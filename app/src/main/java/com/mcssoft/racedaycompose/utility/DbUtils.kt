@@ -16,7 +16,7 @@ class DbUtils @Inject constructor(
 
         } catch(ex: Exception) {
             return DataResult.Error(ex.localizedMessage ?:
-            "DbUtils.getMeeting(): An unexpected error occurred.")
+                "DbUtils.getMeeting(): An unexpected error occurred.")
         }
         return DataResult.Success(meeting)
     }
@@ -39,7 +39,7 @@ class DbUtils @Inject constructor(
 
         } catch(ex: Exception) {
             return DataResult.Error(ex.localizedMessage ?:
-            "DbUtils.getRaces(): An unexpected error occurred.")
+                "DbUtils.getRaces(): An unexpected error occurred.")
         }
         return DataResult.Success(races)
     }

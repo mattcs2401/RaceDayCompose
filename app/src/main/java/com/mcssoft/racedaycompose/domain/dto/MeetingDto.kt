@@ -4,17 +4,19 @@ import com.mcssoft.racedaycompose.domain.model.Meeting
 
 data class MeetingDto(
     val Abandoned: Boolean,
-//    val BoxChallengeAvailable: Boolean,
-//    val DriverChallengeAvailable: Boolean,
-//    val JockeyChallengeAvailable: Boolean,
     val MeetingCode: String,
     val MeetingId: Int,
     val MeetingType: String,
-//    val Pools: List<PoolDto>,
     val Races: List<RaceDto>,
-//    val TrackChanged: Boolean,
     val VenueName: String
+
+//    Not used ATT.
 //    val WeatherChanged: Boolean
+//    val BoxChallengeAvailable: Boolean,
+//    val DriverChallengeAvailable: Boolean,
+//    val JockeyChallengeAvailable: Boolean,
+//    val Pools: List<PoolDto>,
+//    val TrackChanged: Boolean,
 )
 
 fun MeetingDto.toMeeting(): Meeting {

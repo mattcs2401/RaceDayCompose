@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.races
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -26,7 +25,7 @@ class RacesViewModel @Inject constructor(
     init {
 //        Log.d("TAG","RacesViewModel.init()-savedStateHandle=${savedStateHandle.keys()}")
 
-        savedStateHandle.get<Long>(Constants.PARAM_MEETING_ID)?.let { meetingId ->
+        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { meetingId ->
             getMeeting(meetingId)
             getRaces(meetingId)
         }

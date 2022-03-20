@@ -28,6 +28,7 @@ class GetMeetings @Inject constructor(
 
             // Filter if required.
             if(onlyAuNz) {
+                // TBA - this possibly could still filter out something inadvertently.
                 val value = result.data?.filter { meeting ->
                     meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
                 }

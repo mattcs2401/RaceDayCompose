@@ -1,6 +1,6 @@
 buildscript {
     ext.hilt_ver = '2.40.5'
-    ext.kotlin_ver = '1.6.10'  //'1.5.31'//
+    ext.kotlin_ver = '1.6.10'
     ext.build_ver = '7.1.2'
     ext.compose_ver = '1.1.1'
 

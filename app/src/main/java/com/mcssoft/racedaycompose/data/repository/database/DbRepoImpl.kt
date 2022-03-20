@@ -21,9 +21,13 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetings()
     }
 
-    override suspend fun getMeetings(code: String): List<Meeting> {
-        return  dao.getMeetings()
+    override suspend fun getMeetingCodes(): List<String> {
+        return dao.getMeetingCodes()
     }
+
+//    override suspend fun getMeetings(code: String): List<Meeting> {
+//        return  dao.getMeetings()
+//    }
 
     override suspend fun deleteMeetings() {
         return dao.deleteMeetings()

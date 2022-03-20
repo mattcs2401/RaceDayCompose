@@ -1,6 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RaceDayCompose</string>
 
+    <string name="app_db_name">race_day_compose.db</string>
+
+    <string name="base_url">https://api.tatts.com/sales/vmax/web/data/racing/</string>
+
+    <!-- Notification. -->
+    <string name="download_channel_id">download_channel_id</string>
+    <string name="download_channel_name">Runners Download</string>
+
     <!-- Button labels. -->
     <string name="lbl_btn_ok">OK</string>
     <string name="lbl_btn_cancel" tools:ignore="ButtonCase">CANCEL</string>
@@ -24,4 +32,9 @@
 
     <!-- Component labels. -->
     <string name="label_loading">Loading…</string>
+
+    <!-- Keys. -->
+    <string name="key_meeting_codes">key_meeting_code</string>
+    <string name="key_meeting_date">key_meeting_date</string>
+
 </resources>

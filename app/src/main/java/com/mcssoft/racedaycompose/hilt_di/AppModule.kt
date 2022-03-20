@@ -2,7 +2,10 @@ package com.mcssoft.racedaycompose.hilt_di
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.room.Room
+import androidx.work.WorkManager
+import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
 import com.mcssoft.racedaycompose.data.repository.preferences.PreferencesImpl
@@ -36,7 +39,8 @@ object AppModule {
         return Room.databaseBuilder(
             app,
             RaceDayDb::class.java,
-            "race_day_compose.db"
+            app.resources.getString(R.string.app_db_name)
+            //"race_day_compose.db"
         ).build()
     }
 
@@ -48,7 +52,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(): IRaceDay {
+    fun provideApi(app: Application): IRaceDay {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
@@ -56,7 +60,7 @@ object AppModule {
             .build()
         return Retrofit.Builder()
             .client(client)
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(app.resources.getString(R.string.base_url))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(IRaceDay::class.java)
@@ -101,5 +105,9 @@ object AppModule {
         return DbUtils(local)
     }
 
-
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
+        return WorkManager.getInstance(context)
+    }
 }

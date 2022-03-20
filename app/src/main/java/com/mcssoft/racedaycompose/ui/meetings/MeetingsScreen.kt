@@ -63,7 +63,7 @@ fun MeetingsScreen(navController: NavController,
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
-                    items = state.meetings
+                    items = state.body// .data
                 ) { meeting ->
                     MeetingItem(
                         meeting = meeting,
@@ -77,9 +77,9 @@ fun MeetingsScreen(navController: NavController,
                     )
                 }
             }
-            if (state.error.isNotBlank()) {
+            if (state.failed) {
                 Text(
-                    text = state.error,
+                    text = state.exception?.localizedMessage ?: "An unknown error occurred.",
                     color = MaterialTheme.colors.error,
                     textAlign = TextAlign.Center,
                     modifier = Modifier

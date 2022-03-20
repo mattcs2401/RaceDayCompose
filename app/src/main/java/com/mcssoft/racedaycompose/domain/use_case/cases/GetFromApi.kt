@@ -9,48 +9,36 @@ import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 
 /**
- * Class to GET Meeting/Race details from the Api.
+ * Class to GET details from the Api.
  * @param iRemoteRepo: Api access.
  */
 class GetFromApi @Inject constructor(
     private val iRemoteRepo: IRemoteRepo
 ) {
-    // TODO - add try/catch, some sort or error notification ?
     /**
      * @param mtgDate: The date to use in the Api Url.
+     * @param mtgCode: The Meeting's code (optional Api Url mod).
      * @return A Flow of DataResult<RaceDayDto>.
+     * @notes If Meeting code is not used, then all Meetings are returned in the RaceDayDto details,
+     *        else, just the one Meeting.
      */
-    operator fun invoke (mtgDate: String): Flow<DataResult<RaceDayDto>> = flow {
+    operator fun invoke (mtgDate: String, mtgCode: String = ""): Flow<DataResult<RaceDayDto>> = flow {
         Log.d("TAG","GetFromApi.invoke()")
-        try {
-            emit(DataResult.Loading())
+        emit(DataResult.Loading())
 
-            // GET from the Api.
-            val rdDto = iRemoteRepo.getRaceDay(mtgDate).RaceDay
+        // GET from the Api (as NetworkResponse<BasteDto>).
+        val result = iRemoteRepo.getRaceDay(mtgDate, mtgCode)
 
-            emit(DataResult.Success(rdDto))
-
-        } catch(ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
+        if(result.failed) {
+            emit(DataResult.Error(
+                result.exception?.localizedMessage ?:
+                "[GetFromApi] Exception: An unexpected error occurred."))
+        } else if(!result.isSuccessful) {
+            emit(DataResult.Error(
+                "[GetFromApi] Not an exception, but an unexpected error occurred."))
+        } else {
+            emit(DataResult.Success(result.body.RaceDay))
         }
     }
 
-    /**
-     * @param mtgDate: The date to use in the Api Url.
-     * @param mtgCode: The meeting code to use in an extended version of the Api Url
-     * @return A Flow of DataResult<RaceDayDto>.
-     */
-    operator fun invoke (mtgDate: String, mtgCode: String): Flow<DataResult<RaceDayDto>> = flow {
-        try {
-            emit(DataResult.Loading())
-
-            // GET from the Api.
-            val rdDto = iRemoteRepo.getRaceDay(mtgDate, mtgCode).RaceDay
-
-            emit(DataResult.Success(rdDto))
-
-        } catch(ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
-        }
-    }
 }
