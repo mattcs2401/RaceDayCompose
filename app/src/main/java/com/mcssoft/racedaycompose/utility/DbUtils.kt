@@ -14,9 +14,8 @@ class DbUtils @Inject constructor(
         try {
             meeting = iDbRepo.getMeeting(mtgId)
 
-        } catch(ex: Exception) {
-            return DataResult.Error(ex.localizedMessage ?:
-                "DbUtils.getMeeting(): An unexpected error occurred.")
+        } catch(exception: Exception) {
+            return DataResult.Error(exception)
         }
         return DataResult.Success(meeting)
     }
@@ -25,9 +24,8 @@ class DbUtils @Inject constructor(
         val meetings: List<Meeting>
         try {
             meetings = iDbRepo.getMeetings()
-        } catch(ex: Exception) {
-            return DataResult.Error(ex.localizedMessage ?:
-                "DbUtils.getMeetings(): An unexpected error occurred.")
+        } catch(exception: Exception) {
+            return DataResult.Error(exception)
         }
         return DataResult.Success(meetings)
     }
@@ -37,9 +35,8 @@ class DbUtils @Inject constructor(
         try {
             races = iDbRepo.getRaces(mtgId)
 
-        } catch(ex: Exception) {
-            return DataResult.Error(ex.localizedMessage ?:
-                "DbUtils.getRaces(): An unexpected error occurred.")
+        } catch(exception: Exception) {
+            return DataResult.Error(exception)
         }
         return DataResult.Success(races)
     }

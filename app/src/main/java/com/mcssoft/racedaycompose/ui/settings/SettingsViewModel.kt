@@ -63,7 +63,11 @@ class SettingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _fromDbState.value =
-                        FromDbState(loading = false, error = result.message, preference = false)
+                        FromDbState(
+                            loading = false,
+                            error = result.exception?.localizedMessage ?:
+                                "An unknown error or exception occurred.",
+                            preference = false)
                 }
                 is DataResult.Success -> {
                     _fromDbState.value =
@@ -82,7 +86,11 @@ class SettingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _fromDbState.value =
-                        FromDbState(loading = false, error = result.message, preference = false)
+                        FromDbState(
+                            loading = false,
+                            error = result.exception?.localizedMessage ?:
+                                "An unknown error or exception occurred.",
+                            preference = false)
                 }
                 is DataResult.Success -> {
                     _fromDbState.value =
@@ -103,7 +111,11 @@ class SettingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _onlyAuNzState.value =
-                        OnlyAuNzState(loading = false, error = result.message, preference = false)
+                        OnlyAuNzState(
+                            loading = false,
+                            error = result.exception?.localizedMessage ?:
+                                "An unknown error or exception occurred.",
+                            preference = false)
                 }
                 is DataResult.Success -> {
                     _onlyAuNzState.value =
@@ -122,7 +134,11 @@ class SettingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _onlyAuNzState.value =
-                        OnlyAuNzState(loading = false, error = result.message, preference = false)
+                        OnlyAuNzState(
+                            loading = false,
+                            error = result.exception?.localizedMessage ?:
+                                "An unknown error or exception occurred.",
+                            preference = false)
                 }
                 is DataResult.Success -> {
                     _onlyAuNzState.value =

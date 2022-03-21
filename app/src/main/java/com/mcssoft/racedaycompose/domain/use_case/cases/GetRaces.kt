@@ -2,7 +2,6 @@ package com.mcssoft.racedaycompose.domain.use_case.cases
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DbUtils
 import kotlinx.coroutines.flow.Flow
@@ -27,16 +26,18 @@ class GetRaces @Inject constructor(
 
             when {
                 // An exception was thrown from DbUtils.
-                result.message != "" -> {
-                    emit(DataResult.Error(result.message))
+                result.failure -> {
+                    emit(DataResult.Error(
+                        result.exception ?:
+                        Exception("[GetRaces] An unknown error or exception occurred.")))
                 }
                 // All good.
                 else -> {
                     emit(DataResult.Success(result.data!!))
                 }
             }
-        } catch(ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?: "An unexpected error occurred."))
+        } catch(exception: Exception) {
+            emit(DataResult.Error(exception))
         }
     }
 

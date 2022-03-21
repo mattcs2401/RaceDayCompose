@@ -38,7 +38,8 @@ class RacesViewModel @Inject constructor(
                     _state.value.loading = true
                 }
                 is DataResult.Error -> {
-                    _state.value.error = result.message
+                    _state.value.error = result.exception?.localizedMessage ?:
+                        "An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 is DataResult.Success -> {
@@ -56,7 +57,8 @@ class RacesViewModel @Inject constructor(
                     _state.value.loading = true
                 }
                 is DataResult.Error -> {
-                    _state.value.error = result.message
+                    _state.value.error = result.exception?.localizedMessage ?:
+                        "An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 is DataResult.Success -> {

@@ -4,14 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.workDataOf
-import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.RaceDayApp
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
-import com.mcssoft.racedaycompose.data.repository.remote.RunnersWorker
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
@@ -73,7 +68,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState.failure(
-                        exception = Exception("[GetFromApi] ${result.message}"))
+                        exception = Exception("[GetFromApi] ${result.exception}"))
                 }
                 is DataResult.Success -> {
                     // Raw data has been fetched from the Api, so now save to database.
@@ -95,7 +90,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState.failure(
-                        exception = Exception("[SaveFromApi] ${result.message}"))
+                        exception = Exception("[SaveFromApi] ${result.exception}"))
                 }
                 is DataResult.Success -> {
                     // Data saved to database, so now get list of Meetings.
@@ -126,7 +121,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 is DataResult.Error -> {
                     _state.value = MeetingsState.failure(
-                        exception = Exception(result.message))
+                        exception = Exception(result.exception))
                 }
                 is DataResult.Success -> {
                     _state.value = MeetingsState.success(data = result.data ?: emptyList())

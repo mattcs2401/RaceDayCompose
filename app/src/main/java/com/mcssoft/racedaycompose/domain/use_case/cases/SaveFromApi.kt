@@ -44,9 +44,8 @@ class SaveFromApi @Inject constructor(
 
             emit(DataResult.Success(""))
 
-        } catch (ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?:
-                "[SaveFromApi] An unexpected error occurred (Meetings and Races)."))
+        } catch (exception: Exception) {
+            emit(DataResult.Error(exception))
         }
     }
 
@@ -65,9 +64,8 @@ class SaveFromApi @Inject constructor(
 
             }
 
-        } catch (ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?:
-                "[SaveFromApi] An unexpected error occurred (Runners)."))
+        } catch (exception: Exception) {
+            emit(DataResult.Error(exception))
         }
     }
 

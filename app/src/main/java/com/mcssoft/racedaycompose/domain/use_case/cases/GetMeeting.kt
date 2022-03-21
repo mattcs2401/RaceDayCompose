@@ -26,17 +26,18 @@ class GetMeeting @Inject constructor(
 
             when {
                 // An exception was thrown.
-                result.message != "" -> {
-                    emit(DataResult.Error(result.message))
+                result.failure -> {
+                    emit(DataResult.Error(
+                        result.exception ?:
+                        Exception("[GetMeeting] An unknown error or exception occurred.")))
                 }
                 // All good.
                 else -> {
                     emit(DataResult.Success(result.data!!))
                 }
             }
-        } catch(ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?:
-                "GetMeeting.invoke: An unexpected error occurred."))
+        } catch(exception: Exception) {
+            emit(DataResult.Error(exception))
         }
     }
 

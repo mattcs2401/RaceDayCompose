@@ -2,16 +2,15 @@ package com.mcssoft.racedaycompose.utility
 
 sealed class DataResult<T> (
     var data: T? = null,
-
-    // Default to an empty string so we can check if it was populated by an exception message or
-    // some some sort of informational message, e.g. nothing found.
-    val message: String = ""
+    val exception: Exception? = null
 ) {
     class Success<T>(data: T) : DataResult<T>(data)
 
-    class Error<T>(message: String, data: T? = null) : DataResult<T>(data, message)
+    class Error<T>(exception: java.lang.Exception, data: T? = null) : DataResult<T>(data, exception)
 
     class Loading<T>(data: T? = null) : DataResult<T>(data)
 
+    val failure: Boolean
+        get() = exception != null
 }
 

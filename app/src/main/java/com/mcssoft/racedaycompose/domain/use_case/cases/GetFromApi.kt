@@ -31,11 +31,11 @@ class GetFromApi @Inject constructor(
 
         if(result.failed) {
             emit(DataResult.Error(
-                result.exception?.localizedMessage ?:
-                "[GetFromApi] Exception: An unexpected error occurred."))
+                result.exception ?:
+                Exception("[GetFromApi] Exception: An unexpected error occurred.")))
         } else if(!result.isSuccessful) {
             emit(DataResult.Error(
-                "[GetFromApi] Not an exception, but an unexpected error occurred."))
+                Exception("[GetFromApi] Not an exception, but an unexpected error occurred.")))
         } else {
             emit(DataResult.Success(result.body.RaceDay))
         }

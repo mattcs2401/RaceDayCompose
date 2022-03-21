@@ -22,8 +22,8 @@ class SavePreferences @Inject constructor (
 
             emit(DataResult.Success(fromDb))
 
-        } catch(ex: Exception) {
-            emit(DataResult.Error(ex.localizedMessage ?: "An unknown error occurred."))
+        } catch(exception: Exception) {
+            emit(DataResult.Error(exception))
         }
     }
 
