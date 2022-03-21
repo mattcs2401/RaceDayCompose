@@ -24,20 +24,20 @@ class GetFromApi @Inject constructor(
      */
     operator fun invoke (mtgDate: String, mtgCode: String = ""): Flow<DataResult<RaceDayDto>> = flow {
         Log.d("TAG","GetFromApi.invoke()")
-        emit(DataResult.Loading())
+        emit(DataResult.loading())
 
         // GET from the Api (as NetworkResponse<BasteDto>).
         val result = iRemoteRepo.getRaceDay(mtgDate, mtgCode)
 
         if(result.failed) {
-            emit(DataResult.Error(
+            emit(DataResult.failure(
                 result.exception ?:
                 Exception("[GetFromApi] Exception: An unexpected error occurred.")))
         } else if(!result.isSuccessful) {
-            emit(DataResult.Error(
+            emit(DataResult.failure(
                 Exception("[GetFromApi] Not an exception, but an unexpected error occurred.")))
         } else {
-            emit(DataResult.Success(result.body.RaceDay))
+            emit(DataResult.success(result.body.RaceDay))
         }
     }
 

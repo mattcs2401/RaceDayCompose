@@ -25,7 +25,7 @@ class SaveFromApi @Inject constructor(
         Log.d("TAG","SaveFromApi.invoke()")
         try {
 
-            emit(DataResult.Loading())
+            emit(DataResult.loading())
 
             // Delete whatever is there (CASCADE should take care of Race/Runner etc).
             iDbRepo.deleteMeetings()
@@ -42,17 +42,17 @@ class SaveFromApi @Inject constructor(
                 populateRaces(mId, meetingDto.Races)
             }
 
-            emit(DataResult.Success(""))
+            emit(DataResult.success(""))
 
         } catch (exception: Exception) {
-            emit(DataResult.Error(exception))
+            emit(DataResult.failure(exception))
         }
     }
 
     operator fun invoke(raceDayDto: RaceDayDto): Flow<DataResult<String>> = flow {
         try {
 
-            emit(DataResult.Loading())
+            emit(DataResult.loading())
 
             val meetingDto = raceDayDto.Meetings[0]        // should only be one Meeting.
             val racesDto = meetingDto.Races
@@ -65,7 +65,7 @@ class SaveFromApi @Inject constructor(
             }
 
         } catch (exception: Exception) {
-            emit(DataResult.Error(exception))
+            emit(DataResult.failure(exception))
         }
     }
 

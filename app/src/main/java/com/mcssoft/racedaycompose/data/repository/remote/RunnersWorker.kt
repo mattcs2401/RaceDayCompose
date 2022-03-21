@@ -45,13 +45,15 @@ class RunnersWorker(
 
         codes?.forEach { code ->
             try {
-                when (val result = localGetFromApi(date!!, code)) {
-                    is DataResult.Loading -> {}
-                    is DataResult.Error -> {
+                val result = localGetFromApi(date!!, code)
+                when {
+                    result.loading -> {}
+                    result.failed -> {
                         dataResMsg =
-                            result.exception?.localizedMessage ?: "[RunnerWorker] An exception occurred in GetFromApi()."
+                            result.exception?.localizedMessage ?:
+                                "[RunnerWorker] An exception occurred in GetFromApi()."
                     }
-                    is DataResult.Success -> {
+                    result.successful -> {
                         val bp = "bp"
 //                        localSaveFromApi(result.data as RaceDayDto)
                     }
@@ -75,13 +77,13 @@ class RunnersWorker(
         var dataResMsg = ""
         try {
             useCases.getFromApi(date, code).onEach { result ->
-                when (result) {
-                    is DataResult.Loading -> {}
-                    is DataResult.Error -> {
+                when {
+                    result.loading -> {}
+                    result.failed -> {
                         dataResMsg =
                             result.exception?.localizedMessage ?: "[RunnerWorker] An exception occurred in GetFromApi()."
                     }
-                    is DataResult.Success -> {
+                    result.successful -> {
                         result.data?.let { dto -> localSaveFromApi(dto) }
                     }
                 }
@@ -89,12 +91,12 @@ class RunnersWorker(
         } catch(ex: Exception) {
             // An exception local to this method.
             val exMsg = ex.localizedMessage ?: "[RunnersWorker] An unknown exception occurred."
-            return DataResult.Error(Exception(exMsg))
+            return DataResult.failure(Exception(exMsg))
         }
-        if(dataResMsg != "") {
-            return DataResult.Error(Exception(dataResMsg))
+        return if(dataResMsg != "") {
+            DataResult.failure(Exception(dataResMsg))
         } else {
-            return DataResult.Success("")
+            DataResult.success("")
         }
     }
 
@@ -102,13 +104,14 @@ class RunnersWorker(
         var dataResMsg = ""
         try {
             useCases.saveFromApi(dto).onEach { result ->
-                when(result) {
-                    is DataResult.Loading -> { }
-                    is DataResult.Error -> {
+                when {
+                    result.loading -> { }
+                    result.failed -> {
                         dataResMsg =
-                            result.exception?.localizedMessage ?: "[RunnerWorker] An exception occurred in SaveFromApi()."
+                            result.exception?.localizedMessage ?:
+                                "[RunnerWorker] An exception occurred in SaveFromApi()."
                     }
-                    is DataResult.Success -> {
+                    result.successful -> {
 
                     }
                 }
@@ -116,12 +119,12 @@ class RunnersWorker(
         } catch(ex: Exception) {
             // An exception local to this method.
             val exMsg = ex.localizedMessage ?: "[RunnersWorker] An unknown exception occurred."
-            return DataResult.Error(Exception(exMsg))
+            return DataResult.failure(Exception(exMsg))
         }
         if(dataResMsg != "") {
-            return DataResult.Error(Exception(dataResMsg))
+            return DataResult.failure(Exception(dataResMsg))
         } else {
-            return DataResult.Success("")
+            return DataResult.success("")
         }
     }
 

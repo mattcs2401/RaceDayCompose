@@ -14,14 +14,14 @@ class GetPreferences @Inject constructor (
 ) {
     operator fun invoke(prefType: PreferenceType): Flow<DataResult<Any>> = flow {
         try {
-            emit(DataResult.Loading())
+            emit(DataResult.loading())
 
             val result = preferences.getPreference(prefType)
 
-            emit(DataResult.Success(result))
+            emit(DataResult.success(result))
 
         } catch(exception: Exception) {
-            emit(DataResult.Error(exception))
+            emit(DataResult.failure(exception))
         }
     }
 

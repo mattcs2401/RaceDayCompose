@@ -15,9 +15,9 @@ class DbUtils @Inject constructor(
             meeting = iDbRepo.getMeeting(mtgId)
 
         } catch(exception: Exception) {
-            return DataResult.Error(exception)
+            return DataResult.failure(exception)
         }
-        return DataResult.Success(meeting)
+        return DataResult.success(meeting)
     }
 
     suspend fun getMeetings(): DataResult<List<Meeting>> {
@@ -25,9 +25,9 @@ class DbUtils @Inject constructor(
         try {
             meetings = iDbRepo.getMeetings()
         } catch(exception: Exception) {
-            return DataResult.Error(exception)
+            return DataResult.failure(exception)
         }
-        return DataResult.Success(meetings)
+        return DataResult.success(meetings)
     }
 
     suspend fun getRaces(mtgId: Long): DataResult<List<Race>> {
@@ -36,9 +36,9 @@ class DbUtils @Inject constructor(
             races = iDbRepo.getRaces(mtgId)
 
         } catch(exception: Exception) {
-            return DataResult.Error(exception)
+            return DataResult.failure(exception)
         }
-        return DataResult.Success(races)
+        return DataResult.success(races)
     }
 
     // TODO - get Runners.

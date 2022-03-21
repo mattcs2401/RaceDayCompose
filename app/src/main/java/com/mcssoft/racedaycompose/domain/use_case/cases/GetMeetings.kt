@@ -21,7 +21,7 @@ class GetMeetings @Inject constructor(
         val result: DataResult<List<Meeting>>?
 
         try {
-            emit(DataResult.Loading())
+            emit(DataResult.loading())
 
             // Get from the flow.
             result = DbUtils(iDbRepo).getMeetings()
@@ -37,17 +37,17 @@ class GetMeetings @Inject constructor(
 
             when {
                 // An exception was thrown from DbUtils.
-                result.failure -> {
-                    emit(DataResult.Error(result.exception ?:
+                result.failed -> {
+                    emit(DataResult.failure(result.exception ?:
                     Exception("[GetMeetings] An unknown error or exception occurred.")))
                 }
                 // All good.
                 else -> {
-                    emit(DataResult.Success(result.data!!))
+                    emit(DataResult.success(result.body))
                 }
             }
         } catch(exception: Exception) {
-            emit(DataResult.Error(exception))
+            emit(DataResult.failure(exception))
         }
     }
 

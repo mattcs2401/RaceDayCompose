@@ -33,16 +33,16 @@ class RacesViewModel @Inject constructor(
 
     private fun getRaces(mId: Long) {
         raceDayUseCases.getRaces(mId).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _state.value.loading = true
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _state.value.error = result.exception?.localizedMessage ?:
                         "An unknown error or exception occurred."
                     _state.value.loading = false
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _state.value.races = result.data ?: emptyList()
                     _state.value.loading = false
                 }
@@ -52,16 +52,16 @@ class RacesViewModel @Inject constructor(
 
     private fun getMeeting(mId: Long) {
         raceDayUseCases.getMeeting(mId).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _state.value.loading = true
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _state.value.error = result.exception?.localizedMessage ?:
                         "An unknown error or exception occurred."
                     _state.value.loading = false
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _state.value.meeting = result.data
                     _state.value.loading = false
                 }

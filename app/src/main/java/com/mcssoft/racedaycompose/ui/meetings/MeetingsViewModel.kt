@@ -62,15 +62,15 @@ class MeetingsViewModel @Inject constructor(
      */
     private fun getFromApi(date: String) {
         raceDayUseCases.getFromApi(date).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _state.value = MeetingsState.loading()
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _state.value = MeetingsState.failure(
                         exception = Exception("[GetFromApi] ${result.exception}"))
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     // Raw data has been fetched from the Api, so now save to database.
                     saveFromApi(result.data!!, MEETING_TYPE)
                 }
@@ -84,15 +84,15 @@ class MeetingsViewModel @Inject constructor(
      */
     private fun saveFromApi(raceDayDto: RaceDayDto, mtgType: String) {
         raceDayUseCases.saveFromApi(raceDayDto, mtgType).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _state.value = MeetingsState.loading()
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _state.value = MeetingsState.failure(
                         exception = Exception("[SaveFromApi] ${result.exception}"))
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     // Data saved to database, so now get list of Meetings.
                     val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
 
@@ -115,15 +115,15 @@ class MeetingsViewModel @Inject constructor(
      */
     private fun getMeetings(onlyAuNz: Boolean) {
         raceDayUseCases.getMeetings(onlyAuNz).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _state.value = MeetingsState.loading()
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _state.value = MeetingsState.failure(
                         exception = Exception(result.exception))
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _state.value = MeetingsState.success(data = result.data ?: emptyList())
                 }
             }

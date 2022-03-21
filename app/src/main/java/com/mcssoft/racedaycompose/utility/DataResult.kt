@@ -1,16 +1,52 @@
 package com.mcssoft.racedaycompose.utility
 
-sealed class DataResult<T> (
+data class DataResult<T>(
+    val status: Status? = null,
     var data: T? = null,
     val exception: Exception? = null
 ) {
-    class Success<T>(data: T) : DataResult<T>(data)
+    companion object {
+        fun <T> success(data: T): DataResult<T> {
+            return DataResult(
+                status = Status.Success,
+                data = data,
+                exception = null
+            )
+        }
 
-    class Error<T>(exception: java.lang.Exception, data: T? = null) : DataResult<T>(data, exception)
+        fun <T> failure(exception: Exception): DataResult<T> {
+            return DataResult(
+                status = Status.Failure,
+                data = null,
+                exception = exception
+            )
+        }
 
-    class Loading<T>(data: T? = null) : DataResult<T>(data)
+        fun <T> loading(): DataResult<T> {
+            return DataResult(
+                status = Status.Loading,
+                data = null,
+                exception = null
+            )
+        }
+    }
 
-    val failure: Boolean
+    sealed class Status {
+        object Success : DataResult.Status()
+        object Failure : DataResult.Status()
+        object Loading : DataResult.Status()
+    }
+
+    val loading: Boolean
+        get() = this.status == Status.Loading
+
+    val failed: Boolean
         get() = exception != null
+
+    val successful: Boolean
+        get() = !failed && this.data != null
+
+    val body: T
+        get() = this.data!!
 }
 

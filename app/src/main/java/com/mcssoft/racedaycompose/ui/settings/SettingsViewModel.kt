@@ -56,12 +56,12 @@ class SettingsViewModel @Inject constructor(
     //<editor-fold default state="collapsed" desc="Region: FromDb preference">
     private fun getFromDbPref(prefType: PreferenceType.FromDbPref) {
         raceDayUseCases.getPreferences(prefType).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _fromDbState.value =
                         FromDbState(loading = true, error = "", preference = false)
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _fromDbState.value =
                         FromDbState(
                             loading = false,
@@ -69,7 +69,7 @@ class SettingsViewModel @Inject constructor(
                                 "An unknown error or exception occurred.",
                             preference = false)
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _fromDbState.value =
                         FromDbState(loading = false, error = "", preference = result.data as Boolean)
                 }
@@ -79,12 +79,12 @@ class SettingsViewModel @Inject constructor(
 
     private fun saveFromDbPref(prefType: PreferenceType.FromDbPref, fromDb: Boolean) {
         raceDayUseCases.savePreferences(prefType, fromDb).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _fromDbState.value =
                         FromDbState(loading = true, error = "", preference = false)
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _fromDbState.value =
                         FromDbState(
                             loading = false,
@@ -92,7 +92,7 @@ class SettingsViewModel @Inject constructor(
                                 "An unknown error or exception occurred.",
                             preference = false)
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _fromDbState.value =
                         FromDbState(loading = false, error = "", preference = result.data as Boolean)
                 }
@@ -104,12 +104,12 @@ class SettingsViewModel @Inject constructor(
     //<editor-fold default state="collapsed" desc="Region: OnlyAuNz preference">
     private fun getOnlyAuNzPref(prefType: PreferenceType.OnlyAuNzPref) {
         raceDayUseCases.getPreferences(prefType).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(loading = true, error = "", preference = false)
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(
                             loading = false,
@@ -117,7 +117,7 @@ class SettingsViewModel @Inject constructor(
                                 "An unknown error or exception occurred.",
                             preference = false)
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(loading = false, error = "", preference = result.data as Boolean)
                 }
@@ -127,12 +127,12 @@ class SettingsViewModel @Inject constructor(
 
     private fun saveOnlyAuNzPref(prefType: PreferenceType.OnlyAuNzPref, onlyAuNz: Boolean) {
         raceDayUseCases.savePreferences(prefType, onlyAuNz).onEach { result ->
-            when(result) {
-                is DataResult.Loading -> {
+            when {
+                result.loading -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(loading = true, error = "", preference = false)
                 }
-                is DataResult.Error -> {
+                result.failed -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(
                             loading = false,
@@ -140,7 +140,7 @@ class SettingsViewModel @Inject constructor(
                                 "An unknown error or exception occurred.",
                             preference = false)
                 }
-                is DataResult.Success -> {
+                result.successful -> {
                     _onlyAuNzState.value =
                         OnlyAuNzState(loading = false, error = "", preference = result.data as Boolean)
                 }

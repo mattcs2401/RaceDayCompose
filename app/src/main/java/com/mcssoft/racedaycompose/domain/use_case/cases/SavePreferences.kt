@@ -16,14 +16,14 @@ class SavePreferences @Inject constructor (
      */
     operator fun invoke(prefType: PreferenceType, fromDb: Boolean): Flow<DataResult<Any>> = flow {
         try {
-            emit(DataResult.Loading())
+            emit(DataResult.loading())
 
             preferences.setPreference(prefType, fromDb)
 
-            emit(DataResult.Success(fromDb))
+            emit(DataResult.success(fromDb))
 
         } catch(exception: Exception) {
-            emit(DataResult.Error(exception))
+            emit(DataResult.failure(exception))
         }
     }
 
