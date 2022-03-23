@@ -30,6 +30,16 @@ class DbUtils @Inject constructor(
         return DataResult.success(meetings)
     }
 
+    suspend fun getMeetingCodes(): DataResult<List<String>> {
+        val codes: List<String>
+        try {
+            codes = iDbRepo.getMeetingCodes()
+        } catch(exception: Exception) {
+            return DataResult.failure(exception)
+        }
+        return DataResult.success(codes)
+    }
+
     suspend fun getRaces(mtgId: Long): DataResult<List<Race>> {
         val races: List<Race>
         try {

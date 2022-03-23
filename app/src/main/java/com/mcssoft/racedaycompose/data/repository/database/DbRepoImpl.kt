@@ -2,6 +2,7 @@ package com.mcssoft.racedaycompose.data.repository.database
 
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
+import com.mcssoft.racedaycompose.domain.model.Runner
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -21,13 +22,13 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetings()
     }
 
+    override suspend fun getMeetingId(mId: Int): Long {
+        return dao.getMeetingId(mId)
+    }
+
     override suspend fun getMeetingCodes(): List<String> {
         return dao.getMeetingCodes()
     }
-
-//    override suspend fun getMeetings(code: String): List<Meeting> {
-//        return  dao.getMeetings()
-//    }
 
     override suspend fun deleteMeetings() {
         return dao.deleteMeetings()
@@ -45,6 +46,20 @@ class DbRepoImpl @Inject constructor(
 
     override suspend fun getRaces(mtgId: Long): List<Race> {
         return dao.getRaces(mtgId)
+    }
+
+    override suspend fun getRaceId(mtgId: Long, raceNo: Int): Long {
+        return dao.getRaceId(mtgId, raceNo)
+    }
+    //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Runner related.">
+    override suspend fun insertRunners(runners: List<Runner>): List<Long> {
+        return dao.insertRunners(runners)
+    }
+
+    override suspend fun getRunners(rId: Long): List<Runner> {
+        return dao.getRunners(rId)
     }
 
     //</editor-fold>

@@ -2,9 +2,7 @@ package com.mcssoft.racedaycompose.hilt_di
 
 import android.app.Application
 import android.content.Context
-import androidx.compose.ui.res.stringResource
 import androidx.room.Room
-import androidx.work.WorkManager
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
@@ -15,7 +13,6 @@ import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.*
-import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.DateUtils
 import com.mcssoft.racedaycompose.utility.DbUtils
 import dagger.Module
@@ -94,6 +91,7 @@ object AppModule {
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
             getRunners = GetRunners(local),
+            saveRunners = SaveRunners(remote, local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs)
         )
@@ -105,9 +103,4 @@ object AppModule {
         return DbUtils(local)
     }
 
-    @Provides
-    @Singleton
-    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
-        return WorkManager.getInstance(context)
-    }
 }

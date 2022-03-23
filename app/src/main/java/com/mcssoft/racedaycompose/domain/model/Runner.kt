@@ -15,9 +15,10 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["raceId"])])
 data class Runner(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    val _id: Long = 0,
     
     val raceId: Long = 0,                   // foreign key.
+
     val barrier: Int = 0,
     val form: String = "",
     val lastThreeStarts: String = "",

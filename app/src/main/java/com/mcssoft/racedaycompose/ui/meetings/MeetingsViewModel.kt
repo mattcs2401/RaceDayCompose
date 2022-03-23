@@ -4,14 +4,16 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.mcssoft.racedaycompose.RaceDayApp
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
-import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.DateUtils
+import com.mcssoft.racedaycompose.utility.RunnerWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
-    private val prefs: IPreferences,
-    private val workerManager: WorkManager
+    private val prefs: IPreferences
 ) : ViewModel() {
     /*
       Notes: Couldn't seem to get a Context object in here. Keep getting a "leaks a Context object"
@@ -34,13 +35,19 @@ class MeetingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val date = DateUtils().getDateToday()
             val fromDbPref = prefs.getPreference(PreferenceType.FromDbPref) as Boolean
             if(fromDbPref) {
                 val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
                 getMeetings(onlyAuNzPref)
             } else {
-                val date = DateUtils().getDateToday()
+                // Get the initial load from the Api (Meetings/Races).
                 getFromApi(date)
+                // Get the associated Runners from the Api.
+                saveRunners(date)
+//                // Start the process to get all the Runner detail from the Api, and save to the
+//                // database.
+//                execRunnersWorker()
             }
        }
     }
@@ -99,10 +106,10 @@ class MeetingsViewModel @Inject constructor(
                     // Get the list of Meetings to display. Associated Races are already populated.
                     getMeetings(onlyAuNzPref)
 
-                    // Start the process to get all the Runner detail from the Api, and save to the
-                    // database.
-                    val date = DateUtils().getDateToday()
-                    //execRunnersWorker(date)
+//                    // Start the process to get all the Runner detail from the Api, and save to the
+//                    // database.
+//                    val date = DateUtils().getDateToday()
+//                    execRunnersWorker(date)
                 }
             }
         }.launchIn(viewModelScope)
@@ -130,17 +137,22 @@ class MeetingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun execRunnersWorker(date: String) {
-//        val codes =
-//        _state.value.data.forEach { meeting ->
-//            meeting.meetingCode
-//        }
-//        val data = workDataOf(
-//            RaceDayApp.context.resources.getString(R.string.key_meeting_date) to date,
-//            RaceDayApp.context.resources.getString(R.string.key_meeting_codes) to codes)
-//        val worker = OneTimeWorkRequestBuilder<RunnersWorker>()
-//            .setInputData(data)
-//            .build()
-//        workerManager.enqueue(worker)
+    private fun saveRunners(date: String) {
+        raceDayUseCases.saveRunners(date).onEach { result ->
+            when {
+                result.loading -> {}
+                result.failed -> {}
+                result.successful -> {}
+            }
+        }.launchIn(viewModelScope)
     }
+
+//    private fun execRunnersWorker() {
+//        val workManager = WorkManager.getInstance(RaceDayApp.context)
+//        val worker = OneTimeWorkRequestBuilder<RunnerWorker>()
+//            .addTag("RunnersWorker")
+//            //.setInputData(workData)
+//            .build()
+//        workManager.enqueue(worker)
+//    }
 }
