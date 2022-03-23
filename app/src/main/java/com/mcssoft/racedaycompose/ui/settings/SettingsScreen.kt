@@ -39,10 +39,13 @@ fun SettingsScreen(navController: NavController,
             TopBar(
                 title = stringResource(id = R.string.label_preferences),
                 MaterialTheme.colors.primary,
-                onBackPressed = { navController.navigate(
-                    ScreenRoute.MeetingsScreen.route /* + "key=${value}"*/) {
-                    popUpTo(ScreenRoute.MeetingsScreen.route) { inclusive = true }
-                }},
+                onBackPressed = {
+                    navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                        popUpTo(ScreenRoute.MeetingsScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
                 Icons.Filled.ArrowBack
             )
         },

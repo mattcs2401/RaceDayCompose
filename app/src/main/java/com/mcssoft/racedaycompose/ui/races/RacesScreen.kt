@@ -43,11 +43,13 @@ fun RacesScreen(navController: NavController,
              TopBar(
                  title = stringResource(id = R.string.label_races),
                  MaterialTheme.colors.primary,
-                 onBackPressed = { navController.navigate(ScreenRoute.MeetingsScreen.route) {
-                     popUpTo(ScreenRoute.MeetingsScreen.route) {
-                         inclusive = true
+                 onBackPressed = {
+                     navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                         popUpTo(ScreenRoute.MeetingsScreen.route) {
+                             inclusive = true
+                         }
                      }
-                 } },
+                 },
                  Icons.Filled.ArrowBack
              )
         },
@@ -57,14 +59,21 @@ fun RacesScreen(navController: NavController,
             .fillMaxSize()
             .background(MaterialTheme.colors.secondary)) {
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp)
+            ) {
+                state.meeting?.let { meeting ->
+                    MeetingHeader(meeting = meeting, MaterialTheme.colors.background) }
+            }
+
+            LazyColumn(modifier = Modifier.fillMaxSize() .padding(top = 64.dp)) {
                 items(
                     items = state.races
                 ) { race ->
                     RaceItem(
                         race = race,
                         onItemClick = {
-                            Toast.makeText(RaceDayApp.context, "Race no ${race.raceNumber} selected.", Toast.LENGTH_SHORT).show()
                             navController.navigate(
                                 ScreenRoute.RunnersScreen.route + "raceId=${race._id}"
                             )

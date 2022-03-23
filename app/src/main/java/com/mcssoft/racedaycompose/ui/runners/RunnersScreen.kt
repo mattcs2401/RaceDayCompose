@@ -45,11 +45,13 @@ fun RunnersScreen(
             TopBar(
                 title = stringResource(id = R.string.label_runners),
                 MaterialTheme.colors.primary,
-                onBackPressed = { navController.navigate(ScreenRoute.RacesScreen.route) {
-//                    popUpTo(ScreenRoute.RacesScreen.route) {
-//                        inclusive = true
-//                    }
-                } },
+                onBackPressed = {
+                    navController.navigate(ScreenRoute.RacesScreen.route + "meetingId=${0}") {
+                        popUpTo(ScreenRoute.RacesScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
                 Icons.Filled.ArrowBack
             )
         },

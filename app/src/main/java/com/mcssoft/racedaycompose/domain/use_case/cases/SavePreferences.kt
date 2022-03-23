@@ -12,15 +12,28 @@ class SavePreferences @Inject constructor (
 ) {
     /**
      * Save the FromDb preference to the datastore.
-     * @param fromDb: The value to save.
+     * @param value: The value to save.
      */
-    operator fun invoke(prefType: PreferenceType, fromDb: Boolean): Flow<DataResult<Any>> = flow {
+    operator fun invoke(prefType: PreferenceType, value: Boolean): Flow<DataResult<Any>> = flow {
         try {
             emit(DataResult.loading())
 
-            preferences.setPreference(prefType, fromDb)
+            preferences.setPreference(prefType, value)
 
-            emit(DataResult.success(fromDb))
+            emit(DataResult.success(value))
+
+        } catch(exception: Exception) {
+            emit(DataResult.failure(exception))
+        }
+    }
+
+    operator fun invoke(prefType: PreferenceType, value: Long): Flow<DataResult<Any>> = flow {
+        try {
+            emit(DataResult.loading())
+
+            preferences.setPreference(prefType, value)
+
+            emit(DataResult.success(value))
 
         } catch(exception: Exception) {
             emit(DataResult.failure(exception))

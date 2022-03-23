@@ -6,7 +6,7 @@ sealed class ScreenRoute(val route: String) {
 
     object RacesScreen: ScreenRoute("races_screen")
 
-    object RunnersScreen: ScreenRoute("runners_screen")    // TBA.
+    object RunnersScreen: ScreenRoute("runners_screen")
 
     object SummaryScreen: ScreenRoute("summary_screen")    // TBA.
 

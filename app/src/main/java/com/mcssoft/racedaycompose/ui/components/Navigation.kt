@@ -36,6 +36,7 @@ fun Navigation() {
             route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType
+                defaultValue = -1
             })
         ) {
             RacesScreen(
@@ -46,6 +47,7 @@ fun Navigation() {
             route = ScreenRoute.RunnersScreen.route + "raceId={raceId}",
             arguments = listOf(navArgument("raceId") {
                 type = NavType.LongType
+                defaultValue = -1
             })
         ) {
             RunnersScreen(

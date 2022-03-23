@@ -15,4 +15,5 @@ data class RacesState(
     var error: String = "",                 // a string for error messages.
     var races: List<Race> = emptyList(),    // the list of Races.
     var meeting: Meeting? = null,           // the Meeting associated with the Races listing.
+    var meetingId: Long = 0                 // the id of the Meeting (saved to preferences).
 )

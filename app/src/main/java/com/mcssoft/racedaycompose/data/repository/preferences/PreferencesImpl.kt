@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mcssoft.racedaycompose.R
 import kotlinx.coroutines.flow.first
@@ -25,6 +26,8 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
         booleanPreferencesKey(context.resources.getString(R.string.pref_from_db_key))
     private val onlyAuNzKey =
         booleanPreferencesKey(context.resources.getString(R.string.pref_only_aunz_key))
+    private val meetingIdKey =
+        longPreferencesKey(context.resources.getString(R.string.setting_meeting_id_key))
 
     /**
      *
@@ -36,6 +39,9 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
             }
             is PreferenceType.OnlyAuNzPref -> {
                 getOnlyAuNzPref()
+            }
+            is PreferenceType.MeetingId -> {
+                getMeetingId()
             }
         }
     }
@@ -50,6 +56,9 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
             }
             is PreferenceType.OnlyAuNzPref -> {
                 setOnlyAuNzPref(value as Boolean)
+            }
+            is PreferenceType.MeetingId -> {
+                setMeetingId(value as Long)
             }
         }
     }
@@ -89,7 +98,17 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
             preferences[onlyAuNzKey] = value
         }
     }
-
     //</editor-fold>
 
+    //<editor-fold default state="collapsed" desc="Region: App settings">
+    private suspend fun setMeetingId(value: Long) {
+        dsPrefs.edit { preferences ->
+            preferences[meetingIdKey] = value
+        }
+    }
+
+    private suspend fun getMeetingId(): Long {
+        return dsPrefs.data.first()[meetingIdKey] ?: -1
+    }
+    //</editor-fold>
 }
