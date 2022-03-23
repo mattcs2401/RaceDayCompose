@@ -87,6 +87,9 @@ interface IDbRepo {
     @Query("select * from race where mtgId= :mtgId")
     suspend fun getRaces(mtgId: Long): List<Race>
 
+    @Query("select * from Race where _id= :rId")
+    suspend fun getRace(rId: Long): Race
+
     /**
      * Get the id (database row id) of a Race based on the (foreign key) Meeting id and Race number.
      * @param mtgId: The Meeting id (database row number).
@@ -95,7 +98,6 @@ interface IDbRepo {
      */
     @Query("select _id from Race where mtgId= :mtgId and raceNumber= :raceNo")
     suspend fun getRaceId(mtgId: Long, raceNo: Int): Long
-
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: Runner related.">
@@ -112,7 +114,7 @@ interface IDbRepo {
      * @param rId: The Race id (database row id).
      * @return A list of Runners.
      */
-    @Query("select * from Runner where raceId= :rId")
-    suspend fun getRunners(rId: Long): List<Runner>
+    @Query("select * from Runner where raceId= :raceId")
+    suspend fun getRunners(raceId: Long): List<Runner>
     //</editor-fold>
 }

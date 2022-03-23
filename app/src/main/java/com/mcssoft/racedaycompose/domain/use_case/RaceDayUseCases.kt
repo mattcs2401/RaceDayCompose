@@ -29,5 +29,7 @@ data class RaceDayUseCases(
     val getPreferences: GetPreferences,
 
     // Save Settings.
-    val savePreferences: SavePreferences
+    val savePreferences: SavePreferences,
+
+    val getRace: GetRace
 )

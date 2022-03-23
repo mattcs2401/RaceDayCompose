@@ -90,6 +90,7 @@ object AppModule {
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
+            getRace = GetRace(local),
             getRunners = GetRunners(local),
             saveRunners = SaveRunners(remote, local),
             getPreferences = GetPreferences(prefs),

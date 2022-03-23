@@ -48,6 +48,10 @@ class DbRepoImpl @Inject constructor(
         return dao.getRaces(mtgId)
     }
 
+    override suspend fun getRace(rId: Long): Race {
+        return dao.getRace(rId)
+    }
+
     override suspend fun getRaceId(mtgId: Long, raceNo: Int): Long {
         return dao.getRaceId(mtgId, raceNo)
     }

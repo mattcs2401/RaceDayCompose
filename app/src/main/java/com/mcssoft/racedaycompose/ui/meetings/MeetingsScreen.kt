@@ -63,7 +63,7 @@ fun MeetingsScreen(navController: NavController,
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
-                    items = state.body// .data
+                    items = state.body
                 ) { meeting ->
                     MeetingItem(
                         meeting = meeting,

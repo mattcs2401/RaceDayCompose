@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsScreen
 import com.mcssoft.racedaycompose.ui.races.RacesScreen
+import com.mcssoft.racedaycompose.ui.runners.RunnersScreen
 import com.mcssoft.racedaycompose.ui.settings.SettingsScreen
 import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 
@@ -38,6 +39,16 @@ fun Navigation() {
             })
         ) {
             RacesScreen(
+                navController = navController
+            )
+        }
+        composable(
+            route = ScreenRoute.RunnersScreen.route + "raceId={raceId}",
+            arguments = listOf(navArgument("raceId") {
+                type = NavType.LongType
+            })
+        ) {
+            RunnersScreen(
                 navController = navController
             )
         }
