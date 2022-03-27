@@ -14,7 +14,6 @@ import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.utility.DateUtils
-import com.mcssoft.racedaycompose.utility.DbUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -96,12 +95,6 @@ object AppModule {
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs)
         )
-    }
-
-    @Provides
-    @Singleton
-    fun provideDbUtils(local: IDbRepo): DbUtils {
-        return DbUtils(local)
     }
 
 }

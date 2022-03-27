@@ -1,10 +1,12 @@
 package com.mcssoft.racedaycompose.ui.components
 
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavController
 
 /**
  * Implement a custom TopAppBar component.

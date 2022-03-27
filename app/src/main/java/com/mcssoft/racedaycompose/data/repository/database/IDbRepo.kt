@@ -111,7 +111,7 @@ interface IDbRepo {
 
     /**
      * Get a list of Runners based on the id of the associated Race.
-     * @param rId: The Race id (database row id).
+     * @param raceId: The Race id (database row id).
      * @return A list of Runners.
      */
     @Query("select * from Runner where raceId= :raceId")

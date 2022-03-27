@@ -4,16 +4,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.mcssoft.racedaycompose.RaceDayApp
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
-import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
+import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.dto.RaceDayDto
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants.MEETING_TYPE
 import com.mcssoft.racedaycompose.utility.DateUtils
-import com.mcssoft.racedaycompose.utility.RunnerWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,8 +22,10 @@ class MeetingsViewModel @Inject constructor(
     private val prefs: IPreferences
 ) : ViewModel() {
     /*
-      Notes: Couldn't seem to get a Context object in here. Keep getting a "leaks a Context object"
-             warning.
+      ------
+      Notes:
+      ------
+      Couldn't seem to get a Context object in here. Keep getting "leaks a Context object" warning.
      */
 
     private val _state = mutableStateOf(MeetingsState.initialise())
@@ -36,18 +34,15 @@ class MeetingsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val date = DateUtils().getDateToday()
-            val fromDbPref = prefs.getPreference(PreferenceType.FromDbPref) as Boolean
+            val fromDbPref = prefs.getPreference(Preference.FromDbPref) as Boolean
             if(fromDbPref) {
-                val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
+                val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
                 getMeetings(onlyAuNzPref)
             } else {
                 // Get the initial load from the Api (Meetings/Races).
                 getFromApi(date)
                 // Get the associated Runners from the Api.
                 saveRunners(date)
-//                // Start the process to get all the Runner detail from the Api, and save to the
-//                // database.
-//                execRunnersWorker()
             }
        }
     }
@@ -101,7 +96,7 @@ class MeetingsViewModel @Inject constructor(
                 }
                 result.successful -> {
                     // Data saved to database, so now get list of Meetings.
-                    val onlyAuNzPref = prefs.getPreference(PreferenceType.OnlyAuNzPref) as Boolean
+                    val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
 
                     // Get the list of Meetings to display. Associated Races are already populated.
                     getMeetings(onlyAuNzPref)
@@ -147,12 +142,4 @@ class MeetingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-//    private fun execRunnersWorker() {
-//        val workManager = WorkManager.getInstance(RaceDayApp.context)
-//        val worker = OneTimeWorkRequestBuilder<RunnerWorker>()
-//            .addTag("RunnersWorker")
-//            //.setInputData(workData)
-//            .build()
-//        workManager.enqueue(worker)
-//    }
 }

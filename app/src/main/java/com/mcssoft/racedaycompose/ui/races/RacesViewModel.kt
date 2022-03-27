@@ -2,15 +2,12 @@ package com.mcssoft.racedaycompose.ui.races
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
+import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants
-import com.mcssoft.racedaycompose.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,22 +24,24 @@ class RacesViewModel @Inject constructor(
 
     init {
         /*
+          ------
           Notes:
+          ------
           The Races screen expects a "meetingId" (supplied in the navigation from the MeetingsScreen
-          to the RunnersScreen). However, when navigating back from the Runners screen, we have to
-          supply something ?? A navigation default value can't be used as the meetingId is only
-          known at runtime.
+          to the RacesScreen). However, when navigating back from the Runners screen, we have to
+          supply a "dummy". A navigation default value can't be used as the meetingId is only known
+          at runtime.
          */
-        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { meetingId ->
-            if(meetingId > 0) {
-                // Save the Meeting id to the preferences.
-                saveMeetingId(PreferenceType.MeetingId, meetingId)
+        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mtgId ->
+            if(mtgId > 0) {
+                // Save the Meeting id to the preferences (for back nav from Runners screen).
+                saveMeetingId(Preference.MeetingId, mtgId)
                 // Get Meeting and Races values for the screen.
-                getMeeting(meetingId)
-                getRaces(meetingId)
+                getMeeting(mtgId)
+                getRaces(mtgId)
             } else {
                 // Get the Meeting id from the preferences.
-                getMeetingId(PreferenceType.MeetingId)
+                getMeetingId(Preference.MeetingId)
                 // Meeting id is returned in the state.
                 val mId = _state.value.meetingId
                 // Get Meeting and Races values for the screen.
@@ -90,8 +89,8 @@ class RacesViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun saveMeetingId(prefType: PreferenceType.MeetingId, meetingId: Long) {
-        raceDayUseCases.savePreferences(prefType, meetingId).onEach { result ->
+    private fun saveMeetingId(pref: Preference.MeetingId, meetingId: Long) {
+        raceDayUseCases.savePreferences(pref, meetingId).onEach { result ->
             when {
                 result.loading -> {}
                 result.failed -> {
@@ -106,8 +105,8 @@ class RacesViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getMeetingId(prefType: PreferenceType.MeetingId) {
-        raceDayUseCases.getPreferences(prefType).onEach { result ->
+    private fun getMeetingId(pref: Preference.MeetingId) {
+        raceDayUseCases.getPreferences(pref).onEach { result ->
             when {
                 result.loading -> {}
                 result.failed -> {

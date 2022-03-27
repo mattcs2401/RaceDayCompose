@@ -4,9 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaycompose.data.repository.preferences.PreferenceType
+import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.utility.DataResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,16 +29,16 @@ class SettingsViewModel @Inject constructor(
     fun onEvent(event: SettingsEvent) {
         when(event) {
             is SettingsEvent.GetFromDbPref -> {
-                getFromDbPref(PreferenceType.FromDbPref)
+                getFromDbPref(Preference.FromDbPref)
             }
             is SettingsEvent.SaveFromDbPref -> {
-                saveFromDbPref(PreferenceType.FromDbPref, event.fromDb)
+                saveFromDbPref(Preference.FromDbPref, event.fromDb)
             }
             is SettingsEvent.GetOnlyAuNzPref -> {
-                getOnlyAuNzPref(PreferenceType.OnlyAuNzPref)
+                getOnlyAuNzPref(Preference.OnlyAuNzPref)
             }
             is SettingsEvent.SaveOnlyAuNzPref -> {
-                saveOnlyAuNzPref(PreferenceType.OnlyAuNzPref, event.onlyAuNz)
+                saveOnlyAuNzPref(Preference.OnlyAuNzPref, event.onlyAuNz)
             }
         }
     }
@@ -48,14 +47,14 @@ class SettingsViewModel @Inject constructor(
      * Set the values for the preferences state.
      */
     private fun initialise() {
-        getFromDbPref(PreferenceType.FromDbPref)
-        getOnlyAuNzPref(PreferenceType.OnlyAuNzPref)
+        getFromDbPref(Preference.FromDbPref)
+        getOnlyAuNzPref(Preference.OnlyAuNzPref)
         // TBA others ?
     }
 
     //<editor-fold default state="collapsed" desc="Region: FromDb preference">
-    private fun getFromDbPref(prefType: PreferenceType.FromDbPref) {
-        raceDayUseCases.getPreferences(prefType).onEach { result ->
+    private fun getFromDbPref(pref: Preference.FromDbPref) {
+        raceDayUseCases.getPreferences(pref).onEach { result ->
             when {
                 result.loading -> {
                     _fromDbState.value =
@@ -77,8 +76,8 @@ class SettingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun saveFromDbPref(prefType: PreferenceType.FromDbPref, fromDb: Boolean) {
-        raceDayUseCases.savePreferences(prefType, fromDb).onEach { result ->
+    private fun saveFromDbPref(pref: Preference.FromDbPref, fromDb: Boolean) {
+        raceDayUseCases.savePreferences(pref, fromDb).onEach { result ->
             when {
                 result.loading -> {
                     _fromDbState.value =
@@ -102,8 +101,8 @@ class SettingsViewModel @Inject constructor(
     //</editor-fold>
 
     //<editor-fold default state="collapsed" desc="Region: OnlyAuNz preference">
-    private fun getOnlyAuNzPref(prefType: PreferenceType.OnlyAuNzPref) {
-        raceDayUseCases.getPreferences(prefType).onEach { result ->
+    private fun getOnlyAuNzPref(pref: Preference.OnlyAuNzPref) {
+        raceDayUseCases.getPreferences(pref).onEach { result ->
             when {
                 result.loading -> {
                     _onlyAuNzState.value =
@@ -125,8 +124,8 @@ class SettingsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun saveOnlyAuNzPref(prefType: PreferenceType.OnlyAuNzPref, onlyAuNz: Boolean) {
-        raceDayUseCases.savePreferences(prefType, onlyAuNz).onEach { result ->
+    private fun saveOnlyAuNzPref(pref: Preference.OnlyAuNzPref, onlyAuNz: Boolean) {
+        raceDayUseCases.savePreferences(pref, onlyAuNz).onEach { result ->
             when {
                 result.loading -> {
                     _onlyAuNzState.value =

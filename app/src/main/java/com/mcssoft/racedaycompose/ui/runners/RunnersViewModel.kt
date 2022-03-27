@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.ui.races.RacesState
 import com.mcssoft.racedaycompose.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -37,7 +36,7 @@ class RunnersViewModel @Inject constructor(
                 }
                 result.failed -> {
                     _state.value.error = result.exception?.localizedMessage ?:
-                            "An unknown error or exception occurred."
+                            "[getRace] An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 result.successful -> {
@@ -56,7 +55,7 @@ class RunnersViewModel @Inject constructor(
                 }
                 result.failed -> {
                     _state.value.error = result.exception?.localizedMessage ?:
-                            "An unknown error or exception occurred."
+                            "[getRunners] An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 result.successful -> {

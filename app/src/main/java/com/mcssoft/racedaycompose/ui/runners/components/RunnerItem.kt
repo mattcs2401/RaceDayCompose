@@ -5,15 +5,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.domain.model.Runner
-import com.mcssoft.racedaycompose.utility.DateUtils
 
 @Composable
 fun RunnerItem(

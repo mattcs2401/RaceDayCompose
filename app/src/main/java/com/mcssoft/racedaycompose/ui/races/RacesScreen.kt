@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.races
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,13 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.RaceDayApp
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
-import com.mcssoft.racedaycompose.ui.components.RacesList
 import com.mcssoft.racedaycompose.ui.components.TopBar
-import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable

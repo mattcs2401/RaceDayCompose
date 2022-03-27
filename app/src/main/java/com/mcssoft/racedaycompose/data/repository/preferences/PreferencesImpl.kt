@@ -32,15 +32,15 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
     /**
      *
      */
-    override suspend fun getPreference(prefType: PreferenceType): Any {
-        return when(prefType) {
-            is PreferenceType.FromDbPref -> {
+    override suspend fun getPreference(pref: Preference): Any {
+        return when(pref) {
+            is Preference.FromDbPref -> {
                 getFromDbPref()
             }
-            is PreferenceType.OnlyAuNzPref -> {
+            is Preference.OnlyAuNzPref -> {
                 getOnlyAuNzPref()
             }
-            is PreferenceType.MeetingId -> {
+            is Preference.MeetingId -> {
                 getMeetingId()
             }
         }
@@ -49,15 +49,15 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
     /**
      *
      */
-    override suspend fun setPreference(prefType: PreferenceType, value: Any) {
-        when(prefType) {
-            is PreferenceType.FromDbPref -> {
+    override suspend fun setPreference(pref: Preference, value: Any) {
+        when(pref) {
+            is Preference.FromDbPref -> {
                 setFromDbPref(value as Boolean)
             }
-            is PreferenceType.OnlyAuNzPref -> {
+            is Preference.OnlyAuNzPref -> {
                 setOnlyAuNzPref(value as Boolean)
             }
-            is PreferenceType.MeetingId -> {
+            is Preference.MeetingId -> {
                 setMeetingId(value as Long)
             }
         }

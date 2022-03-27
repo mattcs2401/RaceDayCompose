@@ -2,7 +2,7 @@ package com.mcssoft.racedaycompose.data.repository.preferences
 
 interface IPreferences {
 
-    suspend fun getPreference(prefType: PreferenceType): Any
+    suspend fun getPreference(pref: Preference): Any
 
-    suspend fun setPreference(prefType: PreferenceType, value: Any)
+    suspend fun setPreference(pref: Preference, value: Any)
 }

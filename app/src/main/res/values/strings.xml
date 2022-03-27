@@ -35,7 +35,5 @@
     <string name="label_loading">Loading…</string>
 
     <!-- Keys. -->
-    <string name="key_meeting_codes">key_meeting_code</string>
-    <string name="key_meeting_date">key_meeting_date</string>
 
 </resources>

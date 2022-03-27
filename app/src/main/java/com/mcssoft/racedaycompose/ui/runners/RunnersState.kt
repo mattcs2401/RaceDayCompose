@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.runners
 
-import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.domain.model.Runner
 

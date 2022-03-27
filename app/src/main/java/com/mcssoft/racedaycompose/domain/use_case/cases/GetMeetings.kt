@@ -4,7 +4,6 @@ import android.util.Log
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.utility.DataResult
-import com.mcssoft.racedaycompose.utility.DbUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -17,35 +16,23 @@ class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     operator fun invoke (onlyAuNz: Boolean): Flow<DataResult<List<Meeting>>> = flow {
-        Log.d("TAG","GetMeetings.invoke()")
-        val result: DataResult<List<Meeting>>?
-
+//        Log.d("TAG","GetMeetings.invoke()")
         try {
             emit(DataResult.loading())
 
-            // Get from the flow.
-            result = DbUtils(iDbRepo).getMeetings()
+            var meetings = iDbRepo.getMeetings()
 
             // Filter if required.
             if(onlyAuNz) {
-                // TBA - this possibly could still filter out something inadvertently.
-                val value = result.data?.filter { meeting ->
+                // TBA - this could possibly still filter out something inadvertently.
+                val value = meetings.filter { meeting ->
                     meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
                 }
-                result.data = value
+                meetings = value
             }
 
-            when {
-                // An exception was thrown from DbUtils.
-                result.failed -> {
-                    emit(DataResult.failure(result.exception ?:
-                    Exception("[GetMeetings] An unknown error or exception occurred.")))
-                }
-                // All good.
-                else -> {
-                    emit(DataResult.success(result.body))
-                }
-            }
+            emit(DataResult.success(meetings))
+
         } catch(exception: Exception) {
             emit(DataResult.failure(exception))
         }
