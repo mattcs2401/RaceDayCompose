@@ -1,6 +1,8 @@
 package com.mcssoft.racedaycompose.ui.components
 
+import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +16,10 @@ import com.mcssoft.racedaycompose.ui.settings.SettingsScreen
 import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 
 @Composable
-fun Navigation() {
+fun Navigation( /* Note: Parameters simply passed through to MeetingScreen. */
+    context: Context,
+    owner: LifecycleOwner
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = ScreenRoute.SplashScreen.route) {
@@ -28,6 +33,8 @@ fun Navigation() {
             route = ScreenRoute.MeetingsScreen.route
         ) {
             MeetingsScreen(
+                context = context,
+                owner = owner,
                 navController = navController
             )
         }

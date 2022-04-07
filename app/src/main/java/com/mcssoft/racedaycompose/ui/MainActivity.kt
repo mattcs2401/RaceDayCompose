@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.mcssoft.racedaycompose.ui.components.Navigation
 import com.mcssoft.racedaycompose.ui.theme.framework.RaceDayComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,10 +19,14 @@ class MainActivity : ComponentActivity() {
             RaceDayComposeTheme {
                 Surface(color = MaterialTheme.colors.background) {
 
-                    Navigation()
+                    Navigation(applicationContext, lifecycleOwner())
                 }
             }
         }
+    }
+
+    private fun lifecycleOwner(): LifecycleOwner {
+        return this
     }
 
 }

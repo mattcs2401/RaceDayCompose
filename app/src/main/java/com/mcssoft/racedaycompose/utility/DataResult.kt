@@ -50,3 +50,7 @@ data class DataResult<T>(
         get() = this.data!!
 }
 
+//fun <T> DataResult<T>.successOr(fallback: T): T {
+//    return (this as? DataResult.Status.Success<T>)?.data ?: fallback
+//}
+

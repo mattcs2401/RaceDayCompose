@@ -16,7 +16,7 @@ class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     operator fun invoke (onlyAuNz: Boolean): Flow<DataResult<List<Meeting>>> = flow {
-//        Log.d("TAG","GetMeetings.invoke()")
+        Log.d("TAG","GetMeetings.invoke()")
         try {
             emit(DataResult.loading())
 

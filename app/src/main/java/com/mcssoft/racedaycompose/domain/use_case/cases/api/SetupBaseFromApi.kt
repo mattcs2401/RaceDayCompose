@@ -1,72 +1,60 @@
-package com.mcssoft.racedaycompose.domain.use_case.cases
+package com.mcssoft.racedaycompose.domain.use_case.cases.api
 
+import android.content.Context
 import android.util.Log
+import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import com.mcssoft.racedaycompose.utility.DataResult
-import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
+import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.domain.dto.*
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.utility.DateUtils
+import java.lang.Exception
 
 /**
- * Take the values retrieved from the Api and save them to the database.
+ * Class to GET details from the Api.
+ * @param iRemoteRepo: Api access.
  */
-class SaveFromApi @Inject constructor(
+class SetupBaseFromApi @Inject constructor(
+    private val iRemoteRepo: IRemoteRepo,
     private val iDbRepo: IDbRepo
 ) {
     /**
-     * Save the Meetings and Races from the Api download.
-     * @param raceDayDto: The "raw" Api data.
-     * @param mtgType: The meeting's type (defaults to "R" ATT).
-     * */
-    operator fun invoke(raceDayDto: RaceDayDto, mtgType: String): Flow<DataResult<String>> = flow {
-        Log.d("TAG","SaveFromApi.invoke()")
-        try {
+     * @param mtgDate: The date to use in the Api Url.
+     * @param mtgCode: The Meeting's code (optional Api Url mod).
+     * @return A Flow of DataResult<RaceDayDto>.
+     * @notes If Meeting code is not used, then all Meetings are returned in the RaceDayDto details,
+     *        else, just the one Meeting.
+     */
+    operator fun invoke (mtgDate: String, mtgCode: String = ""): Flow<DataResult<String>> = flow {
+        Log.d("TAG","SetupBaseFromApi.invoke()")
 
+        try {
             emit(DataResult.loading())
 
             // Delete whatever is there (CASCADE should take care of Race/Runner etc).
             iDbRepo.deleteMeetings()
 
-            // Loop through the list of MeetingDto.
-            raceDayDto.Meetings.filter { type -> type.MeetingType == mtgType }
-            .forEach { meetingDto ->
-                // Weather/Track detail in the 1st Race used for Meeting (all other Races will have
-                // the same info).
-                val raceDto = meetingDto.Races[0]
-                // Write Meeting details.
-                val mId = populateMeeting(meetingDto, raceDto)
-                // Write Race details.
-                populateRaces(mId, meetingDto.Races)
-            }
-
+            // GET from the Api (as BaseDto).
+            val result = iRemoteRepo.getRaceDay(mtgDate, mtgCode).body
+            // Save Meeting/Race info.
+            result.RaceDay.Meetings.filter { type -> type.MeetingType == "R" }
+                .forEach { meetingDto ->
+                    // Weather/Track detail in the 1st Race used for Meeting (all other Races will have
+                    // the same info).
+                    val raceDto = meetingDto.Races[0]
+                    // Write Meeting details.
+                    val mId = populateMeeting(meetingDto, raceDto)
+                    // Write Race details.
+                    populateRaces(mId, meetingDto.Races)
+                }
             emit(DataResult.success(""))
-
-        } catch (exception: Exception) {
+        } catch(exception: Exception) {
             emit(DataResult.failure(exception))
         }
-    }
 
-    operator fun invoke(raceDayDto: RaceDayDto): Flow<DataResult<String>> = flow {
-        try {
-
-            emit(DataResult.loading())
-
-            val meetingDto = raceDayDto.Meetings[0]        // should only be one Meeting.
-            val racesDto = meetingDto.Races
-            // Loop through eac Race in the Meeting.
-            racesDto.forEach { race ->
-                // Loop through each set of Runners for the Race.
-                //val raceId = iDbRepo.
-                val runnersDto = race.Runners
-
-            }
-
-        } catch (exception: Exception) {
-            emit(DataResult.failure(exception))
-        }
     }
 
     /**
@@ -104,4 +92,5 @@ class SaveFromApi @Inject constructor(
         }
         return iDbRepo.insertRaces(lRaces)
     }
+
 }

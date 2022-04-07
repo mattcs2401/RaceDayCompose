@@ -12,8 +12,6 @@ class GetRunners @Inject constructor(
 ) {
 
     operator fun invoke (raceId: Long): Flow<DataResult<List<Runner>>> = flow {
-        val result: DataResult<List<Runner>>?
-
         try {
             emit(DataResult.loading())
 

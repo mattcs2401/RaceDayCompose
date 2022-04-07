@@ -13,6 +13,8 @@ import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.*
+import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupBaseFromApi
+import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupRunnerFromApi
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.Module
 import dagger.Provides
@@ -28,6 +30,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    //@Singleton
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
+    }
 
     @Provides
     @Singleton
@@ -82,16 +90,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUseCases(remote: IRemoteRepo, local: IDbRepo, prefs: IPreferences): RaceDayUseCases {
+    fun provideUseCases(remote: IRemoteRepo,
+                        local: IDbRepo,
+                        prefs: IPreferences,
+                        context: Context)
+    : RaceDayUseCases {
         return RaceDayUseCases(
-            getFromApi = GetFromApi(remote),
-            saveFromApi = SaveFromApi(local),
+            setupBaseFromApi = SetupBaseFromApi(remote, local),
+            setupRunnerFromApi = SetupRunnerFromApi(remote, local, context),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
             getRace = GetRace(local),
             getRunners = GetRunners(local),
-            saveRunners = SaveRunners(remote, local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs)
         )

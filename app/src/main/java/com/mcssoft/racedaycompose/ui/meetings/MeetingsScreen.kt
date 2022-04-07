@@ -1,5 +1,7 @@
 package com.mcssoft.racedaycompose.ui.meetings
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +13,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
@@ -26,12 +27,18 @@ import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.DefaultDialog
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
+import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.Failure
+import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.Loading
+import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.Success
 
 @Composable
-fun MeetingsScreen(navController: NavController,
-                   viewModel: MeetingsViewModel = hiltViewModel()
+fun MeetingsScreen(
+    context: Context,
+    owner: LifecycleOwner,
+    navController: NavController,
+    viewModel: MeetingsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state by viewModel.state.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
     val showRefreshDialog = remember { mutableStateOf(false) }
@@ -77,19 +84,25 @@ fun MeetingsScreen(navController: NavController,
                     )
                 }
             }
-            if (state.failed) {
-                Text(
-                    text = state.exception?.localizedMessage ?: "An unknown error occurred.",
-                    color = MaterialTheme.colors.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MaterialTheme.spacing.medium)
-                        .align(Alignment.Center)
-                )
-            }
-            if (state.loading) {
-                Loading(stringResource(id = R.string.label_loading))
+            when(state.status) {
+                is Loading -> {
+                    Loading(stringResource(id = R.string.label_loading))
+                }
+                is Failure -> {
+                    Text(
+                        text = state.exception?.localizedMessage ?: "An unknown error occurred.",
+                        color = MaterialTheme.colors.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(MaterialTheme.spacing.medium)
+                            .align(Alignment.Center)
+                    )
+                }
+                is Success -> {
+                    viewModel.startRunnerDownload(context, owner)
+                    Log.d("TAG", "MeetingsState.successful.")
+                }
             }
             if(showRefreshDialog.value) {
                 DefaultDialog(
