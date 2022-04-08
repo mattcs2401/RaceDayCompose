@@ -3,6 +3,7 @@ package com.mcssoft.racedaycompose.hilt_di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
@@ -32,19 +33,12 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    //@Singleton
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
-    }
-
-    @Provides
     @Singleton
     fun provideDatabase(app: Application): RaceDayDb {
         return Room.databaseBuilder(
             app,
             RaceDayDb::class.java,
             app.resources.getString(R.string.app_db_name)
-            //"race_day_compose.db"
         ).build()
     }
 
@@ -57,13 +51,13 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApi(app: Application): IRaceDay {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client = OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
+//        val logging = HttpLoggingInterceptor()
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+//        val client = OkHttpClient.Builder()
+//            .addInterceptor(logging)
+//            .build()
         return Retrofit.Builder()
-            .client(client)
+//            .client(client)
             .baseUrl(app.resources.getString(R.string.base_url))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -76,14 +70,14 @@ object AppModule {
         return RemoteRepoImpl(api)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRaceDayUtilities(): DateUtils {
         return DateUtils()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePreferences(@ApplicationContext context: Context): IPreferences {
         return PreferencesImpl(context)
     }
@@ -92,12 +86,11 @@ object AppModule {
     @Singleton
     fun provideUseCases(remote: IRemoteRepo,
                         local: IDbRepo,
-                        prefs: IPreferences,
-                        context: Context)
+                        prefs: IPreferences)
     : RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
-            setupRunnerFromApi = SetupRunnerFromApi(remote, local, context),
+            setupRunnerFromApi = SetupRunnerFromApi(),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),

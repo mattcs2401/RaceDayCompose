@@ -10,17 +10,17 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class RaceDayApp : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
+//    override fun onCreate() {
+//        super.onCreate()
 
-        val channel = NotificationChannel(
-            this.resources.getString(R.string.download_channel_id),
-            this.resources.getString(R.string.download_channel_name),
-            NotificationManager.IMPORTANCE_HIGH
-        )
-
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.createNotificationChannel(channel)
-    }
+//        val channel = NotificationChannel(
+//            this.resources.getString(R.string.download_channel_id),
+//            this.resources.getString(R.string.download_channel_name),
+//            NotificationManager.IMPORTANCE_HIGH
+//        )
+//
+//        val notificationManager = getSystemService(NotificationManager::class.java)
+//        notificationManager.createNotificationChannel(channel)
+//    }
 
 }

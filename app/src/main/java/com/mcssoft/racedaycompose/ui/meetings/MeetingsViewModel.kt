@@ -5,12 +5,16 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.utility.DateUtils
+import com.mcssoft.racedaycompose.utility.RunnersWorker
 import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -52,8 +56,8 @@ class MeetingsViewModel @Inject constructor(
                 setupBaseFromApi(date)
                 // TBA ?
                 delay(250)
-                // Get the associated Runners from the Api.
-                setupRunnersFromApi(date)
+//                // Get the associated Runners from the Api.
+//                setupRunnersFromApi()
             }
        }
     }
@@ -66,7 +70,7 @@ class MeetingsViewModel @Inject constructor(
             is MeetingsEvent.Refresh -> {
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
-                setupRunnersFromApi(date)     // get the Runners.
+//                setupRunnersFromApi(date)     // get the Runners.
             }
         }
     }
@@ -117,7 +121,6 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
-
     /**
      * Use case: GetMeetings.
      * Get a list of Meetings from the database.
@@ -143,48 +146,14 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
-    private fun setupRunnersFromApi(date: String) {
-//        viewModelScope.launch {
-//            raceDayUseCases.setupRunnerFromApi(date).collect { result ->
-//                when {
-//                    result.failed -> {
-//                        _state.value = MeetingsState.failure(
-//                            exception = Exception(result.exception))
-//                    }
-//                    result.successful -> {
-//
-//                    }
-//                }
-//            }
-//        }
-//        val workManager = WorkManager.getInstance(getApplication())
-//        val workData = workDataOf("key" to date)
-//        val runnersWorker = OneTimeWorkRequestBuilder<RunnersWorker>()
-//            .addTag("RunnersWorker")
-//            .setInputData(workData)
-//            .build()
-//        workManager.enqueue(runnersWorker)
-//        observeRunnerWorker(workManager, runnersWorker.id)
-    }
+    fun setupRunnersFromApi(context: Context) {
+        viewModelScope.launch {
+            raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
+                when {
 
-    private fun observeRunnerWorker(workManager: WorkManager, id: UUID) {
-//        val workInfo = workManager.getWorkInfoByIdLiveData(id).observe(this) { workInfo ->
-//            when (workInfo.state) {
-//                WorkInfo.State.SUCCEEDED -> {
-//                    workManager.cancelWorkById(id)
-//                }
-//                WorkInfo.State.FAILED -> {
-//                    Log.d("TAG", "[WorkInfo.State.FAILED] Meeting")
-//                    workManager.cancelWorkById(id)
-////                    workerFailure(MEETING, workInfo.outputData)
-//                }
-//                else -> { }
-//            }
-//        }
-    }
-
-    fun startRunnerDownload(context: Context, owner: LifecycleOwner) {
-
+                }
+            }
+        }
     }
 
 }

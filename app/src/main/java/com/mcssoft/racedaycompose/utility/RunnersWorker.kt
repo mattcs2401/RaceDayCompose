@@ -10,6 +10,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.delay
 
 class RunnersWorker(
     context: Context,
@@ -26,7 +27,12 @@ class RunnersWorker(
     private val entryPoints = EntryPointAccessors.fromApplication(context, IEntryPoints::class.java)
 
     override suspend fun doWork(): Result {
+        //val date = inputData.getString("key_date")
+        //val bp = date
         Log.d("TAG", "[RunnerWorker.doWork] starting")
+
+        delay(5000)
+
         val example = entryPoints.getDbRepo()
 
         Log.d("TAG", "[RunnerWorker.doWork] ending")

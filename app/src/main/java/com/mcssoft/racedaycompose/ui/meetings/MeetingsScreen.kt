@@ -34,11 +34,11 @@ import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.Success
 @Composable
 fun MeetingsScreen(
     context: Context,
-    owner: LifecycleOwner,
     navController: NavController,
     viewModel: MeetingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val appState by viewModel.appState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
     val showRefreshDialog = remember { mutableStateOf(false) }
@@ -100,7 +100,10 @@ fun MeetingsScreen(
                     )
                 }
                 is Success -> {
-                    viewModel.startRunnerDownload(context, owner)
+                    if(appState.isRefreshing && appState.meetingsDownloaded) {
+                        Log.d("TAG", "MeetingsState.successful - getting Runners.")
+                        viewModel.setupRunnersFromApi(context)
+                    }
                     Log.d("TAG", "MeetingsState.successful.")
                 }
             }
