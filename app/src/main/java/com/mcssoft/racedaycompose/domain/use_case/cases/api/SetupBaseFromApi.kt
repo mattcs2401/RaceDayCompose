@@ -1,17 +1,19 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases.api
 
-import android.content.Context
 import android.util.Log
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
-import javax.inject.Inject
+import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
+import com.mcssoft.racedaycompose.domain.dto.MeetingDto
+import com.mcssoft.racedaycompose.domain.dto.RaceDto
+import com.mcssoft.racedaycompose.domain.dto.toMeeting
+import com.mcssoft.racedaycompose.domain.dto.toRace
+import com.mcssoft.racedaycompose.domain.model.Race
+import com.mcssoft.racedaycompose.utility.Constants
+import com.mcssoft.racedaycompose.utility.DataResult
+import com.mcssoft.racedaycompose.utility.DateUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import com.mcssoft.racedaycompose.utility.DataResult
-import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
-import com.mcssoft.racedaycompose.domain.dto.*
-import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.utility.DateUtils
-import java.lang.Exception
+import javax.inject.Inject
 
 /**
  * Class to GET details from the Api.
@@ -40,7 +42,7 @@ class SetupBaseFromApi @Inject constructor(
             // GET from the Api (as BaseDto).
             val result = iRemoteRepo.getRaceDay(mtgDate, mtgCode).body
             // Save Meeting/Race info.
-            result.RaceDay.Meetings.filter { type -> type.MeetingType == "R" }
+            result.RaceDay.Meetings.filter { type -> type.MeetingType == Constants.MEETING_TYPE }
                 .forEach { meetingDto ->
                     // Weather/Track detail in the 1st Race used for Meeting (all other Races will have
                     // the same info).

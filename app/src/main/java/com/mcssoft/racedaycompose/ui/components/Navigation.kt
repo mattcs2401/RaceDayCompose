@@ -2,7 +2,6 @@ package com.mcssoft.racedaycompose.ui.components
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable

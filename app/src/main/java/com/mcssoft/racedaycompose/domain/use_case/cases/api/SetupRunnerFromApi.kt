@@ -1,15 +1,13 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases.api
 
 import android.content.Context
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import com.mcssoft.racedaycompose.utility.DataResult
-import com.mcssoft.racedaycompose.utility.RunnerTaskState
+import com.mcssoft.racedaycompose.utility.WorkerState
 import com.mcssoft.racedaycompose.utility.RunnersWorker
 import kotlinx.coroutines.flow.*
 import java.util.*
-import javax.inject.Inject
 
 class SetupRunnerFromApi {
 
@@ -31,10 +29,14 @@ class SetupRunnerFromApi {
 
             observeRunnerWorker(runnersWorker.id).collect { result ->
                 when(result) {
-                    RunnerTaskState.Scheduled -> {}
-                    RunnerTaskState.Cancelled -> {}
-                    RunnerTaskState.Failed -> {}
-                    RunnerTaskState.Completed -> {}
+                    WorkerState.Scheduled -> {}
+                    WorkerState.Cancelled -> {}
+                    WorkerState.Failed -> {
+
+                    }
+                    WorkerState.Succeeded -> {
+
+                    }
                 }
             }
 
@@ -43,7 +45,7 @@ class SetupRunnerFromApi {
         }
     }
 
-    private fun observeRunnerWorker(workerId: UUID): Flow<RunnerTaskState> {
+    private fun observeRunnerWorker(workerId: UUID): Flow<WorkerState> {
         return workManager.getWorkInfoByIdLiveData(workerId)
             .asFlow()
             .map { workInfo ->
@@ -56,10 +58,20 @@ class SetupRunnerFromApi {
             }.distinctUntilChanged()
     }
 
-    private fun mapWorkInfoStateToTaskState(state: WorkInfo.State): RunnerTaskState = when (state) {
-        WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED -> RunnerTaskState.Scheduled
-        WorkInfo.State.CANCELLED -> RunnerTaskState.Cancelled
-        WorkInfo.State.FAILED -> RunnerTaskState.Failed
-        WorkInfo.State.SUCCEEDED -> RunnerTaskState.Completed
+    private fun mapWorkInfoStateToTaskState(state: WorkInfo.State): WorkerState = when (state) {
+        WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED -> WorkerState.Scheduled
+        WorkInfo.State.CANCELLED -> WorkerState.Cancelled
+        WorkInfo.State.FAILED -> WorkerState.Failed
+        WorkInfo.State.SUCCEEDED -> WorkerState.Succeeded
     }
 }
+/*
+From Kotlin docs:
+-----------------
+transformWhile
+- Applies transform function to each value of the given flow while this function returns true.
+
+distinctUntilChanged
+- Returns flow where all subsequent repetitions of the same value are filtered out.
+
+ */

@@ -3,16 +3,15 @@ package com.mcssoft.racedaycompose.hilt_di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import androidx.work.WorkManager
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
-import com.mcssoft.racedaycompose.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
+import com.mcssoft.racedaycompose.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
-import com.mcssoft.racedaycompose.domain.use_case.*
+import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupRunnerFromApi
@@ -22,8 +21,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

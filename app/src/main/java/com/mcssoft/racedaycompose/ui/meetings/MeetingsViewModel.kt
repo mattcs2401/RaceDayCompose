@@ -2,25 +2,19 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.utility.DateUtils
-import com.mcssoft.racedaycompose.utility.RunnersWorker
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,7 +71,7 @@ class MeetingsViewModel @Inject constructor(
 
     /**
      * Use case: SetupBaseFromApi.
-     * Get the raw data from the Api.
+     * Get the raw data from the Api (Meetings and Races).
      */
     private fun setupBaseFromApi(date: String) {
         viewModelScope.launch {
@@ -146,11 +140,19 @@ class MeetingsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Use case: SetupRunnersFromApi.
+     * Get the raw data from the Api (Runners).
+     * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
+     *       info is per Meeting code, not in the generic list of Meetings and Races. So the Api has
+     *       to be hit for each Meeting code.
+     */
     fun setupRunnersFromApi(context: Context) {
         viewModelScope.launch {
             raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
                 when {
-
+                    result.failed -> {}
+                    result.successful -> {}
                 }
             }
         }
