@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import com.mcssoft.racedaycompose.utility.DataResult
-import com.mcssoft.racedaycompose.utility.WorkerState
 import com.mcssoft.racedaycompose.utility.RunnersWorker
+import com.mcssoft.racedaycompose.utility.WorkerState
 import kotlinx.coroutines.flow.*
 import java.util.*
 
@@ -32,10 +32,11 @@ class SetupRunnerFromApi {
                     WorkerState.Scheduled -> {}
                     WorkerState.Cancelled -> {}
                     WorkerState.Failed -> {
-
+                        throw Exception("Observe runnerWorker failure.")
+                        //emit(DataResult.failure(Exception("Observe runnerWorker failure.")))
                     }
                     WorkerState.Succeeded -> {
-
+                        emit(DataResult.success(""))
                     }
                 }
             }

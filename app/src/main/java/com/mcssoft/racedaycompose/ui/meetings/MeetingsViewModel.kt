@@ -2,6 +2,7 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
@@ -50,8 +51,6 @@ class MeetingsViewModel @Inject constructor(
                 setupBaseFromApi(date)
                 // TBA ?
                 delay(250)
-//                // Get the associated Runners from the Api.
-//                setupRunnersFromApi()
             }
        }
     }
@@ -64,7 +63,6 @@ class MeetingsViewModel @Inject constructor(
             is MeetingsEvent.Refresh -> {
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
-//                setupRunnersFromApi(date)     // get the Runners.
             }
         }
     }
@@ -151,8 +149,12 @@ class MeetingsViewModel @Inject constructor(
         viewModelScope.launch {
             raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
                 when {
-                    result.failed -> {}
-                    result.successful -> {}
+                    result.failed -> {
+                        Toast.makeText(context,"Setup Runners from Api failed.", Toast.LENGTH_SHORT).show()
+                    }
+                    result.successful -> {
+                        Toast.makeText(context,"Setup Runners from Api succeeded.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
