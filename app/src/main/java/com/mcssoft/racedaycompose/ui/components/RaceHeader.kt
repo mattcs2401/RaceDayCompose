@@ -32,8 +32,10 @@ fun RaceHeader(race: Race, colour: Color) {
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
         ) {
-
-            val (idRaceNo, idRaceName, idRaceTime, idRaceDist) = createRefs()
+            val (idRaceNo,
+                idRaceName,
+                idRaceTime,
+                idRaceDist) = createRefs()
 
             /* Top line. */
 
@@ -54,16 +56,20 @@ fun RaceHeader(race: Race, colour: Color) {
             /* Second line. */
 
             Text(text = race.raceTime,
-            Modifier.constrainAs(idRaceTime) {
-                top.linkTo(idRaceName.bottom, margin = 16.dp)
-                start.linkTo(idRaceName.start, margin = 0.dp)
-            }, fontSize = 12.sp)
+                Modifier.constrainAs(idRaceTime) {
+                    top.linkTo(idRaceName.bottom, margin = 8.dp)
+                    start.linkTo(idRaceName.start, margin = 0.dp)
+                    bottom.linkTo(parent.bottom, margin = 8.dp)
+                }, fontSize = 12.sp
+            )
 
             Text(text = "${race.distance}m",
-            Modifier.constrainAs(idRaceDist) {
-                start.linkTo(idRaceTime.end, margin = 16.dp)
-                top.linkTo(idRaceTime.top, margin = 0.dp)
-            }, fontSize = 12.sp)
+                Modifier.constrainAs(idRaceDist) {
+                    start.linkTo(idRaceTime.end, margin = 16.dp)
+                    top.linkTo(idRaceTime.top, margin = 0.dp)
+                }, fontSize = 12.sp
+            )
+
         }
     }
 }

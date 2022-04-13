@@ -61,6 +61,10 @@ class MeetingsViewModel @Inject constructor(
     fun onEvent(event: MeetingsEvent) {
         when(event) {
             is MeetingsEvent.Refresh -> {
+                _appState.value = _appState.value.copy(
+                    isRefreshing = true,
+                    meetingsDownloaded = false,
+                    runnersDownloaded = false)
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
             }
@@ -80,11 +84,11 @@ class MeetingsViewModel @Inject constructor(
                             exception = null,
                             status = MeetingsState.Status.Loading,
                             data = null)
-                        _appState.value = _appState.value.copy().apply {
-                            isRefreshing = true
-                            meetingsDownloaded = false
-                            runnersDownloaded = false
-                        }
+//                        _appState.value = _appState.value.copy().apply {
+//                            isRefreshing = true
+//                            meetingsDownloaded = false
+//                            runnersDownloaded = false
+//                        }
 //                        _state.value = MeetingsState.loading()
                     }
                     result.failed -> {
@@ -156,6 +160,7 @@ class MeetingsViewModel @Inject constructor(
                         Toast.makeText(context,"Setup Runners from Api succeeded.", Toast.LENGTH_SHORT).show()
                     }
                 }
+                _appState.value = _appState.value.copy(isRefreshing = false)
             }
         }
     }

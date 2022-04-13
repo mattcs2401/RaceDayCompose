@@ -64,13 +64,16 @@ fun RunnersScreen(
                     RaceHeader(race = race, MaterialTheme.colors.background) }
             }
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxSize()
+                .padding(top = 64.dp)) {
                 items(
-                    items = state.runners
+                    items = state.runners.filter { runner ->
+                        !runner.lateScratching && !runner.scratched
+                    }
                 ) { runner ->
                     RunnerItem(
                         runner = runner,
-                        onItemClick = { }
+                        onItemClick = { /* TBA - checkbox click. */ }
                     )
                 }
             }

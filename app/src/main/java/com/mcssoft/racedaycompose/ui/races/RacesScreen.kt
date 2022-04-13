@@ -63,7 +63,8 @@ fun RacesScreen(navController: NavController,
                     MeetingHeader(meeting = meeting, MaterialTheme.colors.background) }
             }
 
-            LazyColumn(modifier = Modifier.fillMaxSize() .padding(top = 64.dp)) {
+            LazyColumn(modifier = Modifier.fillMaxSize()
+                .padding(top = 64.dp)) {
                 items(
                     items = state.races
                 ) { race ->
