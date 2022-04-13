@@ -89,6 +89,9 @@ class RacesViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Save the meeting id to the preferences.
+     */
     private fun saveMeetingId(pref: Preference.MeetingId, meetingId: Long) {
         raceDayUseCases.savePreferences(pref, meetingId).onEach { result ->
             when {
@@ -101,10 +104,12 @@ class RacesViewModel @Inject constructor(
                     _state.value.meetingId = meetingId
                 }
             }
-
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Get the meeting id from the preferences.
+     */
     private fun getMeetingId(pref: Preference.MeetingId) {
         raceDayUseCases.getPreferences(pref).onEach { result ->
             when {

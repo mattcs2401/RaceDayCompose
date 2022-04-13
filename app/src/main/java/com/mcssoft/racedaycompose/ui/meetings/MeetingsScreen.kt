@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -22,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.DefaultDialog
+import com.mcssoft.racedaycompose.ui.components.RefreshDialog
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
@@ -105,7 +106,7 @@ fun MeetingsScreen(
                 }
             }
             if(showRefreshDialog.value) {
-                DefaultDialog(
+                RefreshDialog(
                     dialogTitle =  stringResource(id = R.string.dlg_refresh_title),
                     dialogText = stringResource(id = R.string.dlg_refresh_text),
                     confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
@@ -117,7 +118,9 @@ fun MeetingsScreen(
                     },
                     onDismissClicked = {
                         showRefreshDialog.value = !showRefreshDialog.value
-                    })
+                    },
+                    RoundedCornerShape(MaterialTheme.spacing.small)
+                )
             }
         }
     }

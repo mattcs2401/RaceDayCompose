@@ -90,6 +90,7 @@ class SetupBaseFromApi @Inject constructor(
         val lRaces = mutableListOf<Race>()
         dtoRaces.forEach { dtoRace ->
             val race = dtoRace.toRace(mId)
+            race.raceTime = DateUtils().getTime(dtoRace.RaceTime)
             lRaces.add(race)
         }
         return iDbRepo.insertRaces(lRaces)

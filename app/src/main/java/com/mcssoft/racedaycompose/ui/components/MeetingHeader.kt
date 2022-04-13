@@ -16,15 +16,6 @@ import com.mcssoft.racedaycompose.domain.model.Meeting
 
 @Composable
 fun MeetingHeader(meeting: Meeting, colour: Color) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(MaterialTheme.spacing.extraSmall),
-//        shape = RoundedCornerShape(MaterialTheme.spacing.default),
-//        elevation = 4.dp,
-//        backgroundColor = colour
-//
-//    )
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -113,7 +104,6 @@ fun MeetingHeader(meeting: Meeting, colour: Color) {
                     start.linkTo(idTrackText.end, margin = 4.dp)
                 }, fontSize = 12.sp
             )
-
 
         }
     }

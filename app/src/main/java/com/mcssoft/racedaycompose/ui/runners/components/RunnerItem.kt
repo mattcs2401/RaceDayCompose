@@ -29,36 +29,6 @@ fun RunnerItem(
                 .clickable { onItemClick(runner) }
         ) {
 
-//            val (idRaceNo, idRaceName, idRaceTime, idRaceDist) = createRefs()
-//
-//            Text(race.raceNumber.toString(),
-//                Modifier.constrainAs(idRaceNo) {
-//                    top.linkTo(parent.top, margin = 16.dp)
-//                    start.linkTo(parent.start, margin = 16.dp)
-//                }, fontSize = 12.sp
-//            )
-//
-//            Text(race.raceName,
-//                Modifier.constrainAs(idRaceName) {
-//                    top.linkTo(idRaceNo.top, margin = 0.dp)
-//                    start.linkTo(idRaceNo.end, margin = 8.dp)
-//                }, fontSize = 12.sp
-//            )
-//
-//            Text(DateUtils().getTime(race.raceTime),
-//                Modifier.constrainAs(idRaceTime) {
-//                    top.linkTo(idRaceName.bottom, margin = 8.dp)
-//                    start.linkTo(idRaceName.start, margin = 0.dp)
-//                    bottom.linkTo(parent.bottom, margin = 16.dp)
-//                }, fontSize = 12.sp
-//            )
-//
-//            Text("${race.distance}m",
-//                Modifier.constrainAs(idRaceDist) {
-//                    top.linkTo(idRaceTime.top, margin = 0.dp)
-//                    start.linkTo(idRaceTime.end, margin = 16.dp)
-//                }, fontSize = 12.sp
-//            )
 
 
 

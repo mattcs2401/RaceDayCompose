@@ -48,7 +48,7 @@ fun RaceItem(
                 }, fontSize = 12.sp
             )
 
-            Text(DateUtils().getTime(race.raceTime),
+            Text(race.raceTime,
                 Modifier.constrainAs(idRaceTime) {
                     top.linkTo(idRaceName.bottom, margin = 8.dp)
                     start.linkTo(idRaceName.start, margin = 0.dp)
@@ -62,9 +62,6 @@ fun RaceItem(
                     start.linkTo(idRaceTime.end, margin = 16.dp)
                 }, fontSize = 12.sp
             )
-
-
-
         }
     }
 }
