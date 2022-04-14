@@ -17,7 +17,7 @@ import com.mcssoft.racedaycompose.domain.model.Runner
 @Composable
 fun RunnerItem(
     runner: Runner,
-    onItemClick: (Runner) -> Unit
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -29,7 +29,7 @@ fun RunnerItem(
     ) {
         ConstraintLayout(
             modifier = Modifier
-                .clickable { onItemClick(runner) }
+                .clickable { }//onCheckedChange(runner) }
         ) {
             val (idRunnerNo,
                 idRunnerName,
@@ -105,8 +105,10 @@ fun RunnerItem(
             /* Checkbox. */
 
             Checkbox(
-                checked = false,
-                onCheckedChange = { onItemClick },
+                checked = runner.checked,
+                onCheckedChange = { checked ->
+                    onCheckedChange(checked)
+                },
                 Modifier.constrainAs(idCb) {
                     top.linkTo(parent.top, margin = 8.dp)
                     end.linkTo(parent.end, margin = 8.dp)

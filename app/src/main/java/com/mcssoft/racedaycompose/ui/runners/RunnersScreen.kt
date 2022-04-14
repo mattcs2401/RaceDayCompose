@@ -1,5 +1,8 @@
 package com.mcssoft.racedaycompose.ui.runners
 
+import android.content.Context
+import android.widget.Toast
+import androidx.activity.contextaware.ContextAware
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,15 +14,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
+import com.mcssoft.racedaycompose.domain.model.Runner
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.RaceHeader
@@ -31,7 +37,7 @@ fun RunnersScreen(
     navController: NavController,
     viewModel: RunnersViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.runnersState.value
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -64,7 +70,8 @@ fun RunnersScreen(
                     RaceHeader(race = race, MaterialTheme.colors.background) }
             }
 
-            LazyColumn(modifier = Modifier.fillMaxSize()
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
                 .padding(top = 64.dp)) {
                 items(
                     items = state.runners.filter { runner ->
@@ -73,7 +80,9 @@ fun RunnersScreen(
                 ) { runner ->
                     RunnerItem(
                         runner = runner,
-                        onItemClick = { /* TBA - checkbox click. */ }
+                        onCheckedChange = { checked ->
+                            viewModel.onEvent(runner._id, checked)
+                        }
                     )
                 }
             }

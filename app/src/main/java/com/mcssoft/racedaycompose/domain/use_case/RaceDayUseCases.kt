@@ -27,6 +27,9 @@ data class RaceDayUseCases(
     // Get a list of the Runners from the database.
     val getRunners: GetRunners,
 
+    // Check/uncheck the "checked" metadata element on the Runner record.
+    val setRunnerChecked: SetRunnerChecked,
+
     // Get Settings.
     val getPreferences: GetPreferences,
 

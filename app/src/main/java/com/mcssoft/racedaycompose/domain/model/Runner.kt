@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 data class Runner(
     @PrimaryKey(autoGenerate = true)
     val _id: Long = 0,
-    
+
     val raceId: Long = 0,                   // foreign key.
 
     val barrier: Int = 0,
@@ -29,5 +29,7 @@ data class Runner(
     val runnerName: String = "",
     val runnerNumber: Int = 0,
     val scratched: Boolean = false,
-    val weight: Double = 0.0
+    val weight: Double = 0.0,
+
+    var checked: Boolean = false
 )

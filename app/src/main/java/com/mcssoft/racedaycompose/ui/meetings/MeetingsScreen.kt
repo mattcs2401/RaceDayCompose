@@ -99,10 +99,10 @@ fun MeetingsScreen(
                 }
                 is Success -> {
                     if(appState.isRefreshing && appState.meetingsDownloaded) {
-                        Log.d("TAG", "MeetingsState.successful - getting Runners.")
+//                        Log.d("TAG", "MeetingsState.successful - getting Runners.")
                         viewModel.setupRunnersFromApi(context)
                     }
-                    Log.d("TAG", "MeetingsState.successful.")
+//                    Log.d("TAG", "MeetingsState.successful.")
                 }
             }
             if(showRefreshDialog.value) {

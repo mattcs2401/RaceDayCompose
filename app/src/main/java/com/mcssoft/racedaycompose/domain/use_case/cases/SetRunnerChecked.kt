@@ -7,19 +7,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetRunners @Inject constructor(
+class SetRunnerChecked @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
     /**
      *
      */
-    operator fun invoke (raceId: Long): Flow<DataResult<List<Runner>>> = flow {
+    operator fun invoke (runnerId: Long, checked: Boolean): Flow<DataResult<String>> = flow {
         try {
-            emit(DataResult.loading())
+//            emit(DataResult.loading())
 
-            val runners = iDbRepo.getRunners(raceId)
+            iDbRepo.setRunnerChecked(runnerId, checked)
 
-            emit(DataResult.success(runners))
+            emit(DataResult.success(""))
 
         } catch(exception: Exception) {
             emit(DataResult.failure(exception))

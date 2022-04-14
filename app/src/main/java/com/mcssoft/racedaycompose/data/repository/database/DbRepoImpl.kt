@@ -66,5 +66,8 @@ class DbRepoImpl @Inject constructor(
         return dao.getRunners(rId)
     }
 
+    override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
+        return dao.setRunnerChecked(runnerId, checked)
+    }
     //</editor-fold>
 }

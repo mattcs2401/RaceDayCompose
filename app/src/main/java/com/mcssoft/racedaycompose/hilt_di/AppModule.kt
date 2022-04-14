@@ -94,7 +94,8 @@ object AppModule {
             getRace = GetRace(local),
             getRunners = GetRunners(local),
             getPreferences = GetPreferences(prefs),
-            savePreferences = SavePreferences(prefs)
+            savePreferences = SavePreferences(prefs),
+            setRunnerChecked = SetRunnerChecked(local)
         )
     }
 

@@ -116,5 +116,8 @@ interface IDbRepo {
      */
     @Query("select * from Runner where raceId= :raceId")
     suspend fun getRunners(raceId: Long): List<Runner>
+
+    @Query("update Runner set checked= :checked where _id= :runnerId")
+    suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
     //</editor-fold>
 }
