@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.DefaultCheckBox
+import com.mcssoft.racedaycompose.ui.components.CheckBox
 import com.mcssoft.racedaycompose.ui.components.Loading
 import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
@@ -64,7 +64,7 @@ fun SettingsScreen(navController: NavController,
                     .fillMaxWidth()
                     .wrapContentHeight()
                 ) {
-                    DefaultCheckBox(
+                    CheckBox(
                         text = stringResource(id = R.string.pref_load_from_db),
                         selected = fromDbState.value.preference,
                         onCheckedChange = { checked ->
@@ -76,7 +76,7 @@ fun SettingsScreen(navController: NavController,
                     .fillMaxWidth()
                     .wrapContentHeight()
                 ) {
-                    DefaultCheckBox(
+                    CheckBox(
                         text = stringResource(id = R.string.pref_only_au),
                         selected = onlyAuNzState.value.preference,
                         onCheckedChange = { checked ->

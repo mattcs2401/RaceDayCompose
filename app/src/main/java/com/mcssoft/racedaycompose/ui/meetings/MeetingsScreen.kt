@@ -1,7 +1,6 @@
 package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,16 +14,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
+import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.RefreshDialog
 import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.SnackBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
@@ -39,7 +39,7 @@ fun MeetingsScreen(
     val appState by viewModel.appState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
-    val showRefreshDialog = remember { mutableStateOf(false) }
+    val showRefresh = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -49,7 +49,7 @@ fun MeetingsScreen(
                 backgroundColor = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
-                        showRefreshDialog.value = true
+                        showRefresh.value = true
                     }) {
                         Icon(Icons.Default.Refresh, "Refresh")
                     }
@@ -82,47 +82,85 @@ fun MeetingsScreen(
                     )
                 }
             }
-            when(state.status) {
-                is Loading -> {
-                    Loading(stringResource(id = R.string.label_loading))
-                }
-                is Failure -> {
-                    Text(
-                        text = state.exception?.localizedMessage ?: "An unknown error occurred.",
-                        color = MaterialTheme.colors.error,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(MaterialTheme.spacing.medium)
-                            .align(Alignment.Center)
-                    )
-                }
-                is Success -> {
-                    if(appState.isRefreshing && appState.meetingsDownloaded) {
-//                        Log.d("TAG", "MeetingsState.successful - getting Runners.")
-                        viewModel.setupRunnersFromApi(context)
-                    }
-//                    Log.d("TAG", "MeetingsState.successful.")
-                }
-            }
-            if(showRefreshDialog.value) {
-                RefreshDialog(
-                    dialogTitle =  stringResource(id = R.string.dlg_refresh_title),
-                    dialogText = stringResource(id = R.string.dlg_refresh_text),
-                    confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
-                    dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
-                    onConfirmClicked = {
-                        showRefreshDialog.value = !showRefreshDialog.value
-                        // Trigger Refresh event through the ViewModel.
-                        viewModel.onEvent(MeetingsEvent.Refresh())
-                    },
-                    onDismissClicked = {
-                        showRefreshDialog.value = !showRefreshDialog.value
-                    },
-                    RoundedCornerShape(MaterialTheme.spacing.small)
-                )
-            }
+            ManageState(
+                state = state,
+                appState = appState,
+                viewModel = viewModel,
+                context = context,
+                showRefresh = showRefresh
+            )
         }
     }
 
 }
+
+@Composable
+private fun ManageState(
+    state: MeetingsState,
+    appState: AppState,
+    viewModel: MeetingsViewModel,
+    context: Context,
+    showRefresh: MutableState<Boolean>
+) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    if(showRefresh.value) {
+        ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
+    } // else {} ?
+    when(state.status) {
+        is Loading -> {
+            Loading(stringResource(id = R.string.label_loading))
+        }
+        is Failure -> {
+            // TODO - get the AppState, what sort of failure ?
+            //      - some sort of dedicated dialog ?
+            Text(
+                text = state.exception?.localizedMessage ?: stringResource(id = R.string.unknown_error),
+                color = MaterialTheme.colors.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.medium)
+//                    .align(Alignment.Center) // can't seem to get this when in the function.
+            )
+        }
+        is Success -> {
+            if(appState.isRefreshing && appState.meetingsDownloaded) {
+                viewModel.setupRunnersFromApi(context)
+            }
+            if(!appState.isRefreshing && appState.runnersDownloaded) {
+                LaunchedEffect(key1 = true) {
+                    snackbarHostState.showSnackbar(
+                        message = "Setup Runners from Api succeeded.",
+                        actionLabel = "Close",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+                SnackBar(snackBarHostState = snackbarHostState)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ShowRefreshDialog(
+    show: MutableState<Boolean>,
+    viewModel: MeetingsViewModel
+) {
+    RefreshDialog(
+        dialogTitle =  stringResource(id = R.string.dlg_refresh_title),
+        dialogText = stringResource(id = R.string.dlg_refresh_text),
+        confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
+        dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
+        onConfirmClicked = {
+            show.value = !show.value
+            // Trigger Refresh event through the ViewModel.
+            viewModel.onEvent(MeetingsEvent.Refresh())
+        },
+        onDismissClicked = {
+            show.value = !show.value
+        },
+        RoundedCornerShape(MaterialTheme.spacing.small)
+    )
+}
+

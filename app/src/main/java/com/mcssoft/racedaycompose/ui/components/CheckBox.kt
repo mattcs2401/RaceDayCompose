@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DefaultCheckBox(
+fun CheckBox(
     text: String,
     selected: Boolean,
     onCheckedChange: (Boolean) -> Unit

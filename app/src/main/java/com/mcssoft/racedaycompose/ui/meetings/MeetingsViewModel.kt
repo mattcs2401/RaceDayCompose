@@ -154,13 +154,20 @@ class MeetingsViewModel @Inject constructor(
             raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
                 when {
                     result.failed -> {
+                        _appState.value = _appState.value.copy(
+                            isRefreshing = false,
+                            runnersDownloaded = false,
+                            downloadError = AppState.Status.DownloadError
+                        )
                         Toast.makeText(context,"Setup Runners from Api failed.", Toast.LENGTH_SHORT).show()
                     }
                     result.successful -> {
-                        Toast.makeText(context,"Setup Runners from Api succeeded.", Toast.LENGTH_SHORT).show()
+                        _appState.value = _appState.value.copy(
+                            isRefreshing = false,
+                            runnersDownloaded = true
+                        )
                     }
                 }
-                _appState.value = _appState.value.copy(isRefreshing = false)
             }
         }
     }

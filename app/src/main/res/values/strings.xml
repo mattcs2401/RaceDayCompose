@@ -34,6 +34,9 @@
     <!-- Component labels. -->
     <string name="label_loading">Loading…</string>
 
-    <!-- Keys. -->
+    <!-- Keys. TBA -->
+
+    <!-- Error text. -->
+    <string name="unknown_error">An unknown error occurred.</string>
 
 </resources>

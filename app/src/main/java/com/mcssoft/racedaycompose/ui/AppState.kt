@@ -2,11 +2,12 @@ package com.mcssoft.racedaycompose.ui
 
 data class AppState(
     var date: String = "",
-    var byDbPref: Boolean = false,               // the FromDb preference is enabled/selected.
-    var byAuNzPref: Boolean = false,             // the OnlAuNz preference is enabled/selected.
-    var isRefreshing: Boolean = false,           // All data being refreshed from the Api.
-    var meetingsDownloaded: Boolean = false,     // Meeting/Race info downloaded from the Api.
-    var runnersDownloaded: Boolean = false       // Runner info downloaded from the Api.
+    var byDbPref: Boolean = false,                    // the FromDb preference is enabled/selected.
+    var byAuNzPref: Boolean = false,                  // the OnlAuNz preference is enabled/selected.
+    var isRefreshing: Boolean = false,                // All data being refreshed from the Api.
+    var meetingsDownloaded: Boolean = false,          // Meeting/Race info downloaded from the Api.
+    var runnersDownloaded: Boolean = false,           // Runner info downloaded from the Api.
+    var downloadError: Status = Status.Initialise     // An error occurred in the download.
 ) {
     companion object {
 
@@ -20,13 +21,15 @@ data class AppState(
                 byAuNzPref = false,
                 isRefreshing = false,
                 meetingsDownloaded = false,
-                runnersDownloaded = false
+                runnersDownloaded = false,
+                downloadError = AppState.Status.Initialise
             )
         }
     }
 
     sealed class Status {
         object Initialise: Status()
+        object DownloadError: Status()
     }
 
 }
