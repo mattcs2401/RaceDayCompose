@@ -23,7 +23,7 @@ import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.RefreshDialog
-import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.SnackBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
@@ -109,7 +109,11 @@ private fun ManageState(
     } // else {} ?
     when(state.status) {
         is Loading -> {
-            Loading(stringResource(id = R.string.label_loading))
+            //Loading(stringResource(id = R.string.label_loading))
+            LoadingDialog(
+                titleText = stringResource(id = R.string.dlg_loading_title),
+                msgText = stringResource(id = R.string.dlg_loading_msg)
+            )
         }
         is Failure -> {
             // TODO - get the AppState, what sort of failure ?
@@ -121,15 +125,22 @@ private fun ManageState(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(MaterialTheme.spacing.medium)
-//                    .align(Alignment.Center) // can't seem to get this when in the function.
             )
         }
         is Success -> {
             if(appState.isRefreshing && appState.meetingsDownloaded) {
-                viewModel.setupRunnersFromApi(context)
+                LaunchedEffect(key1 = true) {
+                    snackbarHostState.showSnackbar(
+                        message = "Getting Runners from the Api.",
+                        actionLabel = "",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+                SnackBar(snackBarHostState = snackbarHostState)
+//                viewModel.setupRunnersFromApi(context)
             }
             if(!appState.isRefreshing && appState.runnersDownloaded) {
-                LaunchedEffect(key1 = true) {
+                LaunchedEffect(key1 = null) {
                     snackbarHostState.showSnackbar(
                         message = "Setup Runners from Api succeeded.",
                         actionLabel = "Close",

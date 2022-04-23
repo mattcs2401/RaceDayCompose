@@ -20,7 +20,7 @@ import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.CheckBox
-import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
@@ -97,7 +97,10 @@ fun SettingsScreen(navController: NavController,
                 )
             }
             if(fromDbState.value.loading) {
-                Loading(stringResource(id = R.string.label_loading))
+                LoadingDialog(
+                    titleText = stringResource(id = R.string.dlg_loading_title),
+                    msgText = stringResource(id = R.string.dlg_loading_msg)
+                )
             }
         }
     }

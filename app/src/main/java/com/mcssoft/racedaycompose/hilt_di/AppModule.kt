@@ -30,7 +30,6 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    @Singleton
     fun provideDatabase(app: Application): RaceDayDb {
         return Room.databaseBuilder(
             app,
@@ -40,13 +39,11 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideRaceDayDao(db: RaceDayDb): IDbRepo {
         return db.getRaceDayDao()
     }
 
     @Provides
-    @Singleton
     fun provideApi(app: Application): IRaceDay {
 //        val logging = HttpLoggingInterceptor()
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -62,15 +59,8 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideRepository(api: IRaceDay): IRemoteRepo {
         return RemoteRepoImpl(api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRaceDayUtilities(): DateUtils {
-        return DateUtils()
     }
 
     @Provides
@@ -80,7 +70,6 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideUseCases(remote: IRemoteRepo,
                         local: IDbRepo,
                         prefs: IPreferences)

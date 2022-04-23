@@ -151,6 +151,7 @@ class MeetingsViewModel @Inject constructor(
      */
     fun setupRunnersFromApi(context: Context) {
         viewModelScope.launch {
+            delay(5000)
             raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
                 when {
                     result.failed -> {

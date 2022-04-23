@@ -1,8 +1,5 @@
 package com.mcssoft.racedaycompose.ui.runners
 
-import android.content.Context
-import android.widget.Toast
-import androidx.activity.contextaware.ContextAware
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,20 +11,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.domain.model.Runner
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.RaceHeader
 import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.runners.components.RunnerItem
@@ -98,7 +92,10 @@ fun RunnersScreen(
                 )
             }
             if (state.loading) {
-                Loading(stringResource(id = R.string.label_loading))
+                LoadingDialog(
+                    titleText = stringResource(id = R.string.dlg_loading_title),
+                    msgText = stringResource(id = R.string.dlg_loading_msg)
+                )
             }
         }
 

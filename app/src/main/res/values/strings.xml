@@ -17,6 +17,9 @@
     <string name="dlg_refresh_title">Refresh Data</string>
     <string name="dlg_refresh_text">Delete all backing data and recreate ?</string>
 
+    <string name="dlg_loading_title">Loading</string>
+    <string name="dlg_loading_msg">Please wait ..</string>>
+
     <!-- Settings/Preferences text. -->
     <string name="pref_load_from_db">Load From DB</string>
     <string name="pref_only_au">Only AU/NZ Races</string>

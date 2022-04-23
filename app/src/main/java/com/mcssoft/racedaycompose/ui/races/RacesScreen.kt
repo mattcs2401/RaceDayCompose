@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.Loading
+import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
 import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
@@ -89,7 +89,10 @@ fun RacesScreen(navController: NavController,
                         .align(Alignment.Center)
                 )}
             if (state.loading) {
-                Loading(stringResource(id = R.string.label_loading))
+                LoadingDialog(
+                    titleText = stringResource(id = R.string.dlg_loading_title),
+                    msgText = stringResource(id = R.string.dlg_loading_msg)
+                )
             }
         }
     }
