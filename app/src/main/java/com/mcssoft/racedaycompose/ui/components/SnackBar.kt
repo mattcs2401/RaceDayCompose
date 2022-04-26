@@ -31,13 +31,13 @@ fun SnackBar(
                             }
                         ) {
                             Text(
-                                text = snackBarHostState.currentSnackbarData?.actionLabel ?: "Unknown",
+                                text = snackBarHostState.currentSnackbarData?.actionLabel ?: "", //"Unknown",
                                 style = TextStyle(color = Color.White)
                             )
                         }
                     }
                 ) {
-                    Text(snackBarHostState.currentSnackbarData?.message ?: "Unknown message")
+                    Text(snackBarHostState.currentSnackbarData?.message ?: "")// "Unknown message")
                 }
             }
         )

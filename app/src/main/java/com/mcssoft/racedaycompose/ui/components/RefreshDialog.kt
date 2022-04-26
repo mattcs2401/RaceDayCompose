@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +27,7 @@ fun RefreshDialog(
     dismissButtonText: String,
     onConfirmClicked: () -> Unit,
     onDismissClicked: () -> Unit,
-    shape: RoundedCornerShape
+    shape: Shape
 ) {
     Dialog(onDismissRequest = onDismissClicked) {
     // TODO - parameters for spacing, colour etc ??

@@ -8,16 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 /**
-  A dialog with a title on the first line, and a circular progress indicator and message text on the
-  second line.
-  @param titleText: The dialog "Title" on the first line. e.g. "Loading".
-  @param msgText: A message to display on the right of a circular progress indicator.
+  A dialog with a title on the 1st line, and a circular progress indicator and message text on the
+  2nd line.
+  @param titleText: The dialog "Title" on the 1st line. e.g. "Loading".
+  @param msgText: A message to display on the right of a circular progress indicator (2nd line).
  */
 @Composable
 fun LoadingDialog(
@@ -57,10 +59,11 @@ fun LoadingDialog(
                 Column(modifier = Modifier
                     .fillMaxWidth(0.7f),
                 ) {
-                    Text(msgText, fontSize = 12.sp)
+                    Text(msgText, fontSize = 12.sp, overflow = TextOverflow.Ellipsis, maxLines = 1)
                 }
             }
 
         }
     }
 }
+

@@ -28,6 +28,7 @@ import com.mcssoft.racedaycompose.ui.components.SnackBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
+import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
 
 @Composable
 fun MeetingsScreen(
@@ -106,10 +107,9 @@ private fun ManageState(
 
     if(showRefresh.value) {
         ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
-    } // else {} ?
+    }
     when(state.status) {
         is Loading -> {
-            //Loading(stringResource(id = R.string.label_loading))
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),
                 msgText = stringResource(id = R.string.dlg_loading_msg)
@@ -137,7 +137,7 @@ private fun ManageState(
                     )
                 }
                 SnackBar(snackBarHostState = snackbarHostState)
-//                viewModel.setupRunnersFromApi(context)
+                viewModel.setupRunnersFromApi(context)
             }
             if(!appState.isRefreshing && appState.runnersDownloaded) {
                 LaunchedEffect(key1 = null) {
@@ -171,7 +171,7 @@ private fun ShowRefreshDialog(
         onDismissClicked = {
             show.value = !show.value
         },
-        RoundedCornerShape(MaterialTheme.spacing.small)
+        shape = RoundedCornerShapes.small
     )
 }
 

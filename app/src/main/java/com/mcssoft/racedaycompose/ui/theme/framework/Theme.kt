@@ -66,7 +66,7 @@ fun RaceDayComposeTheme(
         MaterialTheme(
             colors = colors,
             typography = Typography,
-            shapes = Shapes,
+            shapes = RoundedCornerShapes,
             content = content
         )
     }
