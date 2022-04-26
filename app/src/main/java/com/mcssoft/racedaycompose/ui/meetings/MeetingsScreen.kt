@@ -64,9 +64,11 @@ fun MeetingsScreen(
             )
         }
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+        ) {
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
@@ -106,10 +108,10 @@ private fun ManageState(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    if(showRefresh.value) {
+    if (showRefresh.value) {
         ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
     }
-    when(state.status) {
+    when (state.status) {
         is Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),
@@ -120,7 +122,8 @@ private fun ManageState(
             // TODO - get the AppState, what sort of failure ?
             //      - some sort of dedicated dialog ?
             Text(
-                text = state.exception?.localizedMessage ?: stringResource(id = R.string.unknown_error),
+                text = state.exception?.localizedMessage
+                    ?: stringResource(id = R.string.unknown_error),
                 color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -129,7 +132,7 @@ private fun ManageState(
             )
         }
         is Success -> {
-            if(appState.isRefreshing && appState.meetingsDownloaded) {
+            if (appState.isRefreshing && appState.meetingsDownloaded) {
                 LaunchedEffect(key1 = true) {
                     snackbarHostState.showSnackbar(
                         message = "Getting Runners from the Api.",
@@ -140,7 +143,7 @@ private fun ManageState(
                 SnackBar(snackBarHostState = snackbarHostState)
                 viewModel.setupRunnersFromApi(context)
             }
-            if(!appState.isRefreshing && appState.runnersDownloaded) {
+            if (!appState.isRefreshing && appState.runnersDownloaded) {
                 LaunchedEffect(key1 = null) {
                     snackbarHostState.showSnackbar(
                         message = "Setup Runners from Api succeeded.",
@@ -160,7 +163,7 @@ private fun ShowRefreshDialog(
     viewModel: MeetingsViewModel
 ) {
     RefreshDialog(
-        dialogTitle =  stringResource(id = R.string.dlg_refresh_title),
+        dialogTitle = stringResource(id = R.string.dlg_refresh_title),
         dialogText = stringResource(id = R.string.dlg_refresh_text),
         confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
         dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
