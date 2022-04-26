@@ -30,6 +30,7 @@ import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
 
+@ExperimentalMaterialApi
 @Composable
 fun MeetingsScreen(
     context: Context,

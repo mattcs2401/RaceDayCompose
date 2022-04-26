@@ -43,8 +43,7 @@ fun MeetingItemR2(meeting: Meeting,
         )
 
         if(meeting.trackRating > 0) {
-            Text(
-                meeting.trackRating.toString(),
+            Text(meeting.trackRating.toString(),
                 Modifier.layoutId("idTrackRating"),
                 fontSize = 12.sp
             )
