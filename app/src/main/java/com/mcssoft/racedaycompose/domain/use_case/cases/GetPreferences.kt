@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 // TODO - someway to signify which setting we are getting, maybe some sort of sealed class ?
 
-class GetPreferences @Inject constructor (
+class GetPreferences @Inject constructor(
     private val preferences: IPreferences
 ) {
     operator fun invoke(pref: Preference): Flow<DataResult<Any>> = flow {
@@ -20,7 +20,7 @@ class GetPreferences @Inject constructor (
 
             emit(DataResult.success(result))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

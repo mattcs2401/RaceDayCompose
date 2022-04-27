@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -30,7 +29,6 @@ import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
 
-@ExperimentalMaterialApi
 @Composable
 fun MeetingsScreen(
     context: Context,
@@ -128,7 +126,7 @@ private fun ManageState(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(MaterialTheme.spacing.medium)
+                    .padding(spacing.medium)
             )
         }
         is Success -> {

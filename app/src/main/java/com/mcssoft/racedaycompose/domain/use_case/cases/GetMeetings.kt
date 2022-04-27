@@ -15,15 +15,15 @@ import javax.inject.Inject
 class GetMeetings @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke (onlyAuNz: Boolean): Flow<DataResult<List<Meeting>>> = flow {
-        Log.d("TAG","GetMeetings.invoke()")
+    operator fun invoke(onlyAuNz: Boolean): Flow<DataResult<List<Meeting>>> = flow {
+        Log.d("TAG", "GetMeetings.invoke()")
         try {
             emit(DataResult.loading())
 
             var meetings = iDbRepo.getMeetings()
 
             // Filter if required.
-            if(onlyAuNz) {
+            if (onlyAuNz) {
                 // TBA - this could possibly still filter out something inadvertently.
                 val value = meetings.filter { meeting ->
                     meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
@@ -33,7 +33,7 @@ class GetMeetings @Inject constructor(
 
             emit(DataResult.success(meetings))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

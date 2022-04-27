@@ -8,11 +8,15 @@ import androidx.room.PrimaryKey
 /**
  * Cache equivalent to domain.RaceDto.
  */
-@Entity(tableName = "Race",
+@Entity(
+    tableName = "Race",
     foreignKeys = [
-        ForeignKey(entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mtgId"],
-            onDelete = ForeignKey.CASCADE)],
-    indices = [Index(value = ["mtgId"])])
+        ForeignKey(
+            entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mtgId"],
+            onDelete = ForeignKey.CASCADE
+        )],
+    indices = [Index(value = ["mtgId"])]
+)
 data class Race(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,

@@ -13,7 +13,7 @@ class GetRunners @Inject constructor(
     /**
      *
      */
-    operator fun invoke (raceId: Long): Flow<DataResult<List<Runner>>> = flow {
+    operator fun invoke(raceId: Long): Flow<DataResult<List<Runner>>> = flow {
         try {
             emit(DataResult.loading())
 
@@ -21,7 +21,7 @@ class GetRunners @Inject constructor(
 
             emit(DataResult.success(runners))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

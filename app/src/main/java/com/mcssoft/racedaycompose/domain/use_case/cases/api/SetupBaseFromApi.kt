@@ -30,8 +30,8 @@ class SetupBaseFromApi @Inject constructor(
      * @notes If Meeting code is not used, then all Meetings are returned in the RaceDayDto details,
      *        else, just the one Meeting.
      */
-    operator fun invoke (mtgDate: String, mtgCode: String = ""): Flow<DataResult<String>> = flow {
-        Log.d("TAG","SetupBaseFromApi.invoke()")
+    operator fun invoke(mtgDate: String, mtgCode: String = ""): Flow<DataResult<String>> = flow {
+        Log.d("TAG", "SetupBaseFromApi.invoke()")
 
         try {
             emit(DataResult.loading())
@@ -53,7 +53,7 @@ class SetupBaseFromApi @Inject constructor(
                     populateRaces(mId, meetingDto.Races)
                 }
             emit(DataResult.success(""))
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
 

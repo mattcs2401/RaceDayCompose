@@ -14,10 +14,10 @@ import javax.inject.Inject
 /**
  * Class to set app preferences in a datastore.
  */
-class PreferencesImpl @Inject constructor (context: Context): IPreferences {
+class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
 
     private val Context.dataStore: DataStore<Preferences>
-        by preferencesDataStore(name = "settings")
+            by preferencesDataStore(name = "settings")
 
     private var dsPrefs: DataStore<Preferences> = context.dataStore
 
@@ -33,7 +33,7 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
      *
      */
     override suspend fun getPreference(pref: Preference): Any {
-        return when(pref) {
+        return when (pref) {
             is Preference.FromDbPref -> {
                 getFromDbPref()
             }
@@ -50,7 +50,7 @@ class PreferencesImpl @Inject constructor (context: Context): IPreferences {
      *
      */
     override suspend fun setPreference(pref: Preference, value: Any) {
-        when(pref) {
+        when (pref) {
             is Preference.FromDbPref -> {
                 setFromDbPref(value as Boolean)
             }

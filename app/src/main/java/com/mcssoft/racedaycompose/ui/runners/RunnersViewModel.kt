@@ -1,12 +1,10 @@
 package com.mcssoft.racedaycompose.ui.runners
 
-import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mcssoft.racedaycompose.domain.model.Runner
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +16,7 @@ import javax.inject.Inject
 class RunnersViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
     savedStateHandle: SavedStateHandle
-): ViewModel()
-{
+) : ViewModel() {
     private val _runnersState = mutableStateOf(RunnersState())
     val runnersState: State<RunnersState> = _runnersState
 
@@ -39,8 +36,8 @@ class RunnersViewModel @Inject constructor(
             when {
                 result.failed -> {
                     _runnersState.value = _runnersState.value.copy(
-                        error = result.exception?.localizedMessage ?:
-                        "[getRace] An unknown error or exception occurred.",
+                        error = result.exception?.localizedMessage
+                            ?: "[getRace] An unknown error or exception occurred.",
                         loading = false
                     )
                 }
@@ -60,8 +57,8 @@ class RunnersViewModel @Inject constructor(
                     _runnersState.value.loading = true
                 }
                 result.failed -> {
-                    _runnersState.value.error = result.exception?.localizedMessage ?:
-                            "[getRace] An unknown error or exception occurred."
+                    _runnersState.value.error = result.exception?.localizedMessage
+                        ?: "[getRace] An unknown error or exception occurred."
                     _runnersState.value.loading = false
                 }
                 result.successful -> {
@@ -79,8 +76,8 @@ class RunnersViewModel @Inject constructor(
                     _runnersState.value.loading = true
                 }
                 result.failed -> {
-                    _runnersState.value.error = result.exception?.localizedMessage ?:
-                            "[getRunners] An unknown error or exception occurred."
+                    _runnersState.value.error = result.exception?.localizedMessage
+                        ?: "[getRunners] An unknown error or exception occurred."
                     _runnersState.value.loading = false
                 }
                 result.successful -> {

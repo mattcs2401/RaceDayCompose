@@ -14,7 +14,7 @@ import javax.inject.Inject
 class GetRaces @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke (mId: Long): Flow<DataResult<List<Race>>> = flow {
+    operator fun invoke(mId: Long): Flow<DataResult<List<Race>>> = flow {
         try {
             emit(DataResult.loading())
 
@@ -22,7 +22,7 @@ class GetRaces @Inject constructor(
 
             emit(DataResult.success(races))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

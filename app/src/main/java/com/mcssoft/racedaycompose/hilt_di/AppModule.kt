@@ -15,7 +15,6 @@ import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupRunnerFromApi
-import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,10 +69,12 @@ object AppModule {
     }
 
     @Provides
-    fun provideUseCases(remote: IRemoteRepo,
-                        local: IDbRepo,
-                        prefs: IPreferences)
-    : RaceDayUseCases {
+    fun provideUseCases(
+        remote: IRemoteRepo,
+        local: IDbRepo,
+        prefs: IPreferences
+    )
+            : RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupRunnerFromApi = SetupRunnerFromApi(),

@@ -27,7 +27,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onEvent(event: SettingsEvent) {
-        when(event) {
+        when (event) {
             is SettingsEvent.GetFromDbPref -> {
                 getFromDbPref(Preference.FromDbPref)
             }
@@ -64,13 +64,18 @@ class SettingsViewModel @Inject constructor(
                     _fromDbState.value =
                         FromDbState(
                             loading = false,
-                            error = result.exception?.localizedMessage ?:
-                                "An unknown error or exception occurred.",
-                            preference = false)
+                            error = result.exception?.localizedMessage
+                                ?: "An unknown error or exception occurred.",
+                            preference = false
+                        )
                 }
                 result.successful -> {
                     _fromDbState.value =
-                        FromDbState(loading = false, error = "", preference = result.data as Boolean)
+                        FromDbState(
+                            loading = false,
+                            error = "",
+                            preference = result.data as Boolean
+                        )
                 }
             }
         }.launchIn(viewModelScope)
@@ -87,13 +92,18 @@ class SettingsViewModel @Inject constructor(
                     _fromDbState.value =
                         FromDbState(
                             loading = false,
-                            error = result.exception?.localizedMessage ?:
-                                "An unknown error or exception occurred.",
-                            preference = false)
+                            error = result.exception?.localizedMessage
+                                ?: "An unknown error or exception occurred.",
+                            preference = false
+                        )
                 }
                 result.successful -> {
                     _fromDbState.value =
-                        FromDbState(loading = false, error = "", preference = result.data as Boolean)
+                        FromDbState(
+                            loading = false,
+                            error = "",
+                            preference = result.data as Boolean
+                        )
                 }
             }
         }.launchIn(viewModelScope)
@@ -112,13 +122,18 @@ class SettingsViewModel @Inject constructor(
                     _onlyAuNzState.value =
                         OnlyAuNzState(
                             loading = false,
-                            error = result.exception?.localizedMessage ?:
-                                "An unknown error or exception occurred.",
-                            preference = false)
+                            error = result.exception?.localizedMessage
+                                ?: "An unknown error or exception occurred.",
+                            preference = false
+                        )
                 }
                 result.successful -> {
                     _onlyAuNzState.value =
-                        OnlyAuNzState(loading = false, error = "", preference = result.data as Boolean)
+                        OnlyAuNzState(
+                            loading = false,
+                            error = "",
+                            preference = result.data as Boolean
+                        )
                 }
             }
         }.launchIn(viewModelScope)
@@ -135,13 +150,18 @@ class SettingsViewModel @Inject constructor(
                     _onlyAuNzState.value =
                         OnlyAuNzState(
                             loading = false,
-                            error = result.exception?.localizedMessage ?:
-                                "An unknown error or exception occurred.",
-                            preference = false)
+                            error = result.exception?.localizedMessage
+                                ?: "An unknown error or exception occurred.",
+                            preference = false
+                        )
                 }
                 result.successful -> {
                     _onlyAuNzState.value =
-                        OnlyAuNzState(loading = false, error = "", preference = result.data as Boolean)
+                        OnlyAuNzState(
+                            loading = false,
+                            error = "",
+                            preference = result.data as Boolean
+                        )
                 }
             }
         }.launchIn(viewModelScope)

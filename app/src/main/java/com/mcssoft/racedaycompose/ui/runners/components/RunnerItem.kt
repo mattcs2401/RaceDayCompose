@@ -46,42 +46,48 @@ fun RunnerItem(
 
             /* First row. */
 
-            Text(runner.runnerNumber.toString(),
+            Text(
+                runner.runnerNumber.toString(),
                 Modifier.constrainAs(idRunnerNo) {
                     top.linkTo(parent.top, margin = 8.dp)
                     start.linkTo(parent.start, margin = 8.dp)
                 }, fontSize = 12.sp
             )
 
-            Text(runner.runnerName,
+            Text(
+                runner.runnerName,
                 Modifier.constrainAs(idRunnerName) {
                     top.linkTo(idRunnerNo.top, margin = 0.dp)
                     start.linkTo(idRunnerNo.end, margin = 16.dp)
                 }, fontSize = 12.sp
             )
 
-            Text("L3: ${runner.lastThreeStarts}",
+            Text(
+                "L3: ${runner.lastThreeStarts}",
                 Modifier.constrainAs(idLast3) {
                     top.linkTo(idRunnerName.top, margin = 0.dp)
                     start.linkTo(idRunnerName.end, margin = 16.dp)
                 }, fontSize = 12.sp
             )
 
-            Text("F: ${runner.form}",
+            Text(
+                "F: ${runner.form}",
                 Modifier.constrainAs(idForm) {
                     top.linkTo(idLast3.top, margin = 0.dp)
                     start.linkTo(idLast3.end, margin = 8.dp)
                 }, fontSize = 12.sp
             )
 
-            Text("B: ${runner.barrier}",
+            Text(
+                "B: ${runner.barrier}",
                 Modifier.constrainAs(idBarrier) {
                     top.linkTo(idForm.top, margin = 0.dp)
                     start.linkTo(idForm.end, margin = 8.dp)
                 }, fontSize = 12.sp
             )
 
-            Text("R: ${runner.rating}",
+            Text(
+                "R: ${runner.rating}",
                 Modifier.constrainAs(idRating) {
                     top.linkTo(idBarrier.top, margin = 0.dp)
                     start.linkTo(idBarrier.end, margin = 8.dp)
@@ -90,7 +96,8 @@ fun RunnerItem(
 
             /* 2nd row. */
 
-            Text(runner.riderName,
+            Text(
+                runner.riderName,
                 Modifier.constrainAs(idJockey) {
                     top.linkTo(idRunnerName.bottom, margin = 8.dp)
                     start.linkTo(idRunnerName.start, margin = 0.dp)
@@ -98,7 +105,8 @@ fun RunnerItem(
                 }, fontSize = 12.sp
             )
 
-            Text("${runner.weight}kg",
+            Text(
+                "${runner.weight}kg",
                 Modifier.constrainAs(idWeight) {
                     top.linkTo(idJockey.top, margin = 0.dp)
                     start.linkTo(idJockey.end, margin = 16.dp)
@@ -118,7 +126,6 @@ fun RunnerItem(
                 },
                 enabled = true
             )
-
 
 
         }

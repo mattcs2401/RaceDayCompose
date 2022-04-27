@@ -1,20 +1,18 @@
 package com.mcssoft.racedaycompose.ui.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 /**
  * A simple Ok/Cancel dialog.
@@ -30,63 +28,76 @@ fun RefreshDialog(
     shape: Shape
 ) {
     Dialog(onDismissRequest = onDismissClicked) {
-    // TODO - parameters for spacing, colour etc ??
+        // TODO - parameters for spacing, colour etc ??
         Card(
             modifier = Modifier
                 .fillMaxWidth(),
             shape = shape,
-            backgroundColor = MaterialTheme.colors.surface
-        ){
+            backgroundColor = colors.surface
+        ) {
             // A single columns with 3 Rows and Spacers in between.
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Spacer(modifier = Modifier
-                    .height(16.dp)
-                    .fillMaxWidth()
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .fillMaxWidth()
                 )
 
                 // 1st Row, dialog title.
-                Row(modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Text(text = dialogTitle,
+                    Text(
+                        text = dialogTitle,
                         fontWeight = FontWeight.Bold
                     )
                 }
 
-                Spacer(modifier = Modifier
-                    .height(16.dp)
-                    .fillMaxWidth()
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .fillMaxWidth()
                 )
 
                 // 2nd Row, dialog text.
-                Row(modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    Text(text = dialogText,
-                        textAlign = TextAlign.Center)
+                    Text(
+                        text = dialogText,
+                        textAlign = TextAlign.Center
+                    )
                 }
 
-                Spacer(modifier = Modifier
-                    .height(16.dp)               // 8 dp due to button default height.
-                    .fillMaxWidth()
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)               // 8 dp due to button default height.
+                        .fillMaxWidth()
                 )
 
                 // 3rd Row, Ok and Cancel buttons.
-                Row(modifier = Modifier.fillMaxWidth()
-                    .padding(end = 16.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
-                    OutlinedButton(onClick = onDismissClicked, )
+                    OutlinedButton(onClick = onDismissClicked)
                     {
                         Text(text = dismissButtonText)
                     }
@@ -97,9 +108,10 @@ fun RefreshDialog(
                     }
                 }
 
-                Spacer(modifier = Modifier
-                    .height(8.dp)               // 8 dp due to button default height.
-                    .fillMaxWidth()
+                Spacer(
+                    modifier = Modifier
+                        .height(8.dp)               // 8 dp due to button default height.
+                        .fillMaxWidth()
                 )
             }
         }

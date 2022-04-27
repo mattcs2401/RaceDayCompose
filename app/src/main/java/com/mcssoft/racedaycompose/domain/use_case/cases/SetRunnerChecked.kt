@@ -1,7 +1,6 @@
 package com.mcssoft.racedaycompose.domain.use_case.cases
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
-import com.mcssoft.racedaycompose.domain.model.Runner
 import com.mcssoft.racedaycompose.utility.DataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,7 +12,7 @@ class SetRunnerChecked @Inject constructor(
     /**
      *
      */
-    operator fun invoke (runnerId: Long, checked: Boolean): Flow<DataResult<String>> = flow {
+    operator fun invoke(runnerId: Long, checked: Boolean): Flow<DataResult<String>> = flow {
         try {
 //            emit(DataResult.loading())
 
@@ -21,7 +20,7 @@ class SetRunnerChecked @Inject constructor(
 
             emit(DataResult.success(""))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

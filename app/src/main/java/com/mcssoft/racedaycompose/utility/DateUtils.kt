@@ -14,7 +14,7 @@ class DateUtils {
         val month = ((calendar.get(Calendar.MONTH)) + 1).toString()  // Note (1) below.
         val day = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
-        return  "$year/$month/$day/"
+        return "$year/$month/$day/"
     }
 
     /**

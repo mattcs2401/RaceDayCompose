@@ -52,21 +52,27 @@ fun RunnersScreen(
         },
         backgroundColor = Color.LightGray
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.secondary)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.secondary)
+        ) {
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
             ) {
                 state.race?.let { race ->
-                    RaceHeader(race = race, MaterialTheme.colors.background) }
+                    RaceHeader(race = race, MaterialTheme.colors.background)
+                }
             }
 
-            LazyColumn(modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 64.dp)) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 64.dp)
+            ) {
                 items(
                     items = state.runners.filter { runner ->
                         !runner.lateScratching && !runner.scratched

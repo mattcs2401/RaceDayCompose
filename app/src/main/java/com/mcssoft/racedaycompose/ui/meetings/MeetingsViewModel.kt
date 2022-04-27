@@ -39,32 +39,35 @@ class MeetingsViewModel @Inject constructor(
             _appState.value = _appState.value.copy(
                 date = date,
                 byDbPref = fromDbPref,
-                byAuNzPref = onlyAuNzPref)
-            if(fromDbPref) {
+                byAuNzPref = onlyAuNzPref
+            )
+            if (fromDbPref) {
                 getMeetingsFromLocal(onlyAuNzPref)
             } else {
                 _appState.value = _appState.value.copy(
                     isRefreshing = true,
                     meetingsDownloaded = false,
-                    runnersDownloaded = false)
+                    runnersDownloaded = false
+                )
                 // Get the initial load from the Api (Meetings/Races).
                 setupBaseFromApi(date)
                 // TBA ?
                 delay(250)
             }
-       }
+        }
     }
 
     /**
      * Called from the Meetings screen. Do a complete reload of the Api data.
      */
     fun onEvent(event: MeetingsEvent) {
-        when(event) {
+        when (event) {
             is MeetingsEvent.Refresh -> {
                 _appState.value = _appState.value.copy(
                     isRefreshing = true,
                     meetingsDownloaded = false,
-                    runnersDownloaded = false)
+                    runnersDownloaded = false
+                )
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
             }
@@ -83,7 +86,8 @@ class MeetingsViewModel @Inject constructor(
                         _state.value = _state.value.copy(
                             exception = null,
                             status = MeetingsState.Status.Loading,
-                            data = null)
+                            data = null
+                        )
 //                        _appState.value = _appState.value.copy().apply {
 //                            isRefreshing = true
 //                            meetingsDownloaded = false
@@ -108,8 +112,9 @@ class MeetingsViewModel @Inject constructor(
                         val onlyAuNz = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
                         _appState.value = _appState.value.copy(
                             byAuNzPref = onlyAuNz,
-                            meetingsDownloaded = true)
-                        Log.d("TAG","[SetupBaseFromApi] result.successful")
+                            meetingsDownloaded = true
+                        )
+                        Log.d("TAG", "[SetupBaseFromApi] result.successful")
                         getMeetingsFromLocal(onlyAuNz)
                     }
                 }
@@ -131,10 +136,11 @@ class MeetingsViewModel @Inject constructor(
                     }
                     result.failed -> {
                         _state.value = MeetingsState.failure(
-                            exception = Exception(result.exception))
+                            exception = Exception(result.exception)
+                        )
                     }
                     result.successful -> {
-                        Log.d("TAG","getMeetingsFromLocal(onlyAuNz) result.successful")
+                        Log.d("TAG", "getMeetingsFromLocal(onlyAuNz) result.successful")
                         _state.value = MeetingsState.success(data = result.data ?: emptyList())
                     }
                 }
@@ -160,7 +166,11 @@ class MeetingsViewModel @Inject constructor(
                             runnersDownloaded = false,
                             downloadError = AppState.Status.DownloadError
                         )
-                        Toast.makeText(context,"Setup Runners from Api failed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "Setup Runners from Api failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     result.successful -> {
                         _appState.value = _appState.value.copy(

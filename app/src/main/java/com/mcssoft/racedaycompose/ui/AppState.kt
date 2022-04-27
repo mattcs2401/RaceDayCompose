@@ -22,14 +22,14 @@ data class AppState(
                 isRefreshing = false,
                 meetingsDownloaded = false,
                 runnersDownloaded = false,
-                downloadError = AppState.Status.Initialise
+                downloadError = Status.Initialise
             )
         }
     }
 
     sealed class Status {
-        object Initialise: Status()
-        object DownloadError: Status()
+        object Initialise : Status()
+        object DownloadError : Status()
     }
 
 }

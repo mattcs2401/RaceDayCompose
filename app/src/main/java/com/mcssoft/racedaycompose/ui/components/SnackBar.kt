@@ -31,7 +31,8 @@ fun SnackBar(
                             }
                         ) {
                             Text(
-                                text = snackBarHostState.currentSnackbarData?.actionLabel ?: "", //"Unknown",
+                                text = snackBarHostState.currentSnackbarData?.actionLabel
+                                    ?: "", //"Unknown",
                                 style = TextStyle(color = Color.White)
                             )
                         }

@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.utility.DateUtils
 
 @Composable
 fun RaceItem(
@@ -34,21 +33,24 @@ fun RaceItem(
 
             val (idRaceNo, idRaceName, idRaceTime, idRaceDist) = createRefs()
 
-            Text(race.raceNumber.toString(),
+            Text(
+                race.raceNumber.toString(),
                 Modifier.constrainAs(idRaceNo) {
                     top.linkTo(parent.top, margin = 16.dp)
                     start.linkTo(parent.start, margin = 16.dp)
                 }, fontSize = 12.sp
             )
 
-            Text(race.raceName,
+            Text(
+                race.raceName,
                 Modifier.constrainAs(idRaceName) {
                     top.linkTo(idRaceNo.top, margin = 0.dp)
                     start.linkTo(idRaceNo.end, margin = 8.dp)
                 }, fontSize = 12.sp
             )
 
-            Text(race.raceTime,
+            Text(
+                race.raceTime,
                 Modifier.constrainAs(idRaceTime) {
                     top.linkTo(idRaceName.bottom, margin = 8.dp)
                     start.linkTo(idRaceName.start, margin = 0.dp)
@@ -56,7 +58,8 @@ fun RaceItem(
                 }, fontSize = 12.sp
             )
 
-            Text("${race.distance}m",
+            Text(
+                "${race.distance}m",
                 Modifier.constrainAs(idRaceDist) {
                     top.linkTo(idRaceTime.top, margin = 0.dp)
                     start.linkTo(idRaceTime.end, margin = 16.dp)

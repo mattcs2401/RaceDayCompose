@@ -13,7 +13,7 @@ class SetupRunnerFromApi {
 
     private lateinit var workManager: WorkManager
 
-    operator fun invoke (date: String, context: Context): Flow<DataResult<String>> = flow {
+    operator fun invoke(date: String, context: Context): Flow<DataResult<String>> = flow {
 
         workManager = WorkManager.getInstance(context)
 
@@ -28,7 +28,7 @@ class SetupRunnerFromApi {
             workManager.enqueue(runnersWorker)
 
             observeRunnerWorker(runnersWorker.id).collect { result ->
-                when(result) {
+                when (result) {
                     WorkerState.Scheduled -> {}
                     WorkerState.Cancelled -> {}
                     WorkerState.Failed -> {
@@ -41,7 +41,7 @@ class SetupRunnerFromApi {
                 }
             }
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

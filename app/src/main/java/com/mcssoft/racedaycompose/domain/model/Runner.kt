@@ -8,11 +8,15 @@ import androidx.room.PrimaryKey
 /**
  * Cache equivalent to domain.Runner.
  */
-@Entity(tableName = "Runner",
+@Entity(
+    tableName = "Runner",
     foreignKeys = [
-        ForeignKey(entity = Race::class, parentColumns = ["_id"], childColumns = ["raceId"],
-            onDelete = ForeignKey.CASCADE)],
-    indices = [Index(value = ["raceId"])])
+        ForeignKey(
+            entity = Race::class, parentColumns = ["_id"], childColumns = ["raceId"],
+            onDelete = ForeignKey.CASCADE
+        )],
+    indices = [Index(value = ["raceId"])]
+)
 data class Runner(
     @PrimaryKey(autoGenerate = true)
     val _id: Long = 0,

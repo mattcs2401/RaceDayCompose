@@ -9,11 +9,11 @@ import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
-fun RacesList(races: List<Race>,
-              onItemClick: (Any) -> Unit) {
-    ConstraintLayout(
-//        modifier = Modifier.fillMaxSize()
-    ) {
+fun RacesList(
+    races: List<Race>,
+    onItemClick: (Any) -> Unit
+) {
+    ConstraintLayout {
 
         val (idLazyCol) = createRefs()
 

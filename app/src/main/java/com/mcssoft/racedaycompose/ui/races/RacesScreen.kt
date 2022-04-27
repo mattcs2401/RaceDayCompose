@@ -27,8 +27,9 @@ import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
-fun RacesScreen(navController: NavController,
-                viewModel: RacesViewModel = hiltViewModel()
+fun RacesScreen(
+    navController: NavController,
+    viewModel: RacesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
@@ -36,35 +37,42 @@ fun RacesScreen(navController: NavController,
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-             TopBar(
-                 title = stringResource(id = R.string.label_races),
-                 MaterialTheme.colors.primary,
-                 onBackPressed = {
-                     navController.navigate(ScreenRoute.MeetingsScreen.route) {
-                         popUpTo(ScreenRoute.MeetingsScreen.route) {
-                             inclusive = true
-                         }
-                     }
-                 },
-                 Icons.Filled.ArrowBack
-             )
+            TopBar(
+                title = stringResource(id = R.string.label_races),
+                MaterialTheme.colors.primary,
+                onBackPressed = {
+                    navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                        popUpTo(ScreenRoute.MeetingsScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                Icons.Filled.ArrowBack
+            )
         },
         backgroundColor = Color.LightGray
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.secondary)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.secondary)
+        ) {
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
             ) {
                 state.meeting?.let { meeting ->
-                    MeetingHeader(meeting = meeting, MaterialTheme.colors.background) }
+                    MeetingHeader(meeting = meeting, MaterialTheme.colors.background)
+                }
             }
 
-            LazyColumn(modifier = Modifier.fillMaxSize()
-                .padding(top = 64.dp)) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 64.dp)
+            ) {
                 items(
                     items = state.races
                 ) { race ->
@@ -87,7 +95,8 @@ fun RacesScreen(navController: NavController,
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .align(Alignment.Center)
-                )}
+                )
+            }
             if (state.loading) {
                 LoadingDialog(
                     titleText = stringResource(id = R.string.dlg_loading_title),

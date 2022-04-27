@@ -23,7 +23,7 @@ fun Navigation(
     NavHost(navController = navController, startDestination = ScreenRoute.SplashScreen.route) {
         composable(
             route = ScreenRoute.SplashScreen.route
-        ){
+        ) {
             // "Dummy" starting point.
             SplashScreen(navController = navController)
         }

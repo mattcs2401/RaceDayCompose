@@ -10,10 +10,10 @@ import javax.inject.Inject
  */
 class RemoteRepoImpl @Inject constructor(
     private val api: IRaceDay
-): IRemoteRepo {
+) : IRemoteRepo {
 
     override suspend fun getRaceDay(date: String, code: String): NetworkResponse<BaseDto> {
-        return if(code == "") {
+        return if (code == "") {
             apiCall { api.getRaceDay(date) }
         } else {
             apiCall { api.getRaceDay(date, code) }
@@ -23,7 +23,7 @@ class RemoteRepoImpl @Inject constructor(
     private inline fun <T> apiCall(apiCall: () -> Response<T>): NetworkResponse<T> {
         return try {
             NetworkResponse.success(apiCall.invoke())
-        } catch(ex: Exception) {
+        } catch (ex: Exception) {
             NetworkResponse.failure(ex)
         }
     }

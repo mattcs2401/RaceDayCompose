@@ -7,8 +7,6 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
-import com.mcssoft.racedaycompose.domain.dto.MeetingDto
-import com.mcssoft.racedaycompose.domain.dto.RaceDto
 import com.mcssoft.racedaycompose.domain.dto.toRunner
 import com.mcssoft.racedaycompose.domain.model.Runner
 import dagger.hilt.EntryPoint
@@ -16,10 +14,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
-import java.lang.Exception
 
 class RunnersWorker(
     context: Context,

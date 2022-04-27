@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey
 /**
  * Cache adaptation of domain.dto.MeetingDto.
  */
-@Entity(tableName = "Meeting",
-        indices = [Index(value = ["_id"])])
+@Entity(
+    tableName = "Meeting",
+    indices = [Index(value = ["_id"])]
+)
 data class Meeting(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,

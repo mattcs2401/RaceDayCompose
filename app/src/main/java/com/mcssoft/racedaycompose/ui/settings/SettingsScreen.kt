@@ -25,8 +25,9 @@ import com.mcssoft.racedaycompose.ui.components.TopBar
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
-fun SettingsScreen(navController: NavController,
-                   viewModel: SettingsViewModel = hiltViewModel()
+fun SettingsScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val fromDbState = viewModel.fromDbState
     val onlyAuNzState = viewModel.onlyAuNzState
@@ -51,18 +52,22 @@ fun SettingsScreen(navController: NavController,
         },
         backgroundColor = Color.LightGray
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.secondary))
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.secondary)
+        )
         {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 ) {
                     CheckBox(
                         text = stringResource(id = R.string.pref_load_from_db),
@@ -72,9 +77,10 @@ fun SettingsScreen(navController: NavController,
                         }
                     )
                 }
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 ) {
                     CheckBox(
                         text = stringResource(id = R.string.pref_only_au),
@@ -92,11 +98,11 @@ fun SettingsScreen(navController: NavController,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(MaterialTheme.spacing.medium)
+                        .padding(spacing.medium)
                         .align(Alignment.Center)
                 )
             }
-            if(fromDbState.value.loading) {
+            if (fromDbState.value.loading) {
                 LoadingDialog(
                     titleText = stringResource(id = R.string.dlg_loading_title),
                     msgText = stringResource(id = R.string.dlg_loading_msg)

@@ -41,7 +41,7 @@ fun MeetingItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.spacing.extraSmall)
+            .padding(spacing.extraSmall)
             .animateContentSize(
                 animationSpec = tween(300, easing = LinearOutSlowInEasing)
             ),

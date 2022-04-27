@@ -17,7 +17,7 @@ import javax.inject.Inject
 class RacesViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(RacesState())
     val state: State<RacesState> = _state
@@ -33,7 +33,7 @@ class RacesViewModel @Inject constructor(
           at runtime.
          */
         savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mtgId ->
-            if(mtgId > 0) {
+            if (mtgId > 0) {
                 // Save the Meeting id to the preferences (for back nav from Runners screen).
                 saveMeetingId(Preference.MeetingId, mtgId)
                 // Get Meeting and Races values for the screen.
@@ -58,8 +58,8 @@ class RacesViewModel @Inject constructor(
                     _state.value.loading = true
                 }
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage ?:
-                        "[getRaces] An unknown error or exception occurred."
+                    _state.value.error = result.exception?.localizedMessage
+                        ?: "[getRaces] An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 result.successful -> {
@@ -77,8 +77,8 @@ class RacesViewModel @Inject constructor(
                     _state.value.loading = true
                 }
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage ?:
-                        "[getMeeting] An unknown error or exception occurred."
+                    _state.value.error = result.exception?.localizedMessage
+                        ?: "[getMeeting] An unknown error or exception occurred."
                     _state.value.loading = false
                 }
                 result.successful -> {
@@ -97,8 +97,8 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage ?:
-                            "[saveMeetingId] An unknown error or exception occurred."
+                    _state.value.error = result.exception?.localizedMessage
+                        ?: "[saveMeetingId] An unknown error or exception occurred."
                 }
                 result.successful -> {
                     _state.value.meetingId = meetingId
@@ -115,8 +115,8 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage ?:
-                            "[getMeetingId] An unknown error or exception occurred."
+                    _state.value.error = result.exception?.localizedMessage
+                        ?: "[getMeetingId] An unknown error or exception occurred."
                 }
                 result.successful -> {
                     _state.value.meetingId = result.data as Long

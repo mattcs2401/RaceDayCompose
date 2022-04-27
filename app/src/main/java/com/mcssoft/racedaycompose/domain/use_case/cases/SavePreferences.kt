@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SavePreferences @Inject constructor (
+class SavePreferences @Inject constructor(
     private val preferences: IPreferences
 ) {
     /**
@@ -22,7 +22,7 @@ class SavePreferences @Inject constructor (
 
             emit(DataResult.success(value))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }
@@ -35,7 +35,7 @@ class SavePreferences @Inject constructor (
 
             emit(DataResult.success(value))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

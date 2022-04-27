@@ -13,23 +13,24 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @note onBackPressed and navIcon should implemented together.
  */
 @Composable
-fun TopBar(title: String,                        // title, required.
-           bkgColour: Color,                     // background colour, required.
-           onBackPressed: () -> Unit = {},       // onClick handler (optional).
-           navIcon: ImageVector? = null          // nav icon (optional).
+fun TopBar(
+    title: String,                        // title, required.
+    bkgColour: Color,                     // background colour, required.
+    onBackPressed: () -> Unit = {},       // onClick handler (optional).
+    navIcon: ImageVector? = null          // nav icon (optional).
 ) {
     TopAppBar(
         title = { Text(title) },
         backgroundColor = bkgColour,
         navigationIcon = {
-            if(onBackPressed != {} && navIcon != null) {
+            if (onBackPressed != {} && navIcon != null) {
                 IconButton(onClick = onBackPressed) {
                     Icon(navIcon, navIcon.toString())
                 }
             }
         },
         actions = {
-        // TODO - Any actions ?
+            // TODO - Any actions ?
         }
     )
 }

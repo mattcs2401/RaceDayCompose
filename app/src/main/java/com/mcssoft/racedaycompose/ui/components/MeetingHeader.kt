@@ -17,13 +17,13 @@ import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaycompose.domain.model.Meeting
 
 @Composable
-/**
- * Meeting summary information at the top of the list of Races for that Meeting.
- * @param meeting: The Meeting.
- * @param colour: The background colour.
- *
- * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
- */
+        /**
+         * Meeting summary information at the top of the list of Races for that Meeting.
+         * @param meeting: The Meeting.
+         * @param colour: The background colour.
+         *
+         * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
+         */
 fun MeetingHeader(meeting: Meeting, colour: Color) {
     Box(
         modifier = Modifier
@@ -38,39 +38,57 @@ fun MeetingHeader(meeting: Meeting, colour: Color) {
         ) {
             /* Top line. */
 
-            Text(text = "Meeting: ",
-                Modifier.layoutId("idMtgCode"))
+            Text(
+                text = "Meeting: ",
+                Modifier.layoutId("idMtgCode")
+            )
 
-            Text(text = meeting.meetingCode,
-                Modifier.layoutId("idMtgCodeText"))
+            Text(
+                text = meeting.meetingCode,
+                Modifier.layoutId("idMtgCodeText")
+            )
 
-            Text(text = "Venue: ",
-                Modifier.layoutId("idVenueName"))
+            Text(
+                text = "Venue: ",
+                Modifier.layoutId("idVenueName")
+            )
 
-            Text(text = meeting.venueName,
-                Modifier.layoutId("idVenueNameText"))
+            Text(
+                text = meeting.venueName,
+                Modifier.layoutId("idVenueNameText")
+            )
 
             /* Bottom line. */
 
-            Text(text = "Weather: ",
+            Text(
+                text = "Weather: ",
                 Modifier.layoutId("idWeather"),
-                fontSize = 12.sp)
+                fontSize = 12.sp
+            )
 
-            Text(text = meeting.weatherCond,
+            Text(
+                text = meeting.weatherCond,
                 Modifier.layoutId("idWeatherText"),
-                fontSize = 12.sp)
+                fontSize = 12.sp
+            )
 
-            Text(text = "Track: ",
+            Text(
+                text = "Track: ",
                 Modifier.layoutId("idTrack"),
-                fontSize = 12.sp)
+                fontSize = 12.sp
+            )
 
-            Text(text = meeting.trackCond,
+            Text(
+                text = meeting.trackCond,
                 Modifier.layoutId("idTrackText"),
-                fontSize = 12.sp)
+                fontSize = 12.sp
+            )
 
-            Text(text = meeting.trackRating.toString(),
+            Text(
+                text = meeting.trackRating.toString(),
                 Modifier.layoutId("idRatingText"),
-                fontSize = 12.sp)
+                fontSize = 12.sp
+            )
         }
     }
 }

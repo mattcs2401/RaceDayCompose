@@ -22,7 +22,7 @@ class GetMeeting @Inject constructor(
 
             emit(DataResult.success(meeting))
 
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             emit(DataResult.failure(exception))
         }
     }

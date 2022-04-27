@@ -35,7 +35,7 @@ data class MeetingsState(
     }
 
     sealed class Status {
-        object Loading: Status()
+        object Loading : Status()
         object Success : Status()
         object Failure : Status()
     }

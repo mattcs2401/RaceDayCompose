@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.theme.custom
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
@@ -18,7 +17,7 @@ data class Spacing(
 
 val LocalSpacing = compositionLocalOf { Spacing() }
 
-val MaterialTheme.spacing: Spacing
+val spacing: Spacing
     @Composable
     @ReadOnlyComposable
     get() = LocalSpacing.current
