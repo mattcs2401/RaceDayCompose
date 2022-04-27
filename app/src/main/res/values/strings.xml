@@ -9,6 +9,10 @@
     <string name="download_channel_id">download_channel_id</string>
     <string name="download_channel_name">Runners Download</string>
 
+    <!-- Icon labels. -->
+    <string name="lbl_icon_refresh">Refresh</string>
+    <string name="lbl_icon_settings">Settings</string>
+
     <!-- Button labels. -->
     <string name="lbl_btn_ok">OK</string>
     <string name="lbl_btn_cancel" tools:ignore="ButtonCase">CANCEL</string>

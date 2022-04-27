@@ -21,8 +21,8 @@ import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.ScreenRoute
-import com.mcssoft.racedaycompose.ui.components.RefreshDialog
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
+import com.mcssoft.racedaycompose.ui.components.RefreshDialog
 import com.mcssoft.racedaycompose.ui.components.SnackBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
@@ -31,7 +31,7 @@ import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
 
 @Composable
 fun MeetingsScreen(
-    context: Context,
+    context: Context,   // only used for WorkManager to get Runners.
     navController: NavController,
     viewModel: MeetingsViewModel = hiltViewModel()
 ) {
@@ -51,12 +51,18 @@ fun MeetingsScreen(
                     IconButton(onClick = {
                         showRefresh.value = true
                     }) {
-                        Icon(Icons.Default.Refresh, "Refresh")
+                        Icon(
+                            Icons.Default.Refresh,
+                            stringResource(id = R.string.lbl_icon_refresh)
+                        )
                     }
                     IconButton(onClick = {
                         navController.navigate(ScreenRoute.SettingsScreen.route)
                     }) {
-                        Icon(Icons.Default.Settings, "Settings")
+                        Icon(
+                            Icons.Default.Settings,
+                            stringResource(id = R.string.lbl_icon_settings)
+                        )
                     }
                 }
             )
@@ -67,7 +73,6 @@ fun MeetingsScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
         ) {
-
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
                     items = state.body
@@ -85,10 +90,10 @@ fun MeetingsScreen(
                 }
             }
             ManageState(
+                context = context,
                 state = state,
                 appState = appState,
                 viewModel = viewModel,
-                context = context,
                 showRefresh = showRefresh
             )
         }
@@ -97,14 +102,17 @@ fun MeetingsScreen(
 }
 
 @Composable
+/**
+ * An attempt to group all the state related activity into one place.
+ */
 private fun ManageState(
+    context: Context,
     state: MeetingsState,
     appState: AppState,
     viewModel: MeetingsViewModel,
-    context: Context,
     showRefresh: MutableState<Boolean>
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     if (showRefresh.value) {
         ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
@@ -132,24 +140,24 @@ private fun ManageState(
         is Success -> {
             if (appState.isRefreshing && appState.meetingsDownloaded) {
                 LaunchedEffect(key1 = true) {
-                    snackbarHostState.showSnackbar(
+                    snackBarHostState.showSnackbar(
                         message = "Getting Runners from the Api.",
                         actionLabel = "",
                         duration = SnackbarDuration.Short
                     )
                 }
-                SnackBar(snackBarHostState = snackbarHostState)
+                SnackBar(snackBarHostState = snackBarHostState)
                 viewModel.setupRunnersFromApi(context)
             }
             if (!appState.isRefreshing && appState.runnersDownloaded) {
                 LaunchedEffect(key1 = null) {
-                    snackbarHostState.showSnackbar(
+                    snackBarHostState.showSnackbar(
                         message = "Setup Runners from Api succeeded.",
                         actionLabel = "Close",
                         duration = SnackbarDuration.Short
                     )
                 }
-                SnackBar(snackBarHostState = snackbarHostState)
+                SnackBar(snackBarHostState = snackBarHostState)
             }
         }
     }

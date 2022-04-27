@@ -16,7 +16,7 @@ import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 
 @Composable
 fun Navigation(
-    context: Context    /* Note: Parameter simply passed through to MeetingScreen. */
+    context: Context    // simply passed through to the MeetingsScreen.
 ) {
     val navController = rememberNavController()
 

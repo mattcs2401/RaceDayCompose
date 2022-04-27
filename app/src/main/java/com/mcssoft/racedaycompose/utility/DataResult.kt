@@ -46,8 +46,6 @@ data class DataResult<T>(
     val successful: Boolean
         get() = !failed && this.data != null
 
-    val body: T
-        get() = this.data!!
 }
 
 //fun <T> DataResult<T>.successOr(fallback: T): T {

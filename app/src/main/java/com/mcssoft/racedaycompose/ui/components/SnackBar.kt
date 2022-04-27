@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
 
 @Composable
 fun SnackBar(
@@ -36,7 +37,8 @@ fun SnackBar(
                                 style = TextStyle(color = Color.White)
                             )
                         }
-                    }
+                    },
+                    shape = RoundedCornerShapes.small
                 ) {
                     Text(snackBarHostState.currentSnackbarData?.message ?: "")// "Unknown message")
                 }
