@@ -38,8 +38,7 @@ fun LoadingDialog(
                 .border(width = 2.dp, color = Color.Blue),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
-        )
-        {
+        ) {
             Row(
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
             ) {

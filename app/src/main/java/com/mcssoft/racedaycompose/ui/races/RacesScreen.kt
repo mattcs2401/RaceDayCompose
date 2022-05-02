@@ -64,7 +64,10 @@ fun RacesScreen(
                     .height(64.dp)
             ) {
                 state.meeting?.let { meeting ->
-                    MeetingHeader(meeting = meeting, MaterialTheme.colors.background)
+                    MeetingHeader(
+                        meeting = meeting,
+                        MaterialTheme.colors.background
+                    )
                 }
             }
 

@@ -16,7 +16,6 @@ import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 
 @Composable
 fun Navigation(
-    context: Context    // simply passed through to the MeetingsScreen.
 ) {
     val navController = rememberNavController()
 
@@ -31,7 +30,6 @@ fun Navigation(
             route = ScreenRoute.MeetingsScreen.route
         ) {
             MeetingsScreen(
-                context = context,
                 navController = navController
             )
         }

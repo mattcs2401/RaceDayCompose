@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
             RaceDayComposeTheme {
                 Surface(color = MaterialTheme.colors.background) {
 
-                    Navigation(applicationContext)
+                    Navigation()
                 }
             }
         }

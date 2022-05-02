@@ -33,7 +33,6 @@ class SetupRunnerFromApi {
                     WorkerState.Cancelled -> {}
                     WorkerState.Failed -> {
                         throw Exception("Observe runnerWorker failure.")
-                        //emit(DataResult.failure(Exception("Observe runnerWorker failure.")))
                     }
                     WorkerState.Succeeded -> {
                         emit(DataResult.success(""))

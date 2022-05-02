@@ -13,18 +13,18 @@ class RemoteRepoImpl @Inject constructor(
 ) : IRemoteRepo {
 
     override suspend fun getRaceDay(date: String, code: String): NetworkResponse<BaseDto> {
-        return if (code == "") {
-            apiCall { api.getRaceDay(date) }
-        } else {
-            apiCall { api.getRaceDay(date, code) }
-        }
-    }
-
-    private inline fun <T> apiCall(apiCall: () -> Response<T>): NetworkResponse<T> {
         return try {
-            NetworkResponse.success(apiCall.invoke())
+            val result = api.getRaceDay(date, code)
+            when {
+                result.isSuccessful -> {
+                    NetworkResponse.success(result)
+                }
+                else -> {
+                    NetworkResponse.error(result.message())
+                }
+            }
         } catch (ex: Exception) {
-            NetworkResponse.failure(ex)
+            NetworkResponse.exception(ex)
         }
     }
 

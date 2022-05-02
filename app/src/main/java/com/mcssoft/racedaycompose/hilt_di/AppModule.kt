@@ -53,6 +53,7 @@ object AppModule {
 //            .client(client)
             .baseUrl(app.resources.getString(R.string.base_url))
             .addConverterFactory(GsonConverterFactory.create())
+//            .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()
             .create(IRaceDay::class.java)
     }
@@ -73,8 +74,7 @@ object AppModule {
         remote: IRemoteRepo,
         local: IDbRepo,
         prefs: IPreferences
-    )
-            : RaceDayUseCases {
+    ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
             setupRunnerFromApi = SetupRunnerFromApi(),
@@ -88,5 +88,4 @@ object AppModule {
             setRunnerChecked = SetRunnerChecked(local)
         )
     }
-
 }

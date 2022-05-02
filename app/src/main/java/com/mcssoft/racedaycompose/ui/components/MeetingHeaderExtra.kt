@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.meetings.components
+package com.mcssoft.racedaycompose.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -15,43 +15,36 @@ import com.mcssoft.racedaycompose.domain.model.Meeting
 /**
  * Additional display of Meeting details (the 'expanded' state).
  * @param meeting: The Meeting to get details from for display.
- * @param onItemClick: Used for navigation. Return the selected Meeting to the MeetingsScreen.
  */
 @Composable
-fun MeetingItemExtra(
-    meeting: Meeting,
-    onItemClick: (Meeting) -> Unit
+fun MeetingHeaderExtra(
+    meeting: Meeting
 ) {
     ConstraintLayout(
         constraintSet,
         modifier = Modifier
-            .padding(top = 48.dp) // simply to give room for the top row.
-            .clickable { onItemClick(meeting) },
+            .padding(top = 40.dp)
     ) {
         Text(
             "Abandoned: ${if (meeting.abandoned) "Y" else "N"}",
             Modifier.layoutId("idAbandoned"),
             fontSize = 12.sp
         )
-
         Text(
             "Races: ${meeting.racesNo}",
             Modifier.layoutId("idRacesNo"),
             fontSize = 12.sp
         )
-
         Text(
             meeting.weatherCond,
             Modifier.layoutId("idWeatherCond"),
             fontSize = 12.sp
         )
-
         Text(
             meeting.trackCond,
             Modifier.layoutId("idTrackCond"),
             fontSize = 12.sp
         )
-
         if (meeting.trackRating > 0) {
             Text(
                 meeting.trackRating.toString(),
@@ -59,7 +52,6 @@ fun MeetingItemExtra(
                 fontSize = 12.sp
             )
         }
-
     }
 }
 

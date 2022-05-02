@@ -51,17 +51,10 @@ interface IDbRepo {
     suspend fun getMeetingCodes(): List<String>
 
     /**
-     * Select all from Meetings.
-     * @return A list of Meeting.
-     */
-//    @Query("select * from Meeting where meetingCode= :code")
-//    suspend fun getMeetings(code: String): List<Meeting>
-
-    /**
      * Delete all from Meetings.
      */
     @Query("delete from meeting")
-    suspend fun deleteMeetings()                // CASCADE should take care of Races/Runners etc.
+    suspend fun deleteMeetings(): Int       // CASCADE should take care of Races/Runners etc.
 
     /**
      * Get a count of the Meeting records.

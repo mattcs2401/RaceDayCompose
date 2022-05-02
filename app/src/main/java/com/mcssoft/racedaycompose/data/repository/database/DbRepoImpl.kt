@@ -30,7 +30,7 @@ class DbRepoImpl @Inject constructor(
         return dao.getMeetingCodes()
     }
 
-    override suspend fun deleteMeetings() {
+    override suspend fun deleteMeetings(): Int {
         return dao.deleteMeetings()
     }
 

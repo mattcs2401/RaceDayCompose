@@ -36,22 +36,35 @@ class SetupBaseFromApi @Inject constructor(
         try {
             emit(DataResult.loading())
 
-            // Delete whatever is there (CASCADE should take care of Race/Runner etc).
-            iDbRepo.deleteMeetings()
-
             // GET from the Api (as BaseDto).
-            val result = iRemoteRepo.getRaceDay(mtgDate, mtgCode).body
-            // Save Meeting/Race info.
-            result.RaceDay.Meetings.filter { type -> type.MeetingType == Constants.MEETING_TYPE }
-                .forEach { meetingDto ->
-                    // Weather/Track detail in the 1st Race used for Meeting (all other Races will have
-                    // the same info).
-                    val raceDto = meetingDto.Races[0]
-                    // Write Meeting details.
-                    val mId = populateMeeting(meetingDto, raceDto)
-                    // Write Race details.
-                    populateRaces(mId, meetingDto.Races)
+            val response = iRemoteRepo.getRaceDay(mtgDate, mtgCode)
+
+            when {
+                response.exception -> {
+                    throw Exception(response.ex)
                 }
+                response.successful -> {
+                    // Delete whatever is there (CASCADE should take care of Race/Runner etc).
+                    iDbRepo.deleteMeetings()
+                }
+                response.error -> {
+                    // TBA - Not an exception, but no data in the response.
+                }
+            }
+
+            // Save Meeting/Race info.
+            response.body.RaceDay.Meetings.filter { type ->
+                type.MeetingType == Constants.MEETING_TYPE
+            }.forEach { meetingDto ->
+                // Weather/Track detail in the 1st Race used for Meeting (all other Races will have
+                // the same info).
+                val raceDto = meetingDto.Races[0]
+                // Write Meeting details.
+                val mId = populateMeeting(meetingDto, raceDto)
+                // Write Race details.
+                populateRaces(mId, meetingDto.Races)
+            }
+
             emit(DataResult.success(""))
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))
