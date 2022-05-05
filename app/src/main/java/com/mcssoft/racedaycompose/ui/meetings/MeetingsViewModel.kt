@@ -2,13 +2,13 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.AppState
+import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -70,6 +70,12 @@ class MeetingsViewModel @Inject constructor(
                 )
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
+            }
+            is MeetingsEvent.RefreshFromDb -> {
+                viewModelScope.launch {
+                    val onlyAuNz = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
+                    getMeetingsFromLocal(onlyAuNz)
+                }
             }
         }
     }
@@ -164,13 +170,14 @@ class MeetingsViewModel @Inject constructor(
                         _appState.value = _appState.value.copy(
                             isRefreshing = false,
                             runnersDownloaded = false,
-                            downloadError = AppState.Status.DownloadError
+                            downloadError =
+                            AppState.Status.DownloadError("Setup Runners from Api failed.")
                         )
-                        Toast.makeText(
-                            context,
-                            "Setup Runners from Api failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            context,
+//                            "Setup Runners from Api failed.",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                     result.successful -> {
                         _appState.value = _appState.value.copy(

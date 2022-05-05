@@ -19,7 +19,7 @@ import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
-import com.mcssoft.racedaycompose.ui.components.SnackBar
+import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
@@ -67,6 +67,7 @@ fun MeetingsScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
         ) {
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
                     items = state.body
@@ -104,7 +105,6 @@ private fun ManageState(
     viewModel: MeetingsViewModel,
     showRefresh: MutableState<Boolean>
 ) {
-    val snackBarHostState = remember { SnackbarHostState() }
     val errorDialogShow = remember { mutableStateOf(false) }
 
     if (showRefresh.value) {
@@ -120,30 +120,19 @@ private fun ManageState(
         is Failure -> {
             showRefresh.value = false
             errorDialogShow.value = true
-            ShowErrorDialog(errorDialogShow)
+            ShowErrorDialog(
+                errorDialogShow,
+                viewModel = viewModel
+            )
         }
         is Success -> {
             if (appState.isRefreshing && appState.meetingsDownloaded) {
-                LaunchedEffect(key1 = true) {
-                    snackBarHostState.showSnackbar(
-                        message = "Getting Runners from the Api.",
-                        actionLabel = "",
-                        duration = SnackbarDuration.Short
-                    )
-                }
-                SnackBar(snackBarHostState = snackBarHostState)
+                Toast("Getting Runners from the Api.")     // using Toast instead of SnackBar.
                 // Get the Runner info from the Api.
                 viewModel.setupRunnersFromApi(LocalContext.current)
             }
             if (!appState.isRefreshing && appState.runnersDownloaded) {
-                LaunchedEffect(key1 = null) {
-                    snackBarHostState.showSnackbar(
-                        message = "Setup Runners from Api succeeded.",
-                        actionLabel = "Close",
-                        duration = SnackbarDuration.Short
-                    )
-                }
-                SnackBar(snackBarHostState = snackBarHostState)
+                Toast("Setup Runners from Api succeeded.")
             }
         }
     }
@@ -155,6 +144,7 @@ private fun ShowRefreshDialog(
     viewModel: MeetingsViewModel
 ) {
     CommonDialog(
+        icon = R.drawable.ic_refresh_48,
         dialogTitle = stringResource(id = R.string.dlg_refresh_title),
         dialogText = stringResource(id = R.string.dlg_refresh_text),
         confirmButtonText = stringResource(id = R.string.lbl_btn_ok),
@@ -167,23 +157,43 @@ private fun ShowRefreshDialog(
         onDismissClicked = {
             show.value = !show.value
         }
-        //,shape = RoundedCornerShapes.small
     )
 }
 
 @Composable
 private fun ShowErrorDialog(
-    showError: MutableState<Boolean>
+    showError: MutableState<Boolean>,
+    viewModel: MeetingsViewModel
 ) {
-    if(showError.value) {
+    if (showError.value) {
         CommonDialog(
             icon = R.drawable.ic_error_48,
             dialogTitle = "No Connectivity",
             dialogText = "Check the internet connection or mobile data status.",
-            dismissButtonText = stringResource(id = R.string.lbl_btn_ok),
+            dismissButtonText = "Refresh From Local",
             onDismissClicked = {
                 showError.value = !showError.value
+                viewModel.onEvent(MeetingsEvent.RefreshFromDb)
             }
+
         )
     }
 }
+
+/*
+  SnackBar example:
+  -----------------
+1. val snackBarHostState = remember { SnackbarHostState() }
+2. if (appState.isRefreshing && appState.meetingsDownloaded) {
+                LaunchedEffect(key1 = true) {
+                    snackBarHostState.showSnackbar(
+                        message = "Getting Runners from the Api.",
+                        actionLabel = "",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+                SnackBar(snackBarHostState = snackBarHostState)
+     Get the Runner info from the Api.
+    viewModel.setupRunnersFromApi(LocalContext.current)
+}
+ */

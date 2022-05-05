@@ -10,7 +10,6 @@ data class AppState(
     var downloadError: Status = Status.Initialise     // An error occurred in the download.
 ) {
     companion object {
-
         /**
          * A StateFlow initializer.
          */
@@ -29,7 +28,7 @@ data class AppState(
 
     sealed class Status {
         object Initialise : Status()
-        object DownloadError : Status()
+        data class DownloadError(val msg: String = "") : Status()
     }
 
 }

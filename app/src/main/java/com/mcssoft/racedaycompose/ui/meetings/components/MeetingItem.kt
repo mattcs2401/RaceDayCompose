@@ -54,12 +54,18 @@ fun MeetingItem(
             modifier = Modifier
                 .clickable { onItemClick(meeting) }
         ) {
-            Text(meeting.meetingCode, Modifier.layoutId("idMCode"))
-
-            Text(meeting.venueName, Modifier.layoutId("idVenueName"))
-
-            Text(meeting.meetingTime, Modifier.layoutId("idTime"))
-
+            Text(
+                meeting.meetingCode,
+                Modifier.layoutId("idMCode")
+            )
+            Text(
+                meeting.venueName,
+                Modifier.layoutId("idVenueName")
+            )
+            Text(
+                meeting.meetingTime,
+                Modifier.layoutId("idTime")
+            )
             IconButton(
                 onClick = {
                     expandedState = !expandedState
