@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.CheckBox
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.TopBar

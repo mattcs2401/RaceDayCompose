@@ -3,7 +3,7 @@ package com.mcssoft.racedaycompose.ui.splash
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
-import com.mcssoft.racedaycompose.ui.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 
 /**
  * App starting point.

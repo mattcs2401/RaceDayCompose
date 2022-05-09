@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,10 +16,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
-import com.mcssoft.racedaycompose.ui.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
+import com.mcssoft.racedaycompose.ui.components.navigation.BottomBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 
@@ -50,17 +50,21 @@ fun MeetingsScreen(
                             stringResource(id = R.string.lbl_icon_refresh)
                         )
                     }
-                    IconButton(onClick = {
-                        navController.navigate(ScreenRoute.SettingsScreen.route)
-                    }) {
-                        Icon(
-                            Icons.Default.Settings,
-                            stringResource(id = R.string.lbl_icon_settings)
-                        )
-                    }
+//                    IconButton(onClick = {
+//                        navController.navigate(ScreenRoute.SettingsScreen.route)
+//                    }) {
+//                        Icon(
+//                            Icons.Default.Settings,
+//                            stringResource(id = R.string.lbl_icon_settings)
+//                        )
+//                    }
                 }
             )
+        },
+        bottomBar = {
+            BottomBar(navController = navController)
         }
+    
     ) {
         Box(
             modifier = Modifier

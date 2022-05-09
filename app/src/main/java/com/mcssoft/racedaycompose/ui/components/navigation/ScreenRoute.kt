@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui
+package com.mcssoft.racedaycompose.ui.components.navigation
 
 sealed class ScreenRoute(val route: String) {
 
@@ -9,6 +9,8 @@ sealed class ScreenRoute(val route: String) {
     object RunnersScreen : ScreenRoute("runners_screen")
 
     object SettingsScreen : ScreenRoute("settings_screen")
+
+    object SummaryScreen : ScreenRoute("summary_screen")
 
     object SplashScreen : ScreenRoute("splash_screen")
 }
