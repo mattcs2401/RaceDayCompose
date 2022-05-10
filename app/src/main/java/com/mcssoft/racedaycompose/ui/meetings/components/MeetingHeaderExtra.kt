@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +25,7 @@ fun MeetingHeaderExtra(
             .padding(top = 40.dp)
     ) {
         Text(
-            "Abandoned: ${if (meeting.abandoned) "Y" else "N"}",
+            "Abandoned: ${ if (meeting.abandoned) "Y" else "N" }",
             Modifier.layoutId("idAbandoned"),
             fontSize = 12.sp
         )

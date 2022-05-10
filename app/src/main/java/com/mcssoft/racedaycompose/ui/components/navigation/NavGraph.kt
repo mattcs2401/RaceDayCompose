@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.components.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -20,14 +20,8 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.MeetingsScreen.route //SplashScreen.route
+        startDestination = ScreenRoute.MeetingsScreen.route
     ) {
-//        composable(
-//            route = ScreenRoute.SplashScreen.route
-//        ) {
-//            // "Dummy" starting point.
-//            SplashScreen(navController = navController)
-//        }
         composable(
             route = ScreenRoute.MeetingsScreen.route
         ) {

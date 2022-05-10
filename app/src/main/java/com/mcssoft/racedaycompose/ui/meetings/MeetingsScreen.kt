@@ -6,21 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
-import com.mcssoft.racedaycompose.ui.components.navigation.BottomBar
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 
@@ -38,32 +37,33 @@ fun MeetingsScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(id = R.string.label_meetings)) },
-                backgroundColor = MaterialTheme.colors.primary,
+            TopBar(
+                title = stringResource(id = R.string.label_meetings),
+                backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
                         showRefresh.value = true
                     }) {
                         Icon(
-                            Icons.Default.Refresh,
+                            //Icons.Default.Refresh,
+                            painterResource(id = R.drawable.ic_refresh_24),
                             stringResource(id = R.string.lbl_icon_refresh)
                         )
                     }
-//                    IconButton(onClick = {
-//                        navController.navigate(ScreenRoute.SettingsScreen.route)
-//                    }) {
-//                        Icon(
-//                            Icons.Default.Settings,
-//                            stringResource(id = R.string.lbl_icon_settings)
-//                        )
-//                    }
+                    IconButton(onClick = {
+                        navController.navigate(ScreenRoute.SettingsScreen.route)
+                    }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_settings_24),
+                            stringResource(id = R.string.lbl_icon_settings)
+                        )
+                    }
                 }
             )
-        },
-        bottomBar = {
-            BottomBar(navController = navController)
         }
+//        bottomBar = {
+//            BottomBar(navController = navController)
+//        }
     
     ) {
         Box(

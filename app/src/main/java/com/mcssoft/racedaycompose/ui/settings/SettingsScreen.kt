@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.CheckBox
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
-import com.mcssoft.racedaycompose.ui.components.TopBar
+import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
@@ -47,7 +45,8 @@ fun SettingsScreen(
                         }
                     }
                 },
-                Icons.Filled.ArrowBack
+                actions = {}
+                //Icons.Filled.ArrowBack
             )
         },
         backgroundColor = Color.LightGray

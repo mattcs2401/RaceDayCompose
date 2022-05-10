@@ -4,26 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
-import com.mcssoft.racedaycompose.ui.components.TopBar
+import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 
 @Composable
@@ -39,7 +34,8 @@ fun RacesScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_races),
-                MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colors.primary,
+                backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     navController.navigate(ScreenRoute.MeetingsScreen.route) {
                         popUpTo(ScreenRoute.MeetingsScreen.route) {
@@ -47,10 +43,22 @@ fun RacesScreen(
                         }
                     }
                 },
-                Icons.Filled.ArrowBack
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                            popUpTo(ScreenRoute.MeetingsScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    }) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_home_24),
+                            stringResource(id = R.string.lbl_icon_home)
+                        )
+                    }
+                }
             )
-        },
-        backgroundColor = Color.LightGray
+        }
     ) {
         Box(
             modifier = Modifier
