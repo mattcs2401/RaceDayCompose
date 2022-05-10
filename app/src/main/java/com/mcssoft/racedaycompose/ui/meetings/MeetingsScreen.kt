@@ -58,6 +58,17 @@ fun MeetingsScreen(
                             stringResource(id = R.string.lbl_icon_settings)
                         )
                     }
+                    // TODO - Only display if Summary items exist.
+                    if(viewModel.summaryCheck()) {
+                        IconButton(onClick = {
+                            navController.navigate(ScreenRoute.SummaryScreen.route)
+                        }) {
+                            Icon(
+                                painterResource(id = R.drawable.ic_summary_24),
+                                stringResource(id = R.string.lbl_icon_summary)
+                            )
+                        }
+                    }
                 }
             )
         }

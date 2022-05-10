@@ -18,8 +18,8 @@ import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.CheckBox
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
-import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
@@ -37,7 +37,8 @@ fun SettingsScreen(
         topBar = {
             TopBar(
                 title = stringResource(id = R.string.label_preferences),
-                MaterialTheme.colors.primary,
+                backgroundColour = MaterialTheme.colors.primary,
+                backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     navController.navigate(ScreenRoute.MeetingsScreen.route) {
                         popUpTo(ScreenRoute.MeetingsScreen.route) {
@@ -46,7 +47,6 @@ fun SettingsScreen(
                     }
                 },
                 actions = {}
-                //Icons.Filled.ArrowBack
             )
         },
         backgroundColor = Color.LightGray

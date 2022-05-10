@@ -8,7 +8,6 @@ import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.AppState
-import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -51,8 +50,6 @@ class MeetingsViewModel @Inject constructor(
                 )
                 // Get the initial load from the Api (Meetings/Races).
                 setupBaseFromApi(date)
-                // TBA ?
-                delay(250)
             }
         }
     }
@@ -155,6 +152,15 @@ class MeetingsViewModel @Inject constructor(
     }
 
     /**
+     * Check if any Summary items exist (basically just a count(*) operation).
+     * @return true if records exist, else false.
+     */
+    fun summaryCheck(): Boolean {
+        // TODO - Use case for Summary records check.
+        return true
+    }
+
+    /**
      * Use case: SetupRunnersFromApi.
      * Get the raw data from the Api (Runners).
      * Note: This has to be done separately from the Meeting & Race info because of the Api. Runner
@@ -173,11 +179,6 @@ class MeetingsViewModel @Inject constructor(
                             downloadError =
                             AppState.Status.DownloadError("Setup Runners from Api failed.")
                         )
-//                        Toast.makeText(
-//                            context,
-//                            "Setup Runners from Api failed.",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
                     }
                     result.successful -> {
                         _appState.value = _appState.value.copy(

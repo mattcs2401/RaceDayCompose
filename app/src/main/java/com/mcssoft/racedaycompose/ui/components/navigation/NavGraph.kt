@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsScreen
 import com.mcssoft.racedaycompose.ui.races.RacesScreen
 import com.mcssoft.racedaycompose.ui.runners.RunnersScreen
