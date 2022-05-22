@@ -10,6 +10,7 @@ import com.mcssoft.racedaycompose.ui.meetings.MeetingsScreen
 import com.mcssoft.racedaycompose.ui.races.RacesScreen
 import com.mcssoft.racedaycompose.ui.runners.RunnersScreen
 import com.mcssoft.racedaycompose.ui.settings.SettingsScreen
+import com.mcssoft.racedaycompose.ui.splash.SplashScreen
 import com.mcssoft.racedaycompose.ui.summary.SummaryScreen
 
 @Composable
@@ -19,10 +20,21 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.MeetingsScreen.route
+        startDestination = ScreenRoute.SplashScreen.route
     ) {
         composable(
-            route = ScreenRoute.MeetingsScreen.route
+            route = ScreenRoute.SplashScreen.route
+        ) {
+            SplashScreen(
+                navController = navController
+            )
+        }
+        composable(
+            route = ScreenRoute.MeetingsScreen.route + "prefsChange={prefsChange}",
+            arguments = listOf(navArgument(name = "prefsChange") {
+                type = NavType.BoolType
+                defaultValue = false
+            })
         ) {
             MeetingsScreen(
                 navController = navController

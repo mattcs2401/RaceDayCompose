@@ -2,12 +2,14 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.AppState
+import com.mcssoft.racedaycompose.utility.Constants
 import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
+    savedStateHandle: SavedStateHandle,
     private val prefs: IPreferences
 ) : ViewModel() {
 
@@ -30,6 +33,15 @@ class MeetingsViewModel @Inject constructor(
     val appState: StateFlow<AppState> = _appState.asStateFlow()
 
     init {
+        savedStateHandle.get<Boolean>(Constants.KEY_PREFS_CHANGE)?.let { prefChange ->
+            when(prefChange) {
+                true -> {
+                    // TBA - a preference changed so action.
+                }
+                false -> { /* Nothing changed. */}
+            }
+        }
+
         viewModelScope.launch {
             val date = DateUtils().getDateToday()
             val fromDbPref = prefs.getPreference(Preference.FromDbPref) as Boolean

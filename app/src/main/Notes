@@ -2,6 +2,8 @@
 App Notes
 ---------
 
+https://material-foundation.github.io/material-theme-builder/#/custom
+
 In no particular order:
 -----------------------
 
@@ -12,6 +14,6 @@ In no particular order:
    If navigating back from Races or Runners, there's no need for the Meetings view model to do the
    preference check.
 
--> Have items in the Preferences screen as individual, e.g. as Card.
+-> Put abandoned Meetings to the bottom of the list.
 
-
+-> TBA

@@ -9,9 +9,11 @@ object Constants {
     // The "key" for the parameter passed from the MeetingsScreen to the RacesScreen.
     const val KEY_MEETING_ID: String = "meetingId"
 
+    // The "key" for the ...
     const val KEY_RACE_ID: String = "raceId"
 
-    //TBA - const val KEY_PREF_CHANGE: String = "prefChange"
+    // The "key" for the ...
+    const val KEY_PREFS_CHANGE: String = "prefsChange"
 
     // Base meeting type. Only Meetings of this type will be displayed (ATT).
     const val MEETING_TYPE: String = "R"

@@ -37,7 +37,9 @@ fun RacesScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                    navController.navigate(
+                        ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                    ) {
                         popUpTo(ScreenRoute.MeetingsScreen.route) {
                             inclusive = true
                         }
@@ -45,7 +47,9 @@ fun RacesScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                        navController.navigate(
+                            ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                        ) {
                             popUpTo(ScreenRoute.MeetingsScreen.route) {
                                 inclusive = true
                             }

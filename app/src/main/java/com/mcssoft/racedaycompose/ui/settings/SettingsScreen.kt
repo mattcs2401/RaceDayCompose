@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.components.CheckBox
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
+import com.mcssoft.racedaycompose.ui.settings.components.CheckBoxSettingsItem
 import com.mcssoft.racedaycompose.ui.theme.custom.spacing
 
 @Composable
@@ -40,7 +40,9 @@ fun SettingsScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navController.navigate(ScreenRoute.MeetingsScreen.route) {
+                    navController.navigate(
+                        ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                    ) {
                         popUpTo(ScreenRoute.MeetingsScreen.route) {
                             inclusive = true
                         }
@@ -54,41 +56,37 @@ fun SettingsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.secondary)
-        )
-        {
+                .background(Color.White)// MaterialTheme.colors.secondary)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalArrangement = Arrangement.Center
             ) {
-                Row(
+                CheckBoxSettingsItem(
+                    textTitle = stringResource(id = R.string.pref_load_from_db),
+                    textDescription = "Load meeting details from local.",
+                    selected = fromDbState.value.preference,
+                    onChange = { checked ->
+                        viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
+                    },
+                    backgroundColour = MaterialTheme.colors.secondary
+                )
+                Spacer(
                     modifier = Modifier
+                        .height(8.dp)
                         .fillMaxWidth()
-                        .wrapContentHeight()
-                ) {
-                    CheckBox(
-                        text = stringResource(id = R.string.pref_load_from_db),
-                        selected = fromDbState.value.preference,
-                        onCheckedChange = { checked ->
-                            viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
-                        }
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                ) {
-                    CheckBox(
-                        text = stringResource(id = R.string.pref_only_au),
-                        selected = onlyAuNzState.value.preference,
-                        onCheckedChange = { checked ->
-                            viewModel.onEvent(SettingsEvent.SaveOnlyAuNzPref(checked))
-                        }
-                    )
-                }
+                )
+                CheckBoxSettingsItem(
+                    textTitle = stringResource(id = R.string.pref_only_au),
+                    textDescription = "Display only AU/NZ meeting details.",
+                    selected = onlyAuNzState.value.preference,
+                    onChange = { checked ->
+                        viewModel.onEvent(SettingsEvent.SaveOnlyAuNzPref(checked))
+                    },
+                    backgroundColour = MaterialTheme.colors.secondary
+                )
             }
             if (fromDbState.value.error.isNotBlank()) {
                 Text(
