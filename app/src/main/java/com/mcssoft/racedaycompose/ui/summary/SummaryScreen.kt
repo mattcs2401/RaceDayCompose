@@ -8,6 +8,4 @@ import androidx.navigation.NavController
 fun SummaryScreen(
     navController: NavController,
     viewModel: SummaryViewModel = hiltViewModel()
-) {
-
-}
+) {}

@@ -1,0 +1,23 @@
+data class Race(
+    val Distance: Int,
+    val FeatureRaceBonusActive: String,
+    val FixedPriceSummary: FixedPriceSummary,
+    val Pools: List<PoolX>,
+    val RaceName: String,
+    val RaceNumber: Int,
+    val RaceTime: String,
+    val Runners: List<Runner>,
+    val Status: String,
+    val SubFavourite: Int,
+    val SubFavouriteCandidate: Int,
+    val TotalTrioAvailable: Boolean,
+    val TotalTrioSubEventId: Int,
+    val TrackChanged: Boolean,
+    val TrackCondition: String,
+    val TrackConditionLevel: Int,
+    val TrackRating: Int,
+    val TrackRatingChanged: Boolean,
+    val WeatherChanged: Boolean,
+    val WeatherCondition: String,
+    val WeatherConditionLevel: Int
+)

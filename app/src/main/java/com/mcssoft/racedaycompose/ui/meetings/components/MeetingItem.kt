@@ -14,12 +14,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.ui.theme.custom.spacing
-import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.margin0dp
+import com.mcssoft.racedaycompose.ui.theme.margin16dp
+import com.mcssoft.racedaycompose.ui.theme.padding4dp
 
 @Composable
 fun MeetingItem(
@@ -41,7 +42,7 @@ fun MeetingItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(spacing.extraSmall)
+            .padding(padding4dp)
             .animateContentSize(
                 animationSpec = tween(300, easing = LinearOutSlowInEasing)
             ),
@@ -97,16 +98,16 @@ private val constraintSet = ConstraintSet {
     val idArrow = createRefFor("idArrow")
 
     constrain(idMCode) {
-        top.linkTo(parent.top, margin = 16.dp)
-        start.linkTo(parent.start, margin = 16.dp)
+        top.linkTo(parent.top, margin = margin16dp)
+        start.linkTo(parent.start, margin = margin16dp)
     }
     constrain(idVenueName) {
-        start.linkTo(idMCode.end, margin = 16.dp)
-        top.linkTo(idMCode.top, margin = 0.dp)
+        start.linkTo(idMCode.end, margin = margin16dp)
+        top.linkTo(idMCode.top, margin = margin0dp)
     }
     constrain(idTime) {
-        top.linkTo(idVenueName.top, margin = 0.dp)
-        end.linkTo(idArrow.start, margin = 16.dp)
+        top.linkTo(idVenueName.top, margin = margin0dp)
+        end.linkTo(idArrow.start, margin = margin16dp)
     }
     constrain(idArrow) {
         end.linkTo(parent.absoluteRight)

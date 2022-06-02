@@ -12,15 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.settings.components.CheckBoxSettingsItem
-import com.mcssoft.racedaycompose.ui.theme.custom.spacing
+import com.mcssoft.racedaycompose.ui.theme.height8dp
+import com.mcssoft.racedaycompose.ui.theme.padding16dp
 
 @Composable
 fun SettingsScreen(
@@ -41,9 +41,9 @@ fun SettingsScreen(
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     navController.navigate(
-                        ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                        Screen.MeetingsScreen.route + "prefsChange=${false}"
                     ) {
-                        popUpTo(ScreenRoute.MeetingsScreen.route) {
+                        popUpTo(Screen.MeetingsScreen.route) {
                             inclusive = true
                         }
                     }
@@ -61,7 +61,7 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(padding16dp),
                 verticalArrangement = Arrangement.Center
             ) {
                 CheckBoxSettingsItem(
@@ -75,7 +75,7 @@ fun SettingsScreen(
                 )
                 Spacer(
                     modifier = Modifier
-                        .height(8.dp)
+                        .height(height8dp)
                         .fillMaxWidth()
                 )
                 CheckBoxSettingsItem(
@@ -95,7 +95,7 @@ fun SettingsScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(spacing.medium)
+                        .padding(padding16dp)
                         .align(Alignment.Center)
                 )
             }

@@ -12,15 +12,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.RaceHeader
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.runners.components.RunnerItem
+import com.mcssoft.racedaycompose.ui.theme.height64dp
+import com.mcssoft.racedaycompose.ui.theme.padding16dp
+import com.mcssoft.racedaycompose.ui.theme.padding64dp
 
 @Composable
 fun RunnersScreen(
@@ -38,16 +40,16 @@ fun RunnersScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navController.navigate(ScreenRoute.RacesScreen.route + "meetingId=${0}") {
-                        popUpTo(ScreenRoute.RacesScreen.route) {
+                    navController.navigate(Screen.RacesScreen.route + "meetingId=${0}") {
+                        popUpTo(Screen.RacesScreen.route) {
                             inclusive = true
                         }
                     }
                 },
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(ScreenRoute.MeetingsScreen.route) {
-                            popUpTo(ScreenRoute.MeetingsScreen.route) {
+                        navController.navigate(Screen.MeetingsScreen.route) {
+                            popUpTo(Screen.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }
@@ -71,7 +73,7 @@ fun RunnersScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp)
+                    .height(height64dp)
             ) {
                 state.race?.let { race ->
                     RaceHeader(race = race, MaterialTheme.colors.background)
@@ -81,7 +83,7 @@ fun RunnersScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 64.dp)
+                    .padding(top = padding64dp)
             ) {
                 items(
                     items = state.runners.filter { runner ->
@@ -103,7 +105,7 @@ fun RunnersScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = padding16dp)
                         .align(Alignment.Center)
                 )
             }

@@ -3,7 +3,6 @@ package com.mcssoft.racedaycompose.ui.components.dialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -12,14 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.*
 
 /**
  * A generic dialog with 8dp rounded corners..
@@ -65,7 +62,7 @@ fun CommonDialog(
 
                 Spacer(
                     modifier = Modifier
-                        .height(16.dp)
+                        .height(height16dp)
                         .fillMaxWidth()
                 )
 
@@ -73,13 +70,13 @@ fun CommonDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp),
+                        .padding(start = padding16dp),
                     verticalAlignment = Alignment.CenterVertically
                     //horizontalArrangement = Arrangement.Start
                 ) {
                     if (icon != null) {
                         Column(
-                            modifier = Modifier.fillMaxWidth(0.2f),
+                            modifier = Modifier.fillMaxWidth(twentyPercent),
                             horizontalAlignment = Alignment.Start
                         ) {
                             Image(
@@ -88,7 +85,7 @@ fun CommonDialog(
                             )
                         }
                         Column(
-                            modifier = Modifier.fillMaxWidth(0.8f),
+                            modifier = Modifier.fillMaxWidth(eightyPercent),
                             horizontalAlignment = Alignment.Start
                         ) {
                             Text(
@@ -115,7 +112,7 @@ fun CommonDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(padding16dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -129,7 +126,7 @@ fun CommonDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 16.dp),
+                        .padding(end = padding16dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
@@ -138,7 +135,7 @@ fun CommonDialog(
                         Text(text = dismissButtonText)
                     }
                     if (onConfirmClicked != null) {
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(width16dp))
                         OutlinedButton(onClick = onConfirmClicked)
                         {
                             Text(text = confirmButtonText)
@@ -148,7 +145,7 @@ fun CommonDialog(
 
                 Spacer(
                     modifier = Modifier
-                        .height(16.dp)
+                        .height(height16dp)
                         .fillMaxWidth()
                 )
             }

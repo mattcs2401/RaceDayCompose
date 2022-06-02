@@ -9,10 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.mcssoft.racedaycompose.ui.theme.*
 
 /**
 A dialog with a title on the 1st line, and a circular progress indicator and message text on the
@@ -34,35 +33,49 @@ fun LoadingDialog(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .border(width = 2.dp, color = Color.Blue),
+                .fillMaxWidth(eightyPercent)
+                .border(
+                    width = width2dp,
+                    color = Color.Blue
+                ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
         ) {
             Row(
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+                modifier = Modifier.padding(
+                    start = padding16dp,
+                    top = padding16dp,
+                    bottom = padding8dp
+                )
             ) {
                 Text(titleText)
             }
-
             Row(
-                modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 16.dp),
+                modifier = Modifier.padding(
+                    start = padding16dp,
+                    top = padding8dp,
+                    bottom = padding16dp
+                ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth(0.3f),
+                        .fillMaxWidth(thirtyPercent),
                 ) {
                     CircularProgressIndicator()
                 }
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth(0.7f),
+                        .fillMaxWidth(seventyPercent),
                 ) {
-                    Text(msgText, fontSize = 12.sp, overflow = TextOverflow.Ellipsis, maxLines = 1)
+                    Text(
+                        msgText,
+                        fontSize = fontSize12sp,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
                 }
             }
-
         }
     }
 }

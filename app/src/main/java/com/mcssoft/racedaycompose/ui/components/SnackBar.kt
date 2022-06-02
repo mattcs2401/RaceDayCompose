@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.RoundedCornerShapes
 
 @Composable
 fun SnackBar(

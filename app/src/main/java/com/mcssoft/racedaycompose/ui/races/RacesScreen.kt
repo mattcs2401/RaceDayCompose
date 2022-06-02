@@ -11,15 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.MeetingHeader
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
+import com.mcssoft.racedaycompose.ui.theme.height64dp
+import com.mcssoft.racedaycompose.ui.theme.padding16dp
+import com.mcssoft.racedaycompose.ui.theme.padding64dp
 
 @Composable
 fun RacesScreen(
@@ -38,9 +40,9 @@ fun RacesScreen(
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
                     navController.navigate(
-                        ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                        Screen.MeetingsScreen.route + "prefsChange=${false}"
                     ) {
-                        popUpTo(ScreenRoute.MeetingsScreen.route) {
+                        popUpTo(Screen.MeetingsScreen.route) {
                             inclusive = true
                         }
                     }
@@ -48,9 +50,9 @@ fun RacesScreen(
                 actions = {
                     IconButton(onClick = {
                         navController.navigate(
-                            ScreenRoute.MeetingsScreen.route + "prefsChange=${false}"
+                            Screen.MeetingsScreen.route + "prefsChange=${false}"
                         ) {
-                            popUpTo(ScreenRoute.MeetingsScreen.route) {
+                            popUpTo(Screen.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }
@@ -73,7 +75,7 @@ fun RacesScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp)
+                    .height(height64dp)
             ) {
                 state.meeting?.let { meeting ->
                     MeetingHeader(
@@ -86,7 +88,7 @@ fun RacesScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 64.dp)
+                    .padding(top = padding64dp)
             ) {
                 items(
                     items = state.races
@@ -95,7 +97,7 @@ fun RacesScreen(
                         race = race,
                         onItemClick = {
                             navController.navigate(
-                                ScreenRoute.RunnersScreen.route + "raceId=${race._id}"
+                                Screen.RunnersScreen.route + "raceId=${race._id}"
                             )
                         }
                     )
@@ -108,7 +110,7 @@ fun RacesScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = padding16dp)
                         .align(Alignment.Center)
                 )
             }

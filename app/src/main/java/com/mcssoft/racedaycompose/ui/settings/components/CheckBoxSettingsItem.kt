@@ -8,8 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.mcssoft.racedaycompose.ui.theme.framework.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.*
 
 @Composable
 fun CheckBoxSettingsItem(
@@ -22,15 +21,17 @@ fun CheckBoxSettingsItem(
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        //    .padding(spacing.extraSmall),
         shape = RoundedCornerShapes.small,
         backgroundColor = backgroundColour,
-        border = BorderStroke(2.dp, color = Color.Black)
+        border = BorderStroke(
+            width = stroke2dp,
+            color = Color.Black
+        )
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(8.dp),
+                .fillMaxWidth(eightyPercent)
+                .padding(padding8dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
@@ -41,7 +42,6 @@ fun CheckBoxSettingsItem(
                 Text(
                     text = textTitle,
                     fontWeight = FontWeight.Bold,
-                    //fontSize = 18.sp
                 )
             }
             Row(
@@ -55,8 +55,8 @@ fun CheckBoxSettingsItem(
         }
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.2f)
-                .padding(8.dp),
+                .fillMaxWidth(twentyPercent)
+                .padding(padding8dp),
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {

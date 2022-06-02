@@ -20,17 +20,17 @@ fun NavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.SplashScreen.route
+        startDestination = Screen.SplashScreen.route
     ) {
         composable(
-            route = ScreenRoute.SplashScreen.route
+            route = Screen.SplashScreen.route
         ) {
             SplashScreen(
                 navController = navController
             )
         }
         composable(
-            route = ScreenRoute.MeetingsScreen.route + "prefsChange={prefsChange}",
+            route = Screen.MeetingsScreen.route + "prefsChange={prefsChange}",
             arguments = listOf(navArgument(name = "prefsChange") {
                 type = NavType.BoolType
                 defaultValue = false
@@ -42,7 +42,7 @@ fun NavGraph(
         }
         composable(
             /* See notes below. */
-            route = ScreenRoute.RacesScreen.route + "meetingId={meetingId}",
+            route = Screen.RacesScreen.route + "meetingId={meetingId}",
             arguments = listOf(navArgument("meetingId") {
                 type = NavType.LongType
                 defaultValue = -1
@@ -53,7 +53,7 @@ fun NavGraph(
             )
         }
         composable(
-            route = ScreenRoute.RunnersScreen.route + "raceId={raceId}",
+            route = Screen.RunnersScreen.route + "raceId={raceId}",
             arguments = listOf(navArgument("raceId") {
                 type = NavType.LongType
                 defaultValue = -1
@@ -64,14 +64,14 @@ fun NavGraph(
             )
         }
         composable(
-            route = ScreenRoute.SettingsScreen.route
+            route = Screen.SettingsScreen.route
         ) {
             SettingsScreen(
                 navController = navController
             )
         }
         composable(
-            route = ScreenRoute.SummaryScreen.route
+            route = Screen.SummaryScreen.route
         ) {
             SummaryScreen(
                 navController = navController

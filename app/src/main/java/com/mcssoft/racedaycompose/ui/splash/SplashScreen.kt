@@ -3,7 +3,7 @@ package com.mcssoft.racedaycompose.ui.splash
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 
 /**
  * App starting point.
@@ -19,6 +19,6 @@ import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
 fun SplashScreen(navController: NavController) {
 
     LaunchedEffect(key1 = true) {
-        navController.navigate(ScreenRoute.MeetingsScreen.route + "prefsChange=${false}")
+        navController.navigate(Screen.MeetingsScreen.route + "prefsChange=${false}")
     }
 }

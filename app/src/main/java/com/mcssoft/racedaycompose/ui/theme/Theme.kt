@@ -1,13 +1,9 @@
 package com.mcssoft.racedaycompose.ui.theme.framework
 
 import android.annotation.SuppressLint
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
-import com.mcssoft.racedaycompose.ui.theme.custom.LocalSpacing
-import com.mcssoft.racedaycompose.ui.theme.custom.Spacing
 
 //private val DarkColorPalette = darkColors(
 //    primary = Purple200,
@@ -59,17 +55,17 @@ fun RaceDayComposeTheme(
 
     val colors = LightColorPalette
     
-    CompositionLocalProvider(
-        LocalSpacing provides Spacing(),
-        // e.g. LocalElevation provides Elevation() etc ...
-    ) {
-        MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = RoundedCornerShapes,
-            content = content
-        )
-    }
+//    CompositionLocalProvider(
+//        LocalSpacing provides Spacing(),
+//        // e.g. LocalElevation provides Elevation() etc ...
+//    ) {
+//        MaterialTheme(
+//            colors = colors,
+//            typography = Typography,
+//            shapes = RoundedCornerShapes,
+//            content = content
+//        )
+//    }
 
 
 }

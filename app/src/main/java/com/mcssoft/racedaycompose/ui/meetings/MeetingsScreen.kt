@@ -18,7 +18,7 @@ import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
-import com.mcssoft.racedaycompose.ui.components.navigation.ScreenRoute
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
@@ -51,7 +51,7 @@ fun MeetingsScreen(
                         )
                     }
                     IconButton(onClick = {
-                        navController.navigate(ScreenRoute.SettingsScreen.route)
+                        navController.navigate(Screen.SettingsScreen.route)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_settings_24),
@@ -61,7 +61,7 @@ fun MeetingsScreen(
                     // TODO - Only display if Summary items exist.
                     if(viewModel.summaryCheck()) {
                         IconButton(onClick = {
-                            navController.navigate(ScreenRoute.SummaryScreen.route)
+                            navController.navigate(Screen.SummaryScreen.route)
                         }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_summary_24),
@@ -92,7 +92,7 @@ fun MeetingsScreen(
                         onItemClick = {
                             if (!meeting.abandoned) {
                                 navController.navigate(
-                                    ScreenRoute.RacesScreen.route + "meetingId=${meeting._id}"
+                                    Screen.RacesScreen.route + "meetingId=${meeting._id}"
                                 )
                             }
                         }
