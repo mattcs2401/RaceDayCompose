@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.settings
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -22,6 +23,7 @@ import com.mcssoft.racedaycompose.ui.settings.components.CheckBoxSettingsItem
 import com.mcssoft.racedaycompose.ui.theme.height8dp
 import com.mcssoft.racedaycompose.ui.theme.padding16dp
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SettingsScreen(
     navController: NavController,

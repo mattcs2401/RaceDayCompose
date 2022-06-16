@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.meetings
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MeetingsScreen(
     navController: NavController,
@@ -82,7 +84,6 @@ fun MeetingsScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
         ) {
-
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(
                     items = state.body

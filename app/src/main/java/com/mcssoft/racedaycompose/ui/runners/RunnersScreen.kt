@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.runners
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +25,7 @@ import com.mcssoft.racedaycompose.ui.theme.height64dp
 import com.mcssoft.racedaycompose.ui.theme.padding16dp
 import com.mcssoft.racedaycompose.ui.theme.padding64dp
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RunnersScreen(
     navController: NavController,
@@ -48,7 +50,7 @@ fun RunnersScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.MeetingsScreen.route) {
+                        navController.navigate(Screen.MeetingsScreen.route + "prefsChange=${false}") {
                             popUpTo(Screen.MeetingsScreen.route) {
                                 inclusive = true
                             }

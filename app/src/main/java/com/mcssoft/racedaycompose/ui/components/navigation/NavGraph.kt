@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.components.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -30,7 +31,8 @@ fun NavGraph(
             )
         }
         composable(
-            route = Screen.MeetingsScreen.route + "prefsChange={prefsChange}",
+            route = Screen.MeetingsScreen.route
+        + "prefsChange={prefsChange}",
             arguments = listOf(navArgument(name = "prefsChange") {
                 type = NavType.BoolType
                 defaultValue = false

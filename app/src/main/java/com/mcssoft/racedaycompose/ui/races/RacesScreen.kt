@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.races
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +24,7 @@ import com.mcssoft.racedaycompose.ui.theme.height64dp
 import com.mcssoft.racedaycompose.ui.theme.padding16dp
 import com.mcssoft.racedaycompose.ui.theme.padding64dp
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RacesScreen(
     navController: NavController,

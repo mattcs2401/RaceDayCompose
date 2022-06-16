@@ -33,24 +33,25 @@ class MeetingsViewModel @Inject constructor(
     val appState: StateFlow<AppState> = _appState.asStateFlow()
 
     init {
-        savedStateHandle.get<Boolean>(Constants.KEY_FROM_DB_PREF_CHANGE)?.let { prefChange ->
-            when (prefChange) {
-                true -> {
-                    val bp = "// TBA - a preference changed so action."
-                }
-                false -> { /* Nothing changed. */
-                }
-            }
-        }
-        savedStateHandle.get<Boolean>(Constants.KEY_ONLY_AUNZ_PREF_CHANGE)?.let { prefChange ->
-            when (prefChange) {
-                true -> {
-                    val bp = "// TBA - a preference changed so action."
-                }
-                false -> { /* Nothing changed. */
-                }
-            }
-        }
+//        Log.d("TAG", "MeetingsViewHolder: Init()")
+//        savedStateHandle.get<Boolean>(Constants.KEY_FROM_DB_PREF_CHANGE)?.let { prefChange ->
+//            when (prefChange) {
+//                true -> {
+//                    val bp = "// TBA - a preference changed so action."
+//                }
+//                false -> { /* Nothing changed. */
+//                }
+//            }
+//        }
+//        savedStateHandle.get<Boolean>(Constants.KEY_ONLY_AUNZ_PREF_CHANGE)?.let { prefChange ->
+//            when (prefChange) {
+//                true -> {
+//                    val bp = "// TBA - a preference changed so action."
+//                }
+//                false -> { /* Nothing changed. */
+//                }
+//            }
+//        }
 
         viewModelScope.launch {
             val date = DateUtils().getDateToday()

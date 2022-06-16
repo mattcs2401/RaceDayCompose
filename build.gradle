@@ -1,8 +1,8 @@
 buildscript {
     ext.hilt_ver = '2.40.5'
-    ext.kotlin_ver = '1.6.10'
+    ext.kotlin_ver = '1.6.21'
     ext.build_ver = '7.2.1'
-    ext.compose_ver = '1.1.1'
+    ext.compose_ver = '1.2.0-rc01'
 
     repositories {
         google()
