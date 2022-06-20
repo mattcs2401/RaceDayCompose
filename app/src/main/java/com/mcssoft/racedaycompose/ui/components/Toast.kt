@@ -1,10 +1,8 @@
 package com.mcssoft.racedaycompose.ui.components
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import java.time.Duration
 
 /**
  * Local Toast convenience method.

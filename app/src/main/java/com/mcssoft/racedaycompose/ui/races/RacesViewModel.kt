@@ -1,16 +1,13 @@
 package com.mcssoft.racedaycompose.ui.races
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.utility.Constants
+import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,34 +16,42 @@ class RacesViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(RacesState())
-    val state: State<RacesState> = _state
+    private val _state = MutableStateFlow(RacesState.loading())
+    val state: StateFlow<RacesState> = _state.asStateFlow()
+
+    /*
+      Notes:
+      https://medium.com/codex/type-save-navigation-with-jetpack-compose-destinations-610514e85370
+    */
+    private var mtgId = RacesScreenDestination.argsFrom(savedStateHandle).meetingId
 
     init {
         /*
-          ------
-          Notes:
-          ------
           The Races screen expects a "meetingId" (supplied in the navigation from the MeetingsScreen
-          to the RacesScreen). However, when navigating back from the Runners screen, we have to
-          supply a "dummy". A navigation default value can't be used as the meetingId is only known
-          at runtime.
+          to the RacesScreen). However, when navigating back from the Runners screen, there is no
+           need to supply one, so the original is saved into the preferences and reused.
          */
-        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mtgId ->
-            if (mtgId > 0) {
-                // Save the Meeting id to the preferences (for back nav from Runners screen).
-                saveMeetingId(Preference.MeetingId, mtgId)
-                // Get Meeting and Races values for the screen.
-                getMeeting(mtgId)
-                getRaces(mtgId)
-            } else {
-                // Get the Meeting id from the preferences.
-                getMeetingId(Preference.MeetingId)
-                // Meeting id is returned in the state.
-                val mId = _state.value.meetingId
-                // Get Meeting and Races values for the screen.
-                getMeeting(mId)
-                getRaces(mId)
+        if (mtgId > 0) {
+            // Save the Meeting id to the preferences (for back nav from Runners screen).
+            saveMeetingId(Preference.MeetingId, mtgId)
+        } else {
+            // Get the Meeting id from the preferences.
+            getMeetingId(Preference.MeetingId)
+            // Meeting id is returned in the state.
+            mtgId = _state.value.mtgId
+        }
+        // Get Meeting and Races values for the screen.
+        getMeeting(mtgId)
+        getRaces(mtgId)
+    }
+
+    fun onEvent(event: RacesEvent) {
+        when(event) {
+            is RacesEvent.Retry -> {
+                mtgId = event.mtgId    // TBA ?
+            }
+            is RacesEvent.Cancel -> {
+                // TBA ?
             }
         }
     }
@@ -55,16 +60,24 @@ class RacesViewModel @Inject constructor(
         raceDayUseCases.getRaces(mId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value.loading = true
+                    _state.value = _state.value.copy().apply {
+                        RacesState.loading()
+                    }
                 }
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage
-                        ?: "[getRaces] An unknown error or exception occurred."
-                    _state.value.loading = false
+                    _state.value = _state.value.copy().apply {
+                        result.exception?.let { exception ->
+                            RacesState.failure(exception)
+                        }
+                    }
                 }
                 result.successful -> {
-                    _state.value.races = result.data ?: emptyList()
-                    _state.value.loading = false
+                    _state.value = _state.value.copy(
+                        exception = null,
+                        status = RacesState.Status.Success,
+                        loading = false,
+                        lRaces = result.data ?: emptyList()
+                    )
                 }
             }
         }.launchIn(viewModelScope)
@@ -74,16 +87,25 @@ class RacesViewModel @Inject constructor(
         raceDayUseCases.getMeeting(mId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value.loading = true
+                    _state.value = _state.value.copy().apply {
+                        RacesState.loading()
+                    }
                 }
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage
-                        ?: "[getMeeting] An unknown error or exception occurred."
-                    _state.value.loading = false
+                    _state.value = _state.value.copy().apply {
+                        result.exception?.let { exception ->
+                            RacesState.failure(exception)
+                        }
+                    }
                 }
                 result.successful -> {
-                    _state.value.meeting = result.data
-                    _state.value.loading = false
+                    _state.value = _state.value.copy(
+                        exception = null,
+                        status = RacesState.Status.Success,
+                        loading = false,
+                        mtg = result.data,
+                        mtgId = mId
+                    )
                 }
             }
         }.launchIn(viewModelScope)
@@ -97,11 +119,17 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage
-                        ?: "[saveMeetingId] An unknown error or exception occurred."
+                    result.exception?.let { exception ->
+                        RacesState.failure(exception)
+                    }
                 }
                 result.successful -> {
-                    _state.value.meetingId = meetingId
+                    _state.value = _state.value.copy(
+                        exception = null,
+                        status = RacesState.Status.Success,
+                        loading = false,
+                        mtgId = meetingId
+                    )
                 }
             }
         }.launchIn(viewModelScope)
@@ -115,11 +143,17 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    _state.value.error = result.exception?.localizedMessage
-                        ?: "[getMeetingId] An unknown error or exception occurred."
+                    result.exception?.let { exception ->
+                        RacesState.failure(exception)
+                    }
                 }
                 result.successful -> {
-                    _state.value.meetingId = result.data as Long
+                    _state.value = _state.value.copy(
+                        exception = null,
+                        status = RacesState.Status.Success,
+                        loading = false,
+                        mtgId = result.data as Long
+                    )
                 }
             }
         }.launchIn(viewModelScope)

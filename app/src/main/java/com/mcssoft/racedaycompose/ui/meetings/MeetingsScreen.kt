@@ -13,21 +13,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
-import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
+import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
+import com.mcssoft.racedaycompose.ui.destinations.SettingsScreenDestination
+import com.mcssoft.racedaycompose.ui.destinations.SummaryScreenDestination
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Destination
 @Composable
 fun MeetingsScreen(
-    navController: NavController,
+    navigator: DestinationsNavigator,
     viewModel: MeetingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -53,7 +57,8 @@ fun MeetingsScreen(
                         )
                     }
                     IconButton(onClick = {
-                        navController.navigate(Screen.SettingsScreen.route)
+//                        navController.navigate(Screen.SettingsScreen.route)
+                        navigator.navigate(SettingsScreenDestination)
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_settings_24),
@@ -63,7 +68,8 @@ fun MeetingsScreen(
                     // TODO - Only display if Summary items exist.
                     if(viewModel.summaryCheck()) {
                         IconButton(onClick = {
-                            navController.navigate(Screen.SummaryScreen.route)
+//                            navController.navigate(Screen.SummaryScreen.route)
+                            navigator.navigate(SummaryScreenDestination)
                         }) {
                             Icon(
                                 painterResource(id = R.drawable.ic_summary_24),
@@ -92,9 +98,7 @@ fun MeetingsScreen(
                         meeting = meeting,
                         onItemClick = {
                             if (!meeting.abandoned) {
-                                navController.navigate(
-                                    Screen.RacesScreen.route + "meetingId=${meeting._id}"
-                                )
+                                navigator.navigate(RacesScreenDestination(meeting._id))
                             }
                         }
                     )
@@ -130,7 +134,8 @@ private fun ManageState(
         is Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),
-                msgText = stringResource(id = R.string.dlg_loading_msg)
+                msgText = stringResource(id = R.string.dlg_loading_msg),
+                onDismiss = {}
             )
         }
         is Failure -> {

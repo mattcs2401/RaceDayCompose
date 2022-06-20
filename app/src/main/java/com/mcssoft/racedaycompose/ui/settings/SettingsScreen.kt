@@ -14,19 +14,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
+import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.mcssoft.racedaycompose.ui.settings.components.CheckBoxSettingsItem
 import com.mcssoft.racedaycompose.ui.theme.height8dp
 import com.mcssoft.racedaycompose.ui.theme.padding16dp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Destination
 @Composable
 fun SettingsScreen(
-    navController: NavController,
+    navController: DestinationsNavigator,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val fromDbState = viewModel.fromDbState
@@ -42,9 +45,7 @@ fun SettingsScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navController.navigate(
-                        Screen.MeetingsScreen.route + "prefsChange=${false}"
-                    ) {
+                    navController.navigate(MeetingsScreenDestination) {
                         popUpTo(Screen.MeetingsScreen.route) {
                             inclusive = true
                         }
@@ -104,7 +105,8 @@ fun SettingsScreen(
             if (fromDbState.value.loading) {
                 LoadingDialog(
                     titleText = stringResource(id = R.string.dlg_loading_title),
-                    msgText = stringResource(id = R.string.dlg_loading_msg)
+                    msgText = stringResource(id = R.string.dlg_loading_msg),
+                    onDismiss = {}
                 )
             }
         }

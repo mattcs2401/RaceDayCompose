@@ -22,10 +22,13 @@ A dialog with a title on the 1st line, and a circular progress indicator and mes
 @Composable
 fun LoadingDialog(
     titleText: String,
-    msgText: String
+    msgText: String,
+    onDismiss: () -> Unit
 ) {
     Dialog(
-        onDismissRequest = {},
+        onDismissRequest = {
+            onDismiss()
+        },
         properties = DialogProperties(
             dismissOnBackPress = true,
             dismissOnClickOutside = false

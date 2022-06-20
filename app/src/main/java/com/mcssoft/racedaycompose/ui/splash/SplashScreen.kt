@@ -1,10 +1,10 @@
 package com.mcssoft.racedaycompose.ui.splash
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.NavController
-import com.mcssoft.racedaycompose.ui.components.navigation.Screen
+import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 /**
  * App starting point.
@@ -16,10 +16,14 @@ import com.mcssoft.racedaycompose.ui.components.navigation.Screen
  * default values. This screen was implemented purely to allow for the MeetingsScreen (the actual
  * home/startDestination) to have nav arguments.
  */
+//@RootNavGraph(start = true)
+@Destination(start = true)
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    navigator: DestinationsNavigator
+) {
 
     LaunchedEffect(key1 = true) {
-        navController.navigate(Screen.MeetingsScreen.route + "prefsChange=${false}")
+        navigator.navigate(MeetingsScreenDestination)
     }
 }

@@ -2,7 +2,6 @@ package com.mcssoft.racedaycompose.data.repository.remote
 
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
 import com.mcssoft.racedaycompose.domain.dto.BaseDto
-import retrofit2.Response
 import javax.inject.Inject
 
 /**
