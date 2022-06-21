@@ -11,7 +11,7 @@ import com.mcssoft.racedaycompose.domain.model.Race
  * @param lRaces: The list of Races to display (associated with the Meeting).
  * @param mtg: The Meeting associated with the Races listing (used simply for header info).
  * @param mtgId: The meeting id of the associated meeting. Kept separate as it's used to retrieve
- *               the Meeting.
+ *               the Meeting on back nav to the Races screen.
  */
 data class RacesState(
     var exception: Exception?,
@@ -22,56 +22,24 @@ data class RacesState(
     var mtgId: Long = 0
 ) {
     companion object {
-
-        fun success(meeting: Meeting, races: List<Race>): RacesState {
+        fun initialise(): RacesState {
             return RacesState(
                 exception = null,
-                status = Status.Success,
-                loading = false,
-                lRaces = races,
-                mtg = meeting,
-                mtgId = meeting._id,
-            )
-        }
-
-        fun failure(exception: Exception): RacesState {
-            return RacesState(
-                exception = exception,
-                status = Status.Failure,
-                loading = false,
-                lRaces = emptyList(),
-                mtg = null,
-            )
-        }
-
-        fun loading(): RacesState {
-            return RacesState(
-                exception = null,
-                status = Status.Loading,
-                loading = true,
-                lRaces = emptyList(),
+                status = Status.Initialise,
                 mtg = null,
             )
         }
     }
 
     sealed class Status {
+        object Initialise : Status()
         object Loading : Status()
         object Success : Status()
         object Failure : Status()
     }
 
-//    val loading: Boolean
-//        get() = this.status == RacesState.Status.Loading
-
-    val failed: Boolean
-        get() = this.status == RacesState.Status.Failure
-
-    val successful: Boolean
-        get() = this.status == RacesState.Status.Success //(!failed) && (this.data != null) && (this.data?.isNotEmpty() == true)
-
     val races: List<Race>
-        get() = this.lRaces ?: emptyList()
+        get() = this.lRaces
 
     val meeting: Meeting?
         get() = this.mtg

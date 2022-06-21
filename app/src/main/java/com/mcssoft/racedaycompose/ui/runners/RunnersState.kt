@@ -15,58 +15,57 @@ data class RunnersState(
     var exception: Exception?,
     var status: Status,
     var loading: Boolean = false,
-    var lRunners: List<Runner> = emptyList(),     // the list of Runners.
-    var rce: Race? = null,                      // the Race associated with the Runners listing.
+    var lRunners: List<Runner> = emptyList(),
+    var rce: Race?
 ) {
     companion object {
-        fun success(race: Race, runners: List<Runner>): RunnersState {
+        fun initialise(): RunnersState {
             return RunnersState(
                 exception = null,
-                status = Status.Success,
-                loading = false,
-                lRunners = runners,
-                rce = race,
+                status = Status.Initialise,
+                rce = null
             )
         }
+//        fun success(race: Race, runners: List<Runner>): RunnersState {
+//            return RunnersState(
+//                exception = null,
+//                status = Status.Success,
+//                loading = false,
+//                lRunners = runners,
+//                rce = race,
+//            )
+//        }
 
-        fun failure(exception: Exception): RunnersState {
-            return RunnersState(
-                exception = exception,
-                status = Status.Failure,
-                loading = false,
-                lRunners = emptyList(),
-                rce = null,
-            )
-        }
+//        fun failure(exception: Exception): RunnersState {
+//            return RunnersState(
+//                exception = exception,
+//                status = Status.Failure,
+//                loading = false,
+//                lRunners = emptyList(),
+//                rce = null,
+//            )
+//        }
 
-        fun loading(): RunnersState {
-            return RunnersState(
-                exception = null,
-                status = Status.Loading,
-                loading = true,
-                lRunners = emptyList(),
-                rce = null,
-            )
-        }
+//        fun loading(): RunnersState {
+//            return RunnersState(
+//                exception = null,
+//                status = Status.Loading,
+//                loading = true,
+//                lRunners = emptyList(),
+//                rce = null,
+//            )
+//        }
     }
 
     sealed class Status {
+        object Initialise: Status()
         object Loading : Status()
         object Success : Status()
         object Failure : Status()
     }
 
-    //    val loading: Boolean
-//        get() = this.status == RunnersState.Status.Loading
-
-    val failed: Boolean
-        get() = this.status == Status.Failure
-
-    val successful: Boolean
-        get() = this.status == Status.Success //(!failed) && (this.data != null) && (this.data?.isNotEmpty() == true)
-
     val runners: List<Runner>
-        get() = this.lRunners ?: emptyList()
+        get() = this.lRunners
 
     val race: Race?
         get() = this.rce

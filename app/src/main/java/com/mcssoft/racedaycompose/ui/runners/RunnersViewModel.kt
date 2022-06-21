@@ -5,12 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.destinations.RunnersScreenDestination
-import com.mcssoft.racedaycompose.ui.races.RacesState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +15,7 @@ class RunnersViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(RunnersState.loading())
+    private val _state = MutableStateFlow(RunnersState.initialise())
     val state: StateFlow<RunnersState> = _state
 
     private var raceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
@@ -48,17 +44,21 @@ class RunnersViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.failure(
-                        result.exception ?: Exception("An unknown error has occurred.")
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            status = RunnersState.Status.Failure,
+                            loading = false
                         )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy().apply {
-                        runners.find { runner ->
-                            runner._id == runnerId
-                        }?.checked = checked
+                    _state.update { state ->
+                        state.copy().apply {
+                            runners.find { runner ->
+                                runner._id == runnerId
+                            }?.checked = checked
+                        }
                     }
                 }
             }
@@ -69,24 +69,32 @@ class RunnersViewModel @Inject constructor(
         raceDayUseCases.getRace(raceId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.loading()
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Loading,
+                            loading = true
+                        )
                     }
                 }
                 result.failed -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.failure(
-                        result.exception ?: Exception("An unknown error has occurred.")
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            status = RunnersState.Status.Failure,
+                            loading = false
                         )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RunnersState.Status.Success,
-                        loading = false,
-                        rce = result.data
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Success,
+                            loading = false,
+                            rce = result.data
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -96,23 +104,32 @@ class RunnersViewModel @Inject constructor(
         raceDayUseCases.getRunners(raceId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.loading()
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Loading,
+                            loading = true
+                        )
                     }
                 }
                 result.failed -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.failure(
-                            result.exception ?: Exception("An unknown error has occurred.")
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            status = RunnersState.Status.Failure,
+                            loading = false
                         )
-                    }                }
+                    }
+                }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RunnersState.Status.Success,
-                        loading = false,
-                        lRunners = result.data ?: emptyList()
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RunnersState.Status.Success,
+                            loading = false,
+                            lRunners = result.data ?: emptyList()
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)

@@ -16,8 +16,8 @@ class RacesViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(RacesState.loading())
-    val state: StateFlow<RacesState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(RacesState.initialise())
+    val state = _state.asStateFlow()
 
     /*
       Notes:
@@ -60,24 +60,32 @@ class RacesViewModel @Inject constructor(
         raceDayUseCases.getRaces(mId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.loading()
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Loading,
+                            loading = true
+                        )
                     }
                 }
                 result.failed -> {
-                    _state.value = _state.value.copy().apply {
-                        result.exception?.let { exception ->
-                            RacesState.failure(exception)
-                        }
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception,
+                            status = RacesState.Status.Failure,
+                            loading = false
+                        )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RacesState.Status.Success,
-                        loading = false,
-                        lRaces = result.data ?: emptyList()
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Success,
+                            loading = false,
+                            lRaces = result.data ?: emptyList()
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -87,25 +95,33 @@ class RacesViewModel @Inject constructor(
         raceDayUseCases.getMeeting(mId).onEach { result ->
             when {
                 result.loading -> {
-                    _state.value = _state.value.copy().apply {
-                        RacesState.loading()
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Loading,
+                            loading = true
+                        )
                     }
                 }
                 result.failed -> {
-                    _state.value = _state.value.copy().apply {
-                        result.exception?.let { exception ->
-                            RacesState.failure(exception)
-                        }
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception,
+                            status = RacesState.Status.Failure,
+                            loading = false
+                        )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RacesState.Status.Success,
-                        loading = false,
-                        mtg = result.data,
-                        mtgId = mId
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Success,
+                            loading = false,
+                            mtg = result.data,
+                            mtgId = mId
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -119,17 +135,23 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    result.exception?.let { exception ->
-                        RacesState.failure(exception)
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception,
+                            status = RacesState.Status.Failure,
+                            loading = false
+                        )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RacesState.Status.Success,
-                        loading = false,
-                        mtgId = meetingId
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Success,
+                            loading = false,
+                            mtgId = meetingId
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -143,17 +165,23 @@ class RacesViewModel @Inject constructor(
             when {
                 result.loading -> {}
                 result.failed -> {
-                    result.exception?.let { exception ->
-                        RacesState.failure(exception)
+                    _state.update { state ->
+                        state.copy(
+                            exception = result.exception,
+                            status = RacesState.Status.Failure,
+                            loading = false
+                        )
                     }
                 }
                 result.successful -> {
-                    _state.value = _state.value.copy(
-                        exception = null,
-                        status = RacesState.Status.Success,
-                        loading = false,
-                        mtgId = result.data as Long
-                    )
+                    _state.update { state ->
+                        state.copy(
+                            exception = null,
+                            status = RacesState.Status.Success,
+                            loading = false,
+                            mtgId = result.data as Long
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
