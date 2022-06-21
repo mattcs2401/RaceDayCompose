@@ -11,7 +11,7 @@ data class AppState(
 ) {
     companion object {
         /**
-         * A StateFlow initializer.
+         * A StateFlow initialize value.
          */
         fun initialise(): AppState {
             return AppState(

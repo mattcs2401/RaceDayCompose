@@ -2,7 +2,6 @@ package com.mcssoft.racedaycompose.ui.meetings
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
@@ -13,63 +12,47 @@ import com.mcssoft.racedaycompose.utility.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
-    savedStateHandle: SavedStateHandle,
+//    savedStateHandle: SavedStateHandle,
     private val prefs: IPreferences
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(MeetingsState.loading())   // private mutable.
-    val state: StateFlow<MeetingsState> = _state.asStateFlow()       // public read only.
+    private val _state = MutableStateFlow(MeetingsState.initialise())
+    val state = _state.asStateFlow()
 
     private val _appState = MutableStateFlow(AppState.initialise())
-    val appState: StateFlow<AppState> = _appState.asStateFlow()
+    val appState = _appState.asStateFlow()
 
     init {
-//        Log.d("TAG", "MeetingsViewHolder: Init()")
-//        savedStateHandle.get<Boolean>(Constants.KEY_FROM_DB_PREF_CHANGE)?.let { prefChange ->
-//            when (prefChange) {
-//                true -> {
-//                    val bp = "// TBA - a preference changed so action."
-//                }
-//                false -> { /* Nothing changed. */
-//                }
-//            }
-//        }
-//        savedStateHandle.get<Boolean>(Constants.KEY_ONLY_AUNZ_PREF_CHANGE)?.let { prefChange ->
-//            when (prefChange) {
-//                true -> {
-//                    val bp = "// TBA - a preference changed so action."
-//                }
-//                false -> { /* Nothing changed. */
-//                }
-//            }
-//        }
-
         viewModelScope.launch {
             val date = DateUtils().getDateToday()
             val fromDbPref = prefs.getPreference(Preference.FromDbPref) as Boolean
             val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
             // Update AppState.
-            _appState.value = _appState.value.copy(
-                date = date,
-                byDbPref = fromDbPref,
-                byAuNzPref = onlyAuNzPref
-            )
+            _appState.update { state ->
+                state.copy(
+                    date = date,
+                    byDbPref = fromDbPref,
+                    byAuNzPref = onlyAuNzPref
+                )
+            }
             if (fromDbPref) {
                 getMeetingsFromLocal(onlyAuNzPref)
             } else {
-                _appState.value = _appState.value.copy(
-                    isRefreshing = true,
-                    meetingsDownloaded = false,
-                    runnersDownloaded = false
-                )
+                _appState.update { state ->
+                    state.copy(
+                        isRefreshing = true,
+                        meetingsDownloaded = false,
+                        runnersDownloaded = false
+                    )
+                }
                 // Get the initial load from the Api (Meetings/Races).
                 setupBaseFromApi(date)
             }
@@ -82,11 +65,13 @@ class MeetingsViewModel @Inject constructor(
     fun onEvent(event: MeetingsEvent) {
         when (event) {
             is MeetingsEvent.Refresh -> {
-                _appState.value = _appState.value.copy(
-                    isRefreshing = true,
-                    meetingsDownloaded = false,
-                    runnersDownloaded = false
-                )
+                _appState.update { state ->
+                    state.copy(
+                        isRefreshing = true,
+                        meetingsDownloaded = false,
+                        runnersDownloaded = false
+                    )
+                }
                 val date = DateUtils().getDateToday()
                 setupBaseFromApi(date)     // get Meetings and associated Races.
             }
@@ -108,37 +93,33 @@ class MeetingsViewModel @Inject constructor(
             raceDayUseCases.setupBaseFromApi(date).collect { result ->
                 when {
                     result.loading -> {
-                        _state.value = _state.value.copy(
-                            exception = null,
-                            status = MeetingsState.Status.Loading,
-                            data = null
-                        )
-//                        _appState.value = _appState.value.copy().apply {
-//                            isRefreshing = true
-//                            meetingsDownloaded = false
-//                            runnersDownloaded = false
-//                        }
-//                        _state.value = MeetingsState.loading()
+                        _state.update { state ->
+                            state.copy(
+                                loading = true,
+                                status = MeetingsState.Status.Loading
+                            )
+                        }
                     }
                     result.failed -> {
-                        _state.value = _state.value.copy().apply {
-                            exception = Exception("[SetupBaseFromApi] ${result.exception}")
-                            status = MeetingsState.Status.Failure
-                            data = null
+                        _state.update { state ->
+                            state.copy(
+                                exception = Exception("[SetupBaseFromApi] ${result.exception}"),
+                                status = MeetingsState.Status.Failure,
+                                loading = false,
+                            )
                         }
-                        _appState.value = _appState.value.copy().apply {
-                            isRefreshing = false
+                        _appState.update { state ->
+                            state.copy(isRefreshing = false)
                         }
-//                        _state.value = MeetingsState.failure(
-//                            exception = Exception("[SetupBaseFromApi] ${result.exception}")
-//                        )
                     }
                     result.successful -> {
                         val onlyAuNz = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
-                        _appState.value = _appState.value.copy(
-                            byAuNzPref = onlyAuNz,
-                            meetingsDownloaded = true
-                        )
+                        _appState.update { state ->
+                            state.copy(
+                                byAuNzPref = onlyAuNz,
+                                meetingsDownloaded = true
+                            )
+                        }
                         Log.d("TAG", "[SetupBaseFromApi] result.successful")
                         getMeetingsFromLocal(onlyAuNz)
                     }
@@ -157,16 +138,32 @@ class MeetingsViewModel @Inject constructor(
             raceDayUseCases.getMeetings(onlyAuNz).collect { result ->
                 when {
                     result.loading -> {
-                        _state.value = MeetingsState.loading()
+                        _state.update { state ->
+                            state.copy(
+                                status = MeetingsState.Status.Loading,
+                                loading = true
+                            )
+                        }
                     }
                     result.failed -> {
-                        _state.value = MeetingsState.failure(
-                            exception = Exception(result.exception)
-                        )
+                        _state.update { state ->
+                            state.copy(
+                                exception = Exception(result.exception),
+                                status = MeetingsState.Status.Failure,
+                                loading = false
+                            )
+                        }
                     }
                     result.successful -> {
                         Log.d("TAG", "getMeetingsFromLocal(onlyAuNz) result.successful")
-                        _state.value = MeetingsState.success(data = result.data ?: emptyList())
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                status = MeetingsState.Status.Success,
+                                loading = false,
+                                data = result.data ?: emptyList()
+                            )
+                        }
                     }
                 }
             }//.launchIn(viewModelScope)
@@ -191,22 +188,26 @@ class MeetingsViewModel @Inject constructor(
      */
     fun setupRunnersFromApi(context: Context) {
         viewModelScope.launch {
-            delay(5000)
+            delay(2000) // TBA ?
             raceDayUseCases.setupRunnerFromApi(_appState.value.date, context).collect { result ->
                 when {
                     result.failed -> {
-                        _appState.value = _appState.value.copy(
-                            isRefreshing = false,
-                            runnersDownloaded = false,
-                            downloadError =
-                            AppState.Status.DownloadError("Setup Runners from Api failed.")
-                        )
+                        _appState.update { state ->
+                            state.copy(
+                                isRefreshing = false,
+                                runnersDownloaded = false,
+                                downloadError =
+                                AppState.Status.DownloadError("Setup Runners from Api failed.")
+                            )
+                        }
                     }
                     result.successful -> {
-                        _appState.value = _appState.value.copy(
-                            isRefreshing = false,
-                            runnersDownloaded = true
-                        )
+                        _appState.update { state ->
+                            state.copy(
+                                isRefreshing = false,
+                                runnersDownloaded = true
+                            )
+                        }
                     }
                 }
             }
