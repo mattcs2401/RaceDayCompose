@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.components.dialog
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*

@@ -14,8 +14,8 @@ import com.mcssoft.racedaycompose.ui.theme.*
 fun CheckBoxSettingsItem(
     textTitle: String,
     textDescription: String,
-    selected: Boolean,
-    onChange: (Boolean) -> Unit,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     backgroundColour: Color
 ) {
     Card(
@@ -61,8 +61,8 @@ fun CheckBoxSettingsItem(
             verticalArrangement = Arrangement.Center
         ) {
             Checkbox(
-                checked = selected,
-                onCheckedChange = onChange,
+                checked = checked,
+                onCheckedChange = onCheckedChange,
                 colors = CheckboxDefaults.colors(
                     checkedColor = MaterialTheme.colors.primary,
                     checkmarkColor = MaterialTheme.colors.onBackground

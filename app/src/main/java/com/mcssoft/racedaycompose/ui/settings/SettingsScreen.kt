@@ -5,17 +5,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.components.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
@@ -32,8 +30,8 @@ fun SettingsScreen(
     navController: DestinationsNavigator,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val fromDbState = viewModel.fromDbState
-    val onlyAuNzState = viewModel.onlyAuNzState
+    val fromDbState by viewModel.fromDbState.collectAsState()
+    val onlyAuNzState by viewModel.onlyAuNzState.collectAsState()
 
     val scaffoldState = rememberScaffoldState()
 
@@ -70,8 +68,8 @@ fun SettingsScreen(
                 CheckBoxSettingsItem(
                     textTitle = stringResource(id = R.string.pref_load_from_db),
                     textDescription = "Load meeting details from local.",
-                    selected = fromDbState.value.preference,
-                    onChange = { checked ->
+                    checked = fromDbState.currValue,
+                    onCheckedChange = { checked ->
                         viewModel.onEvent(SettingsEvent.SaveFromDbPref(checked))
                     },
                     backgroundColour = MaterialTheme.colors.secondary
@@ -84,31 +82,14 @@ fun SettingsScreen(
                 CheckBoxSettingsItem(
                     textTitle = stringResource(id = R.string.pref_only_au),
                     textDescription = "Display only AU/NZ meeting details.",
-                    selected = onlyAuNzState.value.preference,
-                    onChange = { checked ->
+                    checked = onlyAuNzState.currValue,
+                    onCheckedChange = { checked ->
                         viewModel.onEvent(SettingsEvent.SaveOnlyAuNzPref(checked))
                     },
                     backgroundColour = MaterialTheme.colors.secondary
                 )
             }
-            if (fromDbState.value.error.isNotBlank()) {
-                Text(
-                    text = fromDbState.value.error,
-                    color = MaterialTheme.colors.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(padding16dp)
-                        .align(Alignment.Center)
-                )
-            }
-            if (fromDbState.value.loading) {
-                LoadingDialog(
-                    titleText = stringResource(id = R.string.dlg_loading_title),
-                    msgText = stringResource(id = R.string.dlg_loading_msg),
-                    onDismiss = {}
-                )
-            }
+
         }
     }
 
