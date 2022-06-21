@@ -22,11 +22,11 @@ class RunnersViewModel @Inject constructor(
     private val _state = MutableStateFlow(RunnersState.loading())
     val state: StateFlow<RunnersState> = _state
 
-    private var rceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
+    private var raceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
 
     init {
-        getRace(rceId)
-        getRunners(rceId)
+        getRace(raceId)
+        getRunners(raceId)
     }
 
     fun onEvent(event: RunnersEvent) {
@@ -49,9 +49,9 @@ class RunnersViewModel @Inject constructor(
                 result.loading -> {}
                 result.failed -> {
                     _state.value = _state.value.copy().apply {
-                        result.exception?.let { exception ->
-                            RacesState.failure(exception)
-                        }
+                        RacesState.failure(
+                        result.exception ?: Exception("An unknown error has occurred.")
+                        )
                     }
                 }
                 result.successful -> {
@@ -75,9 +75,9 @@ class RunnersViewModel @Inject constructor(
                 }
                 result.failed -> {
                     _state.value = _state.value.copy().apply {
-                        result.exception?.let { exception ->
-                            RacesState.failure(exception)
-                        }
+                        RacesState.failure(
+                        result.exception ?: Exception("An unknown error has occurred.")
+                        )
                     }
                 }
                 result.successful -> {
@@ -102,9 +102,9 @@ class RunnersViewModel @Inject constructor(
                 }
                 result.failed -> {
                     _state.value = _state.value.copy().apply {
-                        result.exception?.let { exception ->
-                            RacesState.failure(exception)
-                        }
+                        RacesState.failure(
+                            result.exception ?: Exception("An unknown error has occurred.")
+                        )
                     }                }
                 result.successful -> {
                     _state.value = _state.value.copy(

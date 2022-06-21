@@ -33,10 +33,10 @@ class RacesViewModel @Inject constructor(
          */
         if (mtgId > 0) {
             // Save the Meeting id to the preferences (for back nav from Runners screen).
-            saveMeetingId(Preference.MeetingId, mtgId)
+            saveMeetingId(Preference.MeetingIdPref, mtgId)
         } else {
             // Get the Meeting id from the preferences.
-            getMeetingId(Preference.MeetingId)
+            getMeetingId(Preference.MeetingIdPref)
             // Meeting id is returned in the state.
             mtgId = _state.value.mtgId
         }
@@ -114,7 +114,7 @@ class RacesViewModel @Inject constructor(
     /**
      * Save the meeting id to the preferences.
      */
-    private fun saveMeetingId(pref: Preference.MeetingId, meetingId: Long) {
+    private fun saveMeetingId(pref: Preference.MeetingIdPref, meetingId: Long) {
         raceDayUseCases.savePreferences(pref, meetingId).onEach { result ->
             when {
                 result.loading -> {}
@@ -138,7 +138,7 @@ class RacesViewModel @Inject constructor(
     /**
      * Get the meeting id from the preferences.
      */
-    private fun getMeetingId(pref: Preference.MeetingId) {
+    private fun getMeetingId(pref: Preference.MeetingIdPref) {
         raceDayUseCases.getPreferences(pref).onEach { result ->
             when {
                 result.loading -> {}

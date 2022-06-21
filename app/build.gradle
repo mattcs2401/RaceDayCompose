@@ -54,7 +54,7 @@ android {
 
 dependencies {
 
-    def room_ver = '2.4.2'
+    def room_ver = '2.5.0-alpha02'
     def retrofit_ver = '2.9.0'
     def okhttp_ver = '5.0.0-alpha.3'
     def hilt_models_ver = '1.0.0-alpha03'
@@ -114,7 +114,11 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
     //implementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.7'
 
-    /* NavDestination. */
+    /* ComposeDestinations.
+    * Doco: "A KSP library that processes annotations and generates code that uses Official Jetpack
+    *       Compose Navigation under the hood. It hides the complex, non-type-safe and boilerplate
+    *       code you would have to write otherwise..."
+    *  */
     implementation 'io.github.raamcosta.compose-destinations:core:1.6.12-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.6.12-beta'
 }

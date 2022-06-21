@@ -6,5 +6,7 @@ sealed class Preference {
 
     object OnlyAuNzPref : Preference()
 
-    object MeetingId : Preference()
+    // App specific preference, i.e. not user selectable. MeetingId is saved on navigation from Race
+    // to Runner (for when back nav to Race).
+    object MeetingIdPref : Preference()
 }

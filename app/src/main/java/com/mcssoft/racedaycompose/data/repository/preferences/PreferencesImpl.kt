@@ -40,7 +40,7 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.OnlyAuNzPref -> {
                 getOnlyAuNzPref()
             }
-            is Preference.MeetingId -> {
+            is Preference.MeetingIdPref -> {
                 getMeetingId()
             }
         }
@@ -57,7 +57,7 @@ class PreferencesImpl @Inject constructor(context: Context) : IPreferences {
             is Preference.OnlyAuNzPref -> {
                 setOnlyAuNzPref(value as Boolean)
             }
-            is Preference.MeetingId -> {
+            is Preference.MeetingIdPref -> {
                 setMeetingId(value as Long)
             }
         }
