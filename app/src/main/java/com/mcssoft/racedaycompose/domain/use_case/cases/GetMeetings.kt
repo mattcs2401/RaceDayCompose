@@ -24,9 +24,14 @@ class GetMeetings @Inject constructor(
 
             // Filter if required.
             if (onlyAuNz) {
-                // TBA - this could possibly still filter out something inadvertently.
+                // TODO - this could possibly still filter out something inadvertently.
                 val value = meetings.filter { meeting ->
                     meeting.meetingCode.toCharArray()[1] != 'S' || meeting.meetingCode == "ZS"
+                }.also { list ->
+                    // also filter out any abandoned Meetings.
+                    list.filter {
+                        meeting -> !meeting.abandoned
+                    }
                 }
                 meetings = value
             }

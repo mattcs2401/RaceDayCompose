@@ -13,16 +13,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mcssoft.racedaycompose.R
-import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.RaceHeader
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
+import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
+import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
+import com.mcssoft.racedaycompose.ui.runners.RunnersState.Status.*
 import com.mcssoft.racedaycompose.ui.runners.components.RunnerItem
 import com.mcssoft.racedaycompose.ui.theme.height64dp
 import com.mcssoft.racedaycompose.ui.theme.padding64dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination
@@ -56,8 +59,8 @@ fun RunnersScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        navigator.navigate(RacesScreenDestination.route) {
-                            popUpTo(route = RacesScreenDestination.route) {
+                        navigator.navigate(MeetingsScreenDestination.route) {
+                            popUpTo(route = MeetingsScreenDestination.route) {
                                 inclusive = true
                             }
                         }
@@ -124,14 +127,15 @@ private fun ManageState(
     val errorDialogShow = remember { mutableStateOf(false) }
 
     when (runnersState.status) {
-        is RunnersState.Status.Loading -> {
+        is Initialise -> {}
+        is Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),
                 msgText = stringResource(id = R.string.dlg_loading_msg),
                 onDismiss = {}
             )
         }
-        is RunnersState.Status.Failure -> {
+        is Failure -> {
             errorDialogShow.value = true
 //            ShowErrorDialog(
 //                errorDialogShow,
@@ -139,9 +143,7 @@ private fun ManageState(
 //                viewModel = viewModel
 //            )
         }
-        is RunnersState.Status.Success -> {
-            // TBA.
-        }
+        is Success -> {/* TBA */}
     }
 }
 

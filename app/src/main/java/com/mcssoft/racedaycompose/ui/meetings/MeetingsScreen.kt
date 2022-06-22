@@ -131,6 +131,7 @@ private fun ManageState(
         ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
     }
     when (mtgsState.status) {
+        is Initialise -> {}
         is Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),

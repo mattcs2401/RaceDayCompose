@@ -5,12 +5,24 @@ App Notes
 https://material-foundation.github.io/material-theme-builder/#/custom
 
 
--> If navigating back from Races, there's no need for the Meetings view model to do the
-   preference check.
+-> If navigating back to the Meetings screen from anything but the Settings screen, there's no need
+   for the Meetings view model to do the preference check.
+   -- is it really that big an overhead ?
+      -- maybe if we start getting a whole list of preferences ?
+         -- what about some sort of preference manager ?
+            -- TBA
 
--> Put abandoned Meetings to the bottom of the list.
+-> Abandoned Meetings are filtered out
+   -- lose the 'Abandoned' from Meeting items in the listing (i.e. layout update).
 
 -> Save scroll position/state, for long listings.
 
--> TBA
+-> Implement a 'Summary' screen of selected Races.
+
+-> Implement Notifications based on what is current in the Summary.
+
+-> Implement a search function:
+   -- horse
+   -- jockey
+   -- ??
 

@@ -18,6 +18,7 @@ import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.mcssoft.racedaycompose.ui.destinations.RunnersScreenDestination
+import com.mcssoft.racedaycompose.ui.races.RacesState.Status.*
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 import com.mcssoft.racedaycompose.ui.theme.height64dp
 import com.mcssoft.racedaycompose.ui.theme.padding64dp
@@ -123,14 +124,15 @@ private fun ManageState(
     val errorDialogShow = remember { mutableStateOf(false) }
 
     when (racesState.status) {
-        is RacesState.Status.Loading -> {
+        is Initialise -> {}
+        is Loading -> {
             LoadingDialog(
                 titleText = stringResource(id = R.string.dlg_loading_title),
                 msgText = stringResource(id = R.string.dlg_loading_msg),
                 onDismiss = {}
             )
         }
-        is RacesState.Status.Failure -> {
+        is Failure -> {
             errorDialogShow.value = true
             ShowErrorDialog(
                 errorDialogShow,
@@ -138,9 +140,7 @@ private fun ManageState(
                 viewModel = viewModel
             )
         }
-        is RacesState.Status.Success -> {
-            // TBA.
-        }
+        is Success -> {/* TBA */}
     }
 }
 
