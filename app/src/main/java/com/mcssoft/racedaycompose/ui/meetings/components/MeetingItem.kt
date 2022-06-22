@@ -75,12 +75,12 @@ fun MeetingItem(
                     .layoutId("idArrow")
                     .rotate(rotationState)
             ) {
-                if (!meeting.abandoned) {
+//                if (!meeting.abandoned) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "Drop-Down Arrow"
                     )
-                }
+//                }
             }
         }
         if (expandedState) {

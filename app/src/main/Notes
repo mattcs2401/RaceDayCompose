@@ -12,8 +12,8 @@ https://material-foundation.github.io/material-theme-builder/#/custom
          -- what about some sort of preference manager ?
             -- TBA
 
--> Abandoned Meetings are filtered out
-   -- lose the 'Abandoned' from Meeting items in the listing (i.e. layout update).
+-> Lose the header expand option on the Race and Runner listings.
+   -- Just show everything.
 
 -> Save scroll position/state, for long listings.
 

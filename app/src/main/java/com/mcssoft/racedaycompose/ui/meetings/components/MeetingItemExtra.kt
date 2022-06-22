@@ -29,12 +29,6 @@ fun MeetingItemExtra(
             .clickable { onItemClick(meeting) },
     ) {
         Text(
-            "Abandoned: ${if (meeting.abandoned) "Y" else "N"}",
-            Modifier.layoutId("idAbandoned"),
-            fontSize = 12.sp
-        )
-
-        Text(
             "Races: ${meeting.racesNo}",
             Modifier.layoutId("idRacesNo"),
             fontSize = 12.sp
@@ -64,20 +58,15 @@ fun MeetingItemExtra(
 }
 
 private val constraintSet = ConstraintSet {
-    val idAbandoned = createRefFor("idAbandoned")
     val idRacesNo = createRefFor("idRacesNo")
     val idWeatherCond = createRefFor("idWeatherCond")
     val idTrackCond = createRefFor("idTrackCond")
     val idTrackRating = createRefFor("idTrackRating")
 
-    constrain(idAbandoned) {
+    constrain(idRacesNo) {
         start.linkTo(parent.start, margin = 16.dp)
         top.linkTo(parent.top, margin = 0.dp)
         bottom.linkTo(parent.bottom, margin = 16.dp)
-    }
-    constrain(idRacesNo) {
-        start.linkTo(idAbandoned.end, margin = 16.dp)
-        top.linkTo(idAbandoned.top, margin = 0.dp)
     }
     constrain(idWeatherCond) {
         start.linkTo(idRacesNo.end, margin = 32.dp)

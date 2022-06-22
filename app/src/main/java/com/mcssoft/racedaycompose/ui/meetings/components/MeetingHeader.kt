@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.meetings.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -84,7 +84,7 @@ fun MeetingHeader(meeting: Meeting, backgroundColour: Color) {
         }
         if (expandedState) {
             // Meeting extra info, the 'expanded' state.
-            MeetingHeaderExtra(meeting)//, onItemClick)
+            MeetingHeaderExtra(meeting)
         }
     }
 }
