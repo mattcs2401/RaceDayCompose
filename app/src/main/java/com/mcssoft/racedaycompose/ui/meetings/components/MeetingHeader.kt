@@ -1,54 +1,42 @@
 package com.mcssoft.racedaycompose.ui.meetings.components
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.mcssoft.racedaycompose.domain.model.Meeting
+import com.mcssoft.racedaycompose.ui.theme.width2dp
 
 /**
  * Meeting summary information at the top of the list of Races for that Meeting.
  * @param meeting: The Meeting.
- * @param backgroundColour: The background colour.
+ * @param colour: The background colour.
  *
  * From: https://howtodoandroid.com/jetpack-compose-constraintlayout/
  */
 @Composable
-fun MeetingHeader(meeting: Meeting, backgroundColour: Color) {
-
-    var expandedState by remember { mutableStateOf(false) }
-
-    val rotationState by animateFloatAsState(
-        targetValue = if (expandedState) 180f else 0f
-    )
-
-    Card(
+fun MeetingHeader(
+    meeting: Meeting,
+    colour: Color
+) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 4.dp, end = 4.dp)
-            .animateContentSize(
-                animationSpec = tween(300, easing = LinearOutSlowInEasing)
-            ),
-        shape = RectangleShape,
-        backgroundColor = backgroundColour
-    ) {
+            .background(colour)
+            .border(
+                width = width2dp,
+                color = Color.Blue
+            )
+    ){
         ConstraintLayout(
             constraintSet
         ) {
@@ -68,34 +56,45 @@ fun MeetingHeader(meeting: Meeting, backgroundColour: Color) {
                 text = meeting.venueName,
                 Modifier.layoutId("idVenueNameText")
             )
-            IconButton(
-                onClick = {
-                    expandedState = !expandedState
-                },
-                Modifier
-                    .layoutId("idArrow")
-                    .rotate(rotationState)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Drop-Down Arrow"
+            Text(
+                "Races: ${meeting.racesNo}",
+                Modifier.layoutId("idRacesNo"),
+                fontSize = 12.sp
+            )
+            Text(
+                meeting.weatherCond,
+                Modifier.layoutId("idWeatherCond"),
+                fontSize = 12.sp
+            )
+            Text(
+                meeting.trackCond,
+                Modifier.layoutId("idTrackCond"),
+                fontSize = 12.sp
+            )
+            if (meeting.trackRating > 0) {
+                Text(
+                    meeting.trackRating.toString(),
+                    Modifier.layoutId("idTrackRating"),
+                    fontSize = 12.sp
                 )
             }
-        }
-        if (expandedState) {
-            // Meeting extra info, the 'expanded' state.
-            MeetingHeaderExtra(meeting)
         }
     }
 }
 
 private val constraintSet = ConstraintSet {
+    // 1st line refs.
     val idMtgCode = createRefFor("idMtgCode")
     val idMtgCodeText = createRefFor("idMtgCodeText")
     val idVenueName = createRefFor("idVenueName")
     val idVenueNameText = createRefFor("idVenueNameText")
-    val idArrow = createRefFor("idArrow")
+    // 2nd line refs.
+    val idRacesNo = createRefFor("idRacesNo")
+    val idWeatherCond = createRefFor("idWeatherCond")
+    val idTrackCond = createRefFor("idTrackCond")
+    val idTrackRating = createRefFor("idTrackRating")
 
+    // 1st line layout.
     constrain(idMtgCode) {
         top.linkTo(parent.top, margin = 8.dp)
         start.linkTo(parent.start, margin = 16.dp)
@@ -112,8 +111,23 @@ private val constraintSet = ConstraintSet {
         top.linkTo(idVenueName.top, margin = 0.dp)
         start.linkTo(idVenueName.end, margin = 4.dp)
     }
-    constrain(idArrow) {
-        end.linkTo(parent.absoluteRight)
-        centerVerticallyTo(parent)
+
+    // 2nd line layout.
+    constrain(idRacesNo) {
+        start.linkTo(idMtgCode.start, margin = 0.dp)
+        top.linkTo(idMtgCode.bottom, margin = 8.dp)
+        bottom.linkTo(parent.bottom, margin = 16.dp)
+    }
+    constrain(idWeatherCond) {
+        start.linkTo(idRacesNo.end, margin = 32.dp)
+        top.linkTo(idRacesNo.top, margin = 0.dp)
+    }
+    constrain(idTrackCond) {
+        start.linkTo(idWeatherCond.end, margin = 8.dp)
+        top.linkTo(idWeatherCond.top, margin = 0.dp)
+    }
+    constrain(idTrackRating) {
+        start.linkTo(idTrackCond.end, margin = 8.dp)
+        top.linkTo(idTrackCond.top, margin = 0.dp)
     }
 }

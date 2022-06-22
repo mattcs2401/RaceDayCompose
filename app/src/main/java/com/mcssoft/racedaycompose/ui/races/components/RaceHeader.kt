@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.ui.components
+package com.mcssoft.racedaycompose.ui.races.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,8 +27,7 @@ fun RaceHeader(
                 width = width2dp,
                 color = Color.Blue
             )
-    )
-    {
+    ){
         ConstraintLayout(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -88,7 +87,6 @@ fun RaceHeader(
                 },
                 fontSize = fontSize12sp
             )
-
             Text(
                 text = "${race.distance}m",
                 Modifier.constrainAs(idRaceDist) {
