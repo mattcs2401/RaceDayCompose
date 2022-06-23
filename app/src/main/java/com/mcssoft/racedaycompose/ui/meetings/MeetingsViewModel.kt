@@ -81,6 +81,14 @@ class MeetingsViewModel @Inject constructor(
                     getMeetingsFromLocal(onlyAuNz)
                 }
             }
+            is MeetingsEvent.Cancel -> {
+                _state.update { state ->
+                    state.copy(
+                        data = emptyList()
+                    )
+                }
+//                _state.value.data = listOf()
+            }
         }
     }
 

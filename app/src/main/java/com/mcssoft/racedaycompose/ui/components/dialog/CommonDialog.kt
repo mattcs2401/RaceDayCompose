@@ -59,13 +59,11 @@ fun CommonDialog(
                     .fillMaxWidth()
                     .background(backgroundColour)
             ) {
-
                 Spacer(
                     modifier = Modifier
                         .height(height16dp)
                         .fillMaxWidth()
                 )
-
                 // 1st Row, icon and dialog title.
                 Row(
                     modifier = Modifier
@@ -142,7 +140,6 @@ fun CommonDialog(
                         }
                     }
                 }
-
                 Spacer(
                     modifier = Modifier
                         .height(height16dp)

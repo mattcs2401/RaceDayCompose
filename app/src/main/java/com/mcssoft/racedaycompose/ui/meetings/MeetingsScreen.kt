@@ -190,10 +190,14 @@ private fun ShowErrorDialog(
     if (showError.value) {
         CommonDialog(
             icon = R.drawable.ic_error_48,
-            dialogTitle = "No Connectivity",
-            dialogText = "Check the internet connection or mobile data status.",
-            dismissButtonText = "Refresh From Local",
+            dialogTitle = stringResource(id = R.string.dlg_error_title_noconn),
+            dialogText = stringResource(id = R.string.dlg_error_msg_noconn),
+            dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             onDismissClicked = {
+                showError.value = !showError.value
+            },
+            confirmButtonText = stringResource(id = R.string.lbl_btn_refresh),
+            onConfirmClicked = {
                 showError.value = !showError.value
                 viewModel.onEvent(MeetingsEvent.RefreshFromDb)
             }
@@ -201,7 +205,6 @@ private fun ShowErrorDialog(
         )
     }
 }
-
 /*
   SnackBar example:
   -----------------

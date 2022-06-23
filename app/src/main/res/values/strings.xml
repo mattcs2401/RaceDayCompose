@@ -18,7 +18,9 @@
 
     <!-- Button labels. -->
     <string name="lbl_btn_ok">OK</string>
-    <string name="lbl_btn_cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="lbl_btn_cancel">Cancel</string>
+    <string name="lbl_btn_retry">Retry</string>
+    <string name="lbl_btn_refresh">Refresh From Local</string>
 
     <!-- Dialog text. -->
     <string name="dlg_refresh_title">Refresh Data</string>
@@ -27,6 +29,9 @@
     <string name="dlg_loading_title">Loading</string>
     <string name="dlg_loading_msg">Please wait ..</string>>
 
+    <string name="dlg_error_title">An Error Occurred</string>
+    <string name="dlg_error_title_noconn">No Connectivity</string>
+    <string name="dlg_error_msg_noconn">Check the internet connection or mobile data status.</string>
     <!-- Settings/Preferences text. -->
     <string name="pref_load_from_db">From DB</string>
     <string name="pref_only_au">AU/NZ Races</string>
@@ -43,6 +48,7 @@
 
     <!-- Component labels. -->
     <string name="label_loading">Loading…</string>
+
 
     <!-- Keys. TBA -->
 

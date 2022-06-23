@@ -12,9 +12,6 @@ https://material-foundation.github.io/material-theme-builder/#/custom
          -- what about some sort of preference manager ?
             -- TBA
 
--> Lose the header expand option on the Race and Runner listings.
-   -- Just show everything.
-
 -> Save scroll position/state, for long listings.
 
 -> Implement a 'Summary' screen of selected Races.

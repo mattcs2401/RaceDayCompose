@@ -8,6 +8,10 @@ sealed class MeetingsEvent {
     // Get display items from the database.
     object RefreshFromDb : MeetingsEvent()
 
+    object Cancel : MeetingsEvent() {
+
+    }
+
 //    // Check if Summary items exist.
 //    object SummaryCheck : MeetingsEvent()
 

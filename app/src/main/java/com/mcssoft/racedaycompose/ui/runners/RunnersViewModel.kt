@@ -21,6 +21,7 @@ class RunnersViewModel @Inject constructor(
     private var raceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
 
     init {
+        _state.update { it.copy(rceId = raceId) }
         getRace(raceId)
         getRunners(raceId)
     }

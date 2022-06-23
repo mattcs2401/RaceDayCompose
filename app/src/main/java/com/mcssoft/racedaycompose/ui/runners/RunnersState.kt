@@ -16,7 +16,8 @@ data class RunnersState(
     var status: Status,
     var loading: Boolean = false,
     var lRunners: List<Runner> = emptyList(),
-    var rce: Race?
+    var rce: Race?,
+    var rceId: Long = 0
 ) {
     companion object {
         fun initialise(): RunnersState {
@@ -26,35 +27,6 @@ data class RunnersState(
                 rce = null
             )
         }
-//        fun success(race: Race, runners: List<Runner>): RunnersState {
-//            return RunnersState(
-//                exception = null,
-//                status = Status.Success,
-//                loading = false,
-//                lRunners = runners,
-//                rce = race,
-//            )
-//        }
-
-//        fun failure(exception: Exception): RunnersState {
-//            return RunnersState(
-//                exception = exception,
-//                status = Status.Failure,
-//                loading = false,
-//                lRunners = emptyList(),
-//                rce = null,
-//            )
-//        }
-
-//        fun loading(): RunnersState {
-//            return RunnersState(
-//                exception = null,
-//                status = Status.Loading,
-//                loading = true,
-//                lRunners = emptyList(),
-//                rce = null,
-//            )
-//        }
     }
 
     sealed class Status {
@@ -69,4 +41,5 @@ data class RunnersState(
 
     val race: Race?
         get() = this.rce
+
 }

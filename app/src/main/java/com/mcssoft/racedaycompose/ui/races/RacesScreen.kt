@@ -154,13 +154,13 @@ private fun ShowErrorDialog(
         showError.value = !showError.value
         CommonDialog(
             icon = R.drawable.ic_error_48,
-            dialogTitle = "An Error Occurred",
+            dialogTitle = stringResource(id = R.string.dlg_error_title),
             dialogText = "Unable to get the Races listing.",
-            dismissButtonText = "Cancel",
+            dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             onDismissClicked = {
                 viewModel.onEvent(RacesEvent.Cancel)
             },
-            confirmButtonText = "Retry",
+            confirmButtonText = stringResource(id = R.string.lbl_btn_retry),
             onConfirmClicked = {
                 viewModel.onEvent(RacesEvent.Retry(mtgId))
             }
