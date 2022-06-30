@@ -48,6 +48,7 @@ class SetupBaseFromApi @Inject constructor(
                     iDbRepo.deleteMeetings()
                 }
                 response.error -> {
+                    val bp = "bp"
                     // TBA - Not an exception, but no data in the response.
                 }
             }

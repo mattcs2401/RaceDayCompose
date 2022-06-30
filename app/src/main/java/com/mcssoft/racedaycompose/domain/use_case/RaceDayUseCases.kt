@@ -1,8 +1,17 @@
 package com.mcssoft.racedaycompose.domain.use_case
 
-import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupRunnerFromApi
+import com.mcssoft.racedaycompose.domain.use_case.cases.meetings.GetMeeting
+import com.mcssoft.racedaycompose.domain.use_case.cases.meetings.GetMeetings
+import com.mcssoft.racedaycompose.domain.use_case.cases.preferences.GetPreferences
+import com.mcssoft.racedaycompose.domain.use_case.cases.preferences.SavePreferences
+import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRace
+import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
+import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
+import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SaveSummary
 
 data class RaceDayUseCases(
 
@@ -34,6 +43,11 @@ data class RaceDayUseCases(
     val getPreferences: GetPreferences,
 
     // Save Settings.
-    val savePreferences: SavePreferences
+    val savePreferences: SavePreferences,
 
+    // Get the Summary.
+    val getSummaries: GetSummaries,
+
+    // Update the summary.
+    val saveSummary: SaveSummary
 )

@@ -57,7 +57,6 @@ fun MeetingsScreen(
                         )
                     }
                     IconButton(onClick = {
-//                        navController.navigate(Screen.SettingsScreen.route)
                         navigator.navigate(SettingsScreenDestination)
                     }) {
                         Icon(

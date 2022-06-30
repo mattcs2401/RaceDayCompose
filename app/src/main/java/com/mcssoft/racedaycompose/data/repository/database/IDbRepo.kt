@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.domain.model.Runner
+import com.mcssoft.racedaycompose.domain.model.Summary
 
 @Dao
 interface IDbRepo {
@@ -113,4 +114,14 @@ interface IDbRepo {
     @Query("update Runner set checked= :checked where _id= :runnerId")
     suspend fun setRunnerChecked(runnerId: Long, checked: Boolean)
     //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    @Query("select * from Summary")
+    suspend fun getSummaries(): List<Summary>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSummaries(summaries: List<Summary>): List<Long>
+    //</editor-fold>
+
+
 }

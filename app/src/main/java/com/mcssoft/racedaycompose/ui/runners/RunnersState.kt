@@ -9,22 +9,23 @@ import com.mcssoft.racedaycompose.domain.model.Runner
  * @param status: Loading, Failure, Success.
  * @param loading: Data is being collected.
  * @param lRunners: The list of Runners to display (associated with the Race).
- * @param rce: The Race associated with the Runners listing (used simply for header info).
+ * @param race: The Race associated with the Runners listing (used simply for header info).
+ * @param raceId: The id of the Race (passed in the nav args).
  */
 data class RunnersState(
     var exception: Exception?,
     var status: Status,
     var loading: Boolean = false,
     var lRunners: List<Runner> = emptyList(),
-    var rce: Race?,
-    var rceId: Long = 0
+    var race: Race?,
+    var raceId: Long = 0          // passed in the nav args and used to get Race and Runner info.
 ) {
     companion object {
         fun initialise(): RunnersState {
             return RunnersState(
                 exception = null,
                 status = Status.Initialise,
-                rce = null
+                race = null
             )
         }
     }
@@ -35,11 +36,5 @@ data class RunnersState(
         object Success : Status()
         object Failure : Status()
     }
-
-    val runners: List<Runner>
-        get() = this.lRunners
-
-    val race: Race?
-        get() = this.rce
 
 }

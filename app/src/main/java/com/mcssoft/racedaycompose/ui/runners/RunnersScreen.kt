@@ -97,7 +97,7 @@ fun RunnersScreen(
                     .padding(top = padding64dp)
             ) {
                 items(
-                    items = state.runners.filter { runner ->
+                    items = state.lRunners.filter { runner ->
                         !runner.lateScratching && !runner.scratched
                     }
                 ) { runner ->
@@ -138,11 +138,13 @@ private fun ManageState(
         }
         is Failure -> {
             errorDialogShow.value = true
-            ShowErrorDialog(
-                errorDialogShow,
-                runnersState.rceId,
-                viewModel = viewModel
-            )
+            runnersState.race?.let {
+                ShowErrorDialog(
+                    errorDialogShow,
+                    it._id,// rceId,
+                    viewModel = viewModel
+                )
+            }
         }
     }
 }

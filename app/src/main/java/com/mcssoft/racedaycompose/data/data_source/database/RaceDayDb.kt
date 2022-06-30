@@ -6,9 +6,10 @@ import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.domain.model.Runner
+import com.mcssoft.racedaycompose.domain.model.Summary
 
 @Database(
-    entities = [Meeting::class, Race::class, Runner::class],
+    entities = [Meeting::class, Race::class, Runner::class, Summary::class],
     version = 1,
     exportSchema = false
 )

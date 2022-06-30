@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.domain.use_case.cases
+package com.mcssoft.racedaycompose.domain.use_case.cases.preferences
 
 import com.mcssoft.racedaycompose.data.repository.preferences.IPreferences
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference

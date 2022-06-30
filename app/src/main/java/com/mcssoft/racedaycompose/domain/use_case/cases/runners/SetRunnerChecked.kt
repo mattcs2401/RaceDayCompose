@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.domain.use_case.cases
+package com.mcssoft.racedaycompose.domain.use_case.cases.runners
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.utility.DataResult

@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.domain.use_case.cases
+package com.mcssoft.racedaycompose.domain.use_case.cases.races
 
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.domain.model.Race
@@ -11,16 +11,16 @@ import javax.inject.Inject
  * Get a list of Races from the database.
  * @param iDbRepo: Database access.
  */
-class GetRace @Inject constructor(
+class GetRaces @Inject constructor(
     private val iDbRepo: IDbRepo
 ) {
-    operator fun invoke(raceId: Long): Flow<DataResult<Race>> = flow {
+    operator fun invoke(mId: Long): Flow<DataResult<List<Race>>> = flow {
         try {
             emit(DataResult.loading())
 
-            val race = iDbRepo.getRace(raceId)
+            val races = iDbRepo.getRaces(mId)
 
-            emit(DataResult.success(race))
+            emit(DataResult.success(races))
 
         } catch (exception: Exception) {
             emit(DataResult.failure(exception))

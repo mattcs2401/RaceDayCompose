@@ -21,7 +21,7 @@ class RunnersViewModel @Inject constructor(
     private var raceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
 
     init {
-        _state.update { it.copy(rceId = raceId) }
+        _state.update { it.copy(raceId = raceId) }
         getRace(raceId)
         getRunners(raceId)
     }
@@ -40,6 +40,11 @@ class RunnersViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Set the checkbox on the Runner record (used for the Summary).
+     * @param runnerId: The Runner id.
+     * @param checked: The checkbox value.
+     */
     private fun checkRunner(runnerId: Long, checked: Boolean) {
         raceDayUseCases.setRunnerChecked(runnerId, checked).onEach { result ->
             when {
@@ -47,7 +52,7 @@ class RunnersViewModel @Inject constructor(
                 result.failed -> {
                     _state.update { state ->
                         state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            exception = result.exception,
                             status = RunnersState.Status.Failure,
                             loading = false
                         )
@@ -56,16 +61,21 @@ class RunnersViewModel @Inject constructor(
                 result.successful -> {
                     _state.update { state ->
                         state.copy().apply {
-                            runners.find { runner ->
+                            lRunners.find { runner ->
                                 runner._id == runnerId
                             }?.checked = checked
                         }
                     }
+                    updateSummary(runnerId, checked)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Get Race details.
+     * @param raceId: The Race id.
+     */
     private fun getRace(raceId: Long) {
         raceDayUseCases.getRace(raceId).onEach { result ->
             when {
@@ -81,7 +91,7 @@ class RunnersViewModel @Inject constructor(
                 result.failed -> {
                     _state.update { state ->
                         state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            exception = result.exception,
                             status = RunnersState.Status.Failure,
                             loading = false
                         )
@@ -93,7 +103,7 @@ class RunnersViewModel @Inject constructor(
                             exception = null,
                             status = RunnersState.Status.Success,
                             loading = false,
-                            rce = result.data
+                            race = result.data
                         )
                     }
                 }
@@ -101,6 +111,10 @@ class RunnersViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * Get Runners associated with a Race.
+     * @param raceId: The Race id (is a foreign key on Runner).
+     */
     private fun getRunners(raceId: Long) {
         raceDayUseCases.getRunners(raceId).onEach { result ->
             when {
@@ -116,7 +130,7 @@ class RunnersViewModel @Inject constructor(
                 result.failed -> {
                     _state.update { state ->
                         state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            exception = result.exception,
                             status = RunnersState.Status.Failure,
                             loading = false
                         )
@@ -134,5 +148,16 @@ class RunnersViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun updateSummary(runnerId: Long, checked: Boolean) {
+        when(checked) {
+            false -> {
+
+            }
+            true -> {
+
+            }
+        }
     }
 }

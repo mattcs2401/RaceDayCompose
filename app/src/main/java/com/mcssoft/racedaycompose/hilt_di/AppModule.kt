@@ -12,9 +12,18 @@ import com.mcssoft.racedaycompose.data.repository.preferences.PreferencesImpl
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.data.repository.remote.RemoteRepoImpl
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.domain.use_case.cases.*
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupBaseFromApi
 import com.mcssoft.racedaycompose.domain.use_case.cases.api.SetupRunnerFromApi
+import com.mcssoft.racedaycompose.domain.use_case.cases.meetings.GetMeeting
+import com.mcssoft.racedaycompose.domain.use_case.cases.meetings.GetMeetings
+import com.mcssoft.racedaycompose.domain.use_case.cases.preferences.GetPreferences
+import com.mcssoft.racedaycompose.domain.use_case.cases.preferences.SavePreferences
+import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRace
+import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
+import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
+import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SaveSummary
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -85,7 +94,9 @@ object AppModule {
             getRunners = GetRunners(local),
             getPreferences = GetPreferences(prefs),
             savePreferences = SavePreferences(prefs),
-            setRunnerChecked = SetRunnerChecked(local)
+            setRunnerChecked = SetRunnerChecked(local),
+            getSummaries = GetSummaries(local),
+            saveSummary = SaveSummary(local)
         )
     }
 }

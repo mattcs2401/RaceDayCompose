@@ -3,6 +3,7 @@ package com.mcssoft.racedaycompose.data.repository.database
 import com.mcssoft.racedaycompose.domain.model.Meeting
 import com.mcssoft.racedaycompose.domain.model.Race
 import com.mcssoft.racedaycompose.domain.model.Runner
+import com.mcssoft.racedaycompose.domain.model.Summary
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -62,12 +63,23 @@ class DbRepoImpl @Inject constructor(
         return dao.insertRunners(runners)
     }
 
-    override suspend fun getRunners(rId: Long): List<Runner> {
-        return dao.getRunners(rId)
+    override suspend fun getRunners(raceId: Long): List<Runner> {
+        return dao.getRunners(raceId)
     }
 
     override suspend fun setRunnerChecked(runnerId: Long, checked: Boolean) {
         return dao.setRunnerChecked(runnerId, checked)
     }
     //</editor-fold>
+
+    //<editor-fold default state="collapsed" desc="Region: Summary related.">
+    override suspend fun getSummaries(): List<Summary> {
+        return dao.getSummaries()
+    }
+
+    override suspend fun insertSummaries(summaries: List<Summary>): List<Long> {
+        return dao.insertSummaries(summaries)
+    }
+    //</editor-fold>
+
 }

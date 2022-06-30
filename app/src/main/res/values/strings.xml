@@ -32,6 +32,7 @@
     <string name="dlg_error_title">An Error Occurred</string>
     <string name="dlg_error_title_noconn">No Connectivity</string>
     <string name="dlg_error_msg_noconn">Check the internet connection or mobile data status.</string>
+
     <!-- Settings/Preferences text. -->
     <string name="pref_load_from_db">From DB</string>
     <string name="pref_only_au">AU/NZ Races</string>
@@ -45,12 +46,10 @@
     <string name="label_races">Races</string>
     <string name="label_runners">Runners</string>
     <string name="label_preferences">Preferences</string>
+    <string name="label_summary">Summary</string>
 
     <!-- Component labels. -->
     <string name="label_loading">Loading…</string>
-
-
-    <!-- Keys. TBA -->
 
     <!-- Error text. -->
     <string name="unknown_error">An unknown error occurred.</string>

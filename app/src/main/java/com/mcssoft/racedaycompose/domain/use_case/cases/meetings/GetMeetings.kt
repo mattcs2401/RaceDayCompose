@@ -1,4 +1,4 @@
-package com.mcssoft.racedaycompose.domain.use_case.cases
+package com.mcssoft.racedaycompose.domain.use_case.cases.meetings
 
 import android.util.Log
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
