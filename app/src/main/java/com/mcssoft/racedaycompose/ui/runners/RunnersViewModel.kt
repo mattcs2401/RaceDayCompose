@@ -1,5 +1,6 @@
 package com.mcssoft.racedaycompose.ui.runners
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
 import com.mcssoft.racedaycompose.ui.destinations.RunnersScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +37,18 @@ class RunnersViewModel @Inject constructor(
                 // TBA.
             }
             is RunnersEvent.CheckRunner -> {
-                checkRunner(event.runnerId, event.checked)
+                checkRunner(
+                    event.runnerId,
+                    event.checked
+                )
+            }
+            is RunnersEvent.SetForSummary -> {
+                setForSummary(
+                    event.raceId,
+                    event.runnerId,
+                    event.checked,
+                    event.context
+                )
             }
         }
     }
@@ -61,12 +74,11 @@ class RunnersViewModel @Inject constructor(
                 result.successful -> {
                     _state.update { state ->
                         state.copy().apply {
-                            lRunners.find { runner ->
-                                runner._id == runnerId
-                            }?.checked = checked
+                            lRunners.find { runner -> runner._id == runnerId }?.checked = checked
+                            checkedId = runnerId
+                            chked = checked
                         }
                     }
-                    updateSummary(runnerId, checked)
                 }
             }
         }.launchIn(viewModelScope)
@@ -150,14 +162,39 @@ class RunnersViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun updateSummary(runnerId: Long, checked: Boolean) {
-        when(checked) {
-            false -> {
-
-            }
-            true -> {
-
-            }
-        }
+    /**
+     * Class to ensure the backing data for the Summary is set (if exists).
+     */
+    fun setForSummary(raceId: Long, runnerId: Long, checked: Boolean, context: Context) {
+        viewModelScope.launch {
+            raceDayUseCases.setForSummary(raceId, runnerId, checked, context).collect { result ->
+                when {
+                    result.loading -> {
+//                        _state.update { state ->
+//                            state.copy(
+//                                exception = null,
+//                                loading = true
+//                            )
+//                        }
+                    }
+                    result.failed -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = state.exception,
+                                loading = false
+                            )
+                        }
+                    }
+                    result.successful -> {
+                        _state.update { state ->
+                            state.copy(
+                                exception = null,
+                                loading = false
+                            )
+                        }
+                    }
+                } // when
+            } // collect.
+        } // view model scope.
     }
 }

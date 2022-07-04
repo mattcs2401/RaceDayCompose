@@ -18,7 +18,9 @@ data class RunnersState(
     var loading: Boolean = false,
     var lRunners: List<Runner> = emptyList(),
     var race: Race?,
-    var raceId: Long = 0          // passed in the nav args and used to get Race and Runner info.
+    var raceId: Long = 0,    // passed in from the nav args and used to get Race and Runner info.
+    var checkedId: Long = 0,      // the id of the checked Runner.
+    var chked: Boolean = false  // the checked Runner's checked value.
 ) {
     companion object {
         fun initialise(): RunnersState {

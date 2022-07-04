@@ -9,9 +9,9 @@ import androidx.room.PrimaryKey
     tableName = "Summary",
     foreignKeys = [
         ForeignKey(entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mId"]),
-        ForeignKey(entity = Race::class, parentColumns = ["_id"], childColumns = ["rId"]),
+        ForeignKey(entity = Race::class, parentColumns = ["_id"], childColumns = ["rcId"]),
         ForeignKey(entity = Runner::class, parentColumns = ["_id"], childColumns = ["rrId"])],
-    indices = [Index(value = ["_id", "mId", "rId", "rrId"])]
+    indices = [Index(value = ["mId", "rcId", "rrId"])]
 )
 data class Summary(
 
@@ -21,7 +21,7 @@ data class Summary(
     var _id: Long = 0L,
 
     var mId: Long = 0L,      // foreign key Meeting_id.
-    var rId: Long = 0L,      // foreign key Race_id.
+    var rcId: Long = 0L,     // foreign key Race_id.
     var rrId: Long = 0L,     // foreign key Runner_id.
 
     // Meeting related.

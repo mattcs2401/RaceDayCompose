@@ -23,7 +23,7 @@ import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
-import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SaveSummary
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SetForSummary
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -96,7 +96,8 @@ object AppModule {
             savePreferences = SavePreferences(prefs),
             setRunnerChecked = SetRunnerChecked(local),
             getSummaries = GetSummaries(local),
-            saveSummary = SaveSummary(local)
+            setForSummary = SetForSummary()
         )
     }
+
 }

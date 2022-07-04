@@ -67,7 +67,6 @@ fun MeetingsScreen(
                     // TODO - Only display if Summary items exist.
                     if(viewModel.summaryCheck()) {
                         IconButton(onClick = {
-//                            navController.navigate(Screen.SummaryScreen.route)
                             navigator.navigate(SummaryScreenDestination)
                         }) {
                             Icon(

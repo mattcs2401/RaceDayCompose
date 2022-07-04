@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,6 +43,8 @@ fun RunnersScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scaffoldState = rememberScaffoldState()
+
+    val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -104,7 +107,16 @@ fun RunnersScreen(
                     RunnerItem(
                         runner = runner,
                         onCheckedChange = { checked ->
+                            // Update state.
+                            state.checkedId = runner._id
+                            state.chked = checked
+                            // Update the Runner's checkbox status.
                             viewModel.onEvent(RunnersEvent.CheckRunner(runner._id, checked))
+                            // Create (or remove) Summary item.
+                            viewModel.onEvent(
+                                RunnersEvent.SetForSummary(
+                                    state.raceId, state.checkedId, state.chked, context)
+                            )
                         }
                     )
                 }

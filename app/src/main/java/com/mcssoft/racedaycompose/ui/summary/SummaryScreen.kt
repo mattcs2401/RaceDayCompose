@@ -93,7 +93,7 @@ fun NothingToDisplay() {
     Card(
         shape = RoundedCornerShapes.medium
     ) {
-        // A single columns with 3 Rows and Spacers in between.
+        // A single column, with one Row divided into two columns.
         Column(
             modifier = Modifier
                 .fillMaxWidth()

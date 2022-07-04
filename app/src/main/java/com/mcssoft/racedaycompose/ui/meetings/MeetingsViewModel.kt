@@ -20,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MeetingsViewModel @Inject constructor(
     private val raceDayUseCases: RaceDayUseCases,
-//    savedStateHandle: SavedStateHandle,
     private val prefs: IPreferences
 ) : ViewModel() {
 
@@ -33,8 +32,8 @@ class MeetingsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val date = DateUtils().getDateToday()
-            val fromDbPref = false//prefs.getPreference(Preference.FromDbPref) as Boolean
-            val onlyAuNzPref = false//prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
+            val fromDbPref = prefs.getPreference(Preference.FromDbPref) as Boolean
+            val onlyAuNzPref = prefs.getPreference(Preference.OnlyAuNzPref) as Boolean
             // Update AppState.
             _appState.update { state ->
                 state.copy(
@@ -87,7 +86,6 @@ class MeetingsViewModel @Inject constructor(
                         data = emptyList()
                     )
                 }
-//                _state.value.data = listOf()
             }
         }
     }

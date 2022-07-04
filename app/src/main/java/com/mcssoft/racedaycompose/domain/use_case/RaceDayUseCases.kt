@@ -11,7 +11,7 @@ import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
-import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SaveSummary
+import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SetForSummary
 
 data class RaceDayUseCases(
 
@@ -49,5 +49,5 @@ data class RaceDayUseCases(
     val getSummaries: GetSummaries,
 
     // Update the summary.
-    val saveSummary: SaveSummary
+    val setForSummary: SetForSummary
 )
