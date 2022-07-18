@@ -120,7 +120,13 @@ interface IDbRepo {
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
     //</editor-fold>
 
+    @Query("select count(*) from Trainer")
+    suspend fun getTrainerCount(): Int
+
     @Query("select * from Trainer join Horse on Trainer._id = Horse.tId")
     suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrainer(entity: Trainer)
 
 }

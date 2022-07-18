@@ -82,4 +82,12 @@ class DbRepoImpl @Inject constructor(
     override suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>> {
         return dao.loadTrainerHorses()
     }
+
+    override suspend fun getTrainerCount(): Int {
+        return dao.getTrainerCount()
+    }
+
+    override suspend fun insertTrainer(entity: Trainer) {
+        return dao.insertTrainer(entity)
+    }
 }

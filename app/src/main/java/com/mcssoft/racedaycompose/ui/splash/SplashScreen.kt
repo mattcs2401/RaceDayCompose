@@ -2,6 +2,12 @@ package com.mcssoft.racedaycompose.ui.splash
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.mcssoft.racedaycompose.R
+import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -20,10 +26,32 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination(start = true)
 @Composable
 fun SplashScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: SplashViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
 
-    LaunchedEffect(key1 = true) {
-        navigator.navigate(MeetingsScreenDestination)
+    when(state.status) {
+        is SplashState.Status.Initialise -> {}
+        is SplashState.Status.Loading -> {
+            LoadingDialog(
+                titleText = "Initialising",
+                msgText = stringResource(id = R.string.dlg_loading_msg),
+                onDismiss = {}
+            )
+        }
+        is SplashState.Status.Failure -> {
+            // TBA.
+        }
+        is SplashState.Status.Success -> {
+            if(state.prePopulated) {
+                LaunchedEffect(key1 = true) {
+                    navigator.navigate(MeetingsScreenDestination)
+                }
+            } else {
+                viewModel.prePopulate()
+            }
+        }
     }
+
 }

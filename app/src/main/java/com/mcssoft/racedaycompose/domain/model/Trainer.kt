@@ -1,7 +1,6 @@
 package com.mcssoft.racedaycompose.domain.model
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -13,4 +12,5 @@ data class Trainer(
 
     var shortName: String = "",   // e.g. T.Gollan
     var longName: String = "",    // e.g. Tony Gollan.
+    var location: String = ""     // e.g. Brisbane.
 )

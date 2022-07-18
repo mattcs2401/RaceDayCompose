@@ -3,7 +3,6 @@ package com.mcssoft.racedaycompose.hilt_di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
@@ -23,6 +22,8 @@ import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRace
 import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaycompose.domain.use_case.cases.splash.CheckPrePopulate
+import com.mcssoft.racedaycompose.domain.use_case.cases.splash.PrePopulate
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SetForSummary
 import dagger.Module
@@ -30,7 +31,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -81,10 +81,16 @@ object AppModule {
     }
 
     @Provides
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+
+    @Provides
     fun provideUseCases(
         remote: IRemoteRepo,
         local: IDbRepo,
-        prefs: IPreferences
+        prefs: IPreferences,
+        context: Context
     ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
@@ -98,7 +104,9 @@ object AppModule {
             savePreferences = SavePreferences(prefs),
             setRunnerChecked = SetRunnerChecked(local),
             getSummaries = GetSummaries(local),
-            setForSummary = SetForSummary()
+            setForSummary = SetForSummary(),
+            checkPrePopulate = CheckPrePopulate(local),
+            prePopulate = PrePopulate(local, context)
         )
     }
 

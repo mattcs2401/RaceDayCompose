@@ -10,6 +10,8 @@ import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRace
 import com.mcssoft.racedaycompose.domain.use_case.cases.races.GetRaces
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.GetRunners
 import com.mcssoft.racedaycompose.domain.use_case.cases.runners.SetRunnerChecked
+import com.mcssoft.racedaycompose.domain.use_case.cases.splash.CheckPrePopulate
+import com.mcssoft.racedaycompose.domain.use_case.cases.splash.PrePopulate
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.GetSummaries
 import com.mcssoft.racedaycompose.domain.use_case.cases.summary.SetForSummary
 
@@ -49,5 +51,11 @@ data class RaceDayUseCases(
     val getSummaries: GetSummaries,
 
     // Update the summary.
-    val setForSummary: SetForSummary
+    val setForSummary: SetForSummary,
+
+    // A quick check that Trainer/Horse tables are (pre)populated.
+    val checkPrePopulate: CheckPrePopulate,
+
+    // Pre-populate Trainer/Horse tables.
+    val prePopulate: PrePopulate
 )

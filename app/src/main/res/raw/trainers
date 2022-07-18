@@ -1,0 +1,32 @@
+[
+  {
+    "short-name":"T. Golan",
+    "long-name": "Tony Gollan",
+    "location": "Brisbane"
+  },
+  {
+    "short-name":"R. Heathcote",
+    "long-name": "Rob Heathcote",
+    "location": "Brisbane"
+  },
+  {
+    "short-name":"L. Hatch",
+    "long-name": "Lindsay Hatch",
+    "location": "Toowoomba"
+  },
+  {
+    "short-name":"M. Nolan",
+    "long-name": "Michael Nolan",
+    "location": "Toowoomba"
+  },
+  {
+    "short-name":"M. Smith",
+    "long-name": "Matthew Smith",
+    "location": "Sydney"
+  },
+  {
+    "short-name":"J. Hannah",
+    "long-name": "Jim Hannah",
+    "location": "Toowoomba"
+  }
+]
