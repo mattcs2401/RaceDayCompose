@@ -1,6 +1,7 @@
 package com.mcssoft.racedaycompose.ui.runners
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -112,6 +113,8 @@ fun RunnersScreen(
                             state.chked = checked
                             // Update the Runner's checkbox status.
                             viewModel.onEvent(RunnersEvent.CheckRunner(runner._id, checked))
+                            //
+                            Toast.makeText(context, "Updating Summary.", Toast.LENGTH_SHORT).show()
                             // Create (or remove) Summary item.
                             viewModel.onEvent(
                                 RunnersEvent.SetForSummary(

@@ -4,10 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.domain.model.Runner
-import com.mcssoft.racedaycompose.domain.model.Summary
+import com.mcssoft.racedaycompose.domain.model.*
 
 @Dao
 interface IDbRepo {
@@ -123,5 +120,7 @@ interface IDbRepo {
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
     //</editor-fold>
 
+    @Query("select * from Trainer join Horse on Trainer._id = Horse.tId")
+    suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>>
 
 }

@@ -3,6 +3,7 @@ package com.mcssoft.racedaycompose.hilt_di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.data_source.database.RaceDayDb
 import com.mcssoft.racedaycompose.data.data_source.remote.IRaceDay
@@ -29,6 +30,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

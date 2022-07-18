@@ -1,8 +1,8 @@
 package com.mcssoft.racedaycompose.domain.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mId"]),
         ForeignKey(entity = Race::class, parentColumns = ["_id"], childColumns = ["rcId"]),
-        ForeignKey(entity = Runner::class, parentColumns = ["_id"], childColumns = ["rrId"])],
-    indices = [Index(value = ["mId", "rcId", "rrId"])]
+        ForeignKey(entity = Runner::class, parentColumns = ["_id"], childColumns = ["rrId"])
+    ]
 )
 data class Summary(
 
@@ -20,8 +20,11 @@ data class Summary(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
 
+    @ColumnInfo(index = true)
     var mId: Long = 0L,      // foreign key Meeting_id.
+    @ColumnInfo(index = true)
     var rcId: Long = 0L,     // foreign key Race_id.
+    @ColumnInfo(index = true)
     var rrId: Long = 0L,     // foreign key Runner_id.
 
     // Meeting related.

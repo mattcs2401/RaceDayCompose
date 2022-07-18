@@ -1,9 +1,6 @@
 package com.mcssoft.racedaycompose.data.repository.database
 
-import com.mcssoft.racedaycompose.domain.model.Meeting
-import com.mcssoft.racedaycompose.domain.model.Race
-import com.mcssoft.racedaycompose.domain.model.Runner
-import com.mcssoft.racedaycompose.domain.model.Summary
+import com.mcssoft.racedaycompose.domain.model.*
 import javax.inject.Inject
 
 class DbRepoImpl @Inject constructor(
@@ -82,4 +79,7 @@ class DbRepoImpl @Inject constructor(
     }
     //</editor-fold>
 
+    override suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>> {
+        return dao.loadTrainerHorses()
+    }
 }

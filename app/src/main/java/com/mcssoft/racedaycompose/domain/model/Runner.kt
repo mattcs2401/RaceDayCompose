@@ -34,6 +34,6 @@ data class Runner(
     val runnerNumber: Int = 0,
     val scratched: Boolean = false,
     val weight: Double = 0.0,
-
-    var checked: Boolean = false
+    var checked: Boolean = false,
+    var trainer: String = ""
 )
