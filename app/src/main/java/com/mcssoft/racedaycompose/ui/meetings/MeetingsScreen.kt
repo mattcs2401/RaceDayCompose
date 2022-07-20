@@ -13,15 +13,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.components.Toast
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
+import com.mcssoft.racedaycompose.ui.components.navigation.BottomBar
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
-import com.mcssoft.racedaycompose.ui.destinations.SettingsScreenDestination
-import com.mcssoft.racedaycompose.ui.destinations.SummaryScreenDestination
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
 import com.ramcosta.composedestinations.annotation.Destination
@@ -31,6 +31,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun MeetingsScreen(
+    navController: NavController,
     navigator: DestinationsNavigator,
     viewModel: MeetingsViewModel = hiltViewModel()
 ) {
@@ -51,37 +52,16 @@ fun MeetingsScreen(
                         showRefresh.value = true
                     }) {
                         Icon(
-                            //Icons.Default.Refresh,
                             painterResource(id = R.drawable.ic_refresh_24),
                             stringResource(id = R.string.lbl_icon_refresh)
                         )
                     }
-                    IconButton(onClick = {
-                        navigator.navigate(SettingsScreenDestination)
-                    }) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_settings_24),
-                            stringResource(id = R.string.lbl_icon_settings)
-                        )
-                    }
-                    // TODO - Only display if Summary items exist.
-                    if(viewModel.summaryCheck()) {
-                        IconButton(onClick = {
-                            navigator.navigate(SummaryScreenDestination)
-                        }) {
-                            Icon(
-                                painterResource(id = R.drawable.ic_summary_24),
-                                stringResource(id = R.string.lbl_icon_summary)
-                            )
-                        }
-                    }
                 }
             )
+        },
+        bottomBar = {
+            BottomBar(navController = navController)
         }
-//        bottomBar = {
-//            BottomBar(navController = navController)
-//        }
-    
     ) {
         Box(
             modifier = Modifier
@@ -188,8 +168,8 @@ private fun ShowErrorDialog(
     if (showError.value) {
         CommonDialog(
             icon = R.drawable.ic_error_48,
-            dialogTitle = stringResource(id = R.string.dlg_error_title_noconn),
-            dialogText = stringResource(id = R.string.dlg_error_msg_noconn),
+            dialogTitle = stringResource(id = R.string.dlg_error_title_no_conn),
+            dialogText = stringResource(id = R.string.dlg_error_msg_no_conn),
             dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             onDismissClicked = {
                 showError.value = !showError.value

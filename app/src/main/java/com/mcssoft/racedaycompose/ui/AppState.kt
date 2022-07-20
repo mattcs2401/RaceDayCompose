@@ -13,17 +13,10 @@ data class AppState(
         /**
          * A StateFlow initialize value.
          */
-        fun initialise(): AppState {
-            return AppState(
-                date = "",
-                byDbPref = false,
-                byAuNzPref = false,
-                isRefreshing = false,
-                meetingsDownloaded = false,
-                runnersDownloaded = false,
-                downloadError = Status.Initialise
-            )
-        }
+        fun initialise() = AppState()
+//        fun initialise(): AppState {
+//            return AppState()
+//        }
     }
 
     sealed class Status {

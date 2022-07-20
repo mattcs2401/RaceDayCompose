@@ -10,6 +10,7 @@ import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 /**
@@ -19,11 +20,12 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
  * Notes:
  * ------
  * The Compose navigation doesn't like the startDestination to have any nav arguments, even
- * default values. This screen was implemented purely to allow for the MeetingsScreen (the actual
- * home/startDestination) to have nav arguments.
+ * default values. This screen was implemented to allow for:
+ * 1. the MeetingsScreen (the actual home/startDestination) to have nav arguments, and
+ * 2. any pre-population in the database as required.
  */
-//@RootNavGraph(start = true)
-@Destination(start = true)
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun SplashScreen(
     navigator: DestinationsNavigator,
@@ -35,7 +37,7 @@ fun SplashScreen(
         is SplashState.Status.Initialise -> {}
         is SplashState.Status.Loading -> {
             LoadingDialog(
-                titleText = "Initialising",
+                titleText = stringResource(id = R.string.dlg_init_title),
                 msgText = stringResource(id = R.string.dlg_loading_msg),
                 onDismiss = {}
             )

@@ -22,13 +22,12 @@ class PrePopulate @Inject constructor(
         try {
             emit(DataResult.loading())
 
-            //val runners = iDbRepo.getRunners(raceId)
             val inputStream = context.resources.openRawResource((R.raw.trainers))
-            val trainers = BufferedReader(inputStream.reader()).use {
-                JSONArray(it.readText())
+            val trainers = BufferedReader(inputStream.reader()).use { reader ->
+                JSONArray(reader.readText())
             }
-            for (i in 0 until trainers.length()) {
-                val trainer = trainers.getJSONObject(i)
+            for (ndx in 0 until trainers.length()) {
+                val trainer = trainers.getJSONObject(ndx)
                 val entity = Trainer(
                     shortName = trainer.getString("short-name"),
                     longName = trainer.getString("long-name"),
@@ -44,8 +43,4 @@ class PrePopulate @Inject constructor(
         }
     }
 
-}
-
-private fun prePopulateData(): ArrayList<Trainer> {
-    return arrayListOf(Trainer(), Trainer() )
 }
