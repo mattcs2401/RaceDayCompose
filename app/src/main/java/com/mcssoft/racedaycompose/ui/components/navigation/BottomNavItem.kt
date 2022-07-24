@@ -11,8 +11,7 @@ sealed class BottomNavItem(
 ) {
     object Admin: BottomNavItem(
         Screen.AdminScreen.route,
-        0,
-//        R.drawable.ic_home_24,
+        R.drawable.ic_admin_24,
         "Admin"
     )
 

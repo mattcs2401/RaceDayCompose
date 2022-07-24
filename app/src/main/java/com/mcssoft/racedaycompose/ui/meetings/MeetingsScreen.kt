@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.AppState
 import com.mcssoft.racedaycompose.ui.components.Toast
@@ -31,7 +30,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun MeetingsScreen(
-    navController: NavController,
     navigator: DestinationsNavigator,
     viewModel: MeetingsViewModel = hiltViewModel()
 ) {
@@ -60,7 +58,7 @@ fun MeetingsScreen(
             )
         },
         bottomBar = {
-            BottomBar(navController = navController)
+            BottomBar(navigator = navigator)
         }
     ) {
         Box(
