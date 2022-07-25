@@ -104,7 +104,7 @@ object AppModule {
             savePreferences = SavePreferences(prefs),
             setRunnerChecked = SetRunnerChecked(local),
             getSummaries = GetSummaries(local),
-            setForSummary = SetForSummary(),
+            setForSummary = SetForSummary(local),
             checkPrePopulate = CheckPrePopulate(local),
             prePopulate = PrePopulate(local, context)
         )

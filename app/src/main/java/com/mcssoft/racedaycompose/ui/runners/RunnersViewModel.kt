@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.runners
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,8 +45,7 @@ class RunnersViewModel @Inject constructor(
                 setForSummary(
                     event.raceId,
                     event.runnerId,
-                    event.checked,
-                    event.context
+                    event.checked
                 )
             }
         }
@@ -165,35 +163,22 @@ class RunnersViewModel @Inject constructor(
     /**
      * Class to ensure the backing data for the Summary is set (if exists).
      */
-    fun setForSummary(raceId: Long, runnerId: Long, checked: Boolean, context: Context) {
+    private fun setForSummary(raceId: Long, runnerId: Long, checked: Boolean) {
         viewModelScope.launch {
-            raceDayUseCases.setForSummary(raceId, runnerId, checked, context).collect { result ->
+            raceDayUseCases.setForSummary(raceId, runnerId, checked).collect { result ->
                 when {
                     result.loading -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = null,
-//                                loading = true
-//                            )
-//                        }
+                        _state.update { state -> state.copy(exception = null, loading = true) }
                     }
                     result.failed -> {
                         _state.update { state ->
-                            state.copy(
-                                exception = state.exception,
-                                loading = false
-                            )
+                            state.copy(exception = state.exception, loading = false)
                         }
                     }
                     result.successful -> {
-                        _state.update { state ->
-                            state.copy(
-                                exception = null,
-                                loading = false
-                            )
-                        }
+                        _state.update { state -> state.copy(exception = null, loading = false ) }
                     }
-                } // when
+                }
             } // collect.
         } // view model scope.
     }
