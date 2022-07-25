@@ -38,8 +38,8 @@ data class Summary(
     var raceTime: String = "",
 
     // Runner related.
-    val riderName: String = "",
-    val runnerName: String = "",
-    val runnerNumber: Int = 0
+    var riderName: String = "",
+    var runnerName: String = "",
+    var runnerNumber: Int = 0
 
 )

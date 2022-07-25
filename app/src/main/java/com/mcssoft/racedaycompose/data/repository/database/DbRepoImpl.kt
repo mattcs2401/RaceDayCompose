@@ -60,6 +60,10 @@ class DbRepoImpl @Inject constructor(
         return dao.insertRunners(runners)
     }
 
+    override suspend fun getRunner(runnerId: Long): Runner {
+        return dao.getRunner(runnerId)
+    }
+
     override suspend fun getRunners(raceId: Long): List<Runner> {
         return dao.getRunners(raceId)
     }
@@ -74,9 +78,18 @@ class DbRepoImpl @Inject constructor(
         return dao.getSummaries()
     }
 
+    override suspend fun insertSummary(summary: Summary): Long {
+        return dao.insertSummary(summary)
+    }
+
     override suspend fun insertSummaries(summaries: List<Summary>): List<Long> {
         return dao.insertSummaries(summaries)
     }
+
+    override suspend fun deleteSummary(id: Long) {
+        dao.deleteSummary(id)
+    }
+
     //</editor-fold>
 
     override suspend fun loadTrainerHorses(): Map<Trainer, List<Horse>> {

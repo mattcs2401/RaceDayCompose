@@ -100,6 +100,9 @@ interface IDbRepo {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRunners(runners: List<Runner>): List<Long>
 
+    @Query("select * from Runner where _id = :runnerId")
+    suspend fun getRunner(runnerId: Long): Runner
+
     /**
      * Get a list of Runners based on the id of the associated Race.
      * @param raceId: The Race id (database row id).
@@ -117,7 +120,13 @@ interface IDbRepo {
     suspend fun getSummaries(): List<Summary>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSummary(summary: Summary): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSummaries(summaries: List<Summary>): List<Long>
+
+    @Query("delete from Summary where rrid = :id")
+    suspend fun deleteSummary(id: Long)
     //</editor-fold>
 
     @Query("select count(*) from Trainer")
