@@ -6,7 +6,8 @@ data class SummaryState(
     var exception: Exception?,
     var status: Status,
     var loading: Boolean = false,
-    var summaries: List<Summary> = emptyList()
+    var summaries: List<Summary> = emptyList(),
+    var group: Map<String, List<Summary>> = mapOf()
 ) {
     companion object {
         fun initialise(): SummaryState {
@@ -24,5 +25,6 @@ data class SummaryState(
         object Failure : Status()
     }
 
-    var count = summaries.size
+    val count = summaries.size
+    val grouped by lazy { summaries.groupBy { it.meetingCode } }     // TBA ?
 }

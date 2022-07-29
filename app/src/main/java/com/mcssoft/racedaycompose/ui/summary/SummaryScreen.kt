@@ -1,6 +1,7 @@
 package com.mcssoft.racedaycompose.ui.summary
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,11 +21,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
 import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
+import com.mcssoft.racedaycompose.ui.summary.components.SummaryHeader
 import com.mcssoft.racedaycompose.ui.summary.components.SummaryItem
-import com.mcssoft.racedaycompose.ui.theme.*
+import com.mcssoft.racedaycompose.ui.theme.RoundedCornerShapes
+import com.mcssoft.racedaycompose.ui.theme.eightyPercent
+import com.mcssoft.racedaycompose.ui.theme.padding16dp
+import com.mcssoft.racedaycompose.ui.theme.twentyPercent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 @Destination
@@ -63,24 +69,23 @@ fun SummaryScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = padding64dp)
                 ) {
-                    items(
-                        items = state.summaries
-                    ) { summary ->
-                        SummaryItem(
-                            summary = summary
-                        )
+                    state.grouped.forEach { (mtgCode, listing) ->
+                        stickyHeader {
+                            SummaryHeader(mtgCode = mtgCode, venueName = listing[0].venueName)
+                        }
+                        items(
+                            items = listing
+                        ) { summary ->
+                            SummaryItem(
+                                summary = summary
+                            )
+                        }
                     }
-
                 }
             }
         } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = padding64dp)
-            ) {
+            Box(modifier = Modifier.fillMaxWidth()) {
                 NothingToDisplay()
             }
         }

@@ -50,6 +50,7 @@ private fun createSummaryEntry(race: Race, meeting: Meeting, runner: Runner): Su
         raceName = race.raceName
         raceNumber = race.raceNumber
         raceTime = race.raceTime
+        raceDist = race.distance
         riderName = runner.riderName
         runnerName = runner.runnerName
         runnerNumber = runner.runnerNumber

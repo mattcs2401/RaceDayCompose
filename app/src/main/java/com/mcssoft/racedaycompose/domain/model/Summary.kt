@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 )
 data class Summary(
 
-    // TODO - All values are TBA.
+    // TODO - All values are TBA. Indexes appropriate ?
 
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
@@ -36,6 +36,7 @@ data class Summary(
     var raceName: String = "",
     var raceNumber: Int = 0,
     var raceTime: String = "",
+    var raceDist: Int = 0,
 
     // Runner related.
     var riderName: String = "",

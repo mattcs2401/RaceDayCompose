@@ -29,24 +29,13 @@ class RunnersViewModel @Inject constructor(
 
     fun onEvent(event: RunnersEvent) {
         when(event) {
-            is RunnersEvent.Cancel -> {
-                // TBA.
-            }
-            is RunnersEvent.Retry -> {
-                // TBA.
-            }
+            is RunnersEvent.Cancel -> { /* TBA */ }
+            is RunnersEvent.Retry -> { /* TBA */ }
             is RunnersEvent.CheckRunner -> {
-                checkRunner(
-                    event.runnerId,
-                    event.checked
-                )
+                checkRunner(event.runnerId, event.checked)
             }
             is RunnersEvent.SetForSummary -> {
-                setForSummary(
-                    event.raceId,
-                    event.runnerId,
-                    event.checked
-                )
+                setForSummary(event.raceId, event.runnerId, event.checked)
             }
         }
     }
