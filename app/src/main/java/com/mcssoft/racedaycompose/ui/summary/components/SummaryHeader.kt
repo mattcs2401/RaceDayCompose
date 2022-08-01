@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.mcssoft.racedaycompose.ui.theme.*
+import com.mcssoft.racedaycompose.ui.theme.eightyPercent
+import com.mcssoft.racedaycompose.ui.theme.elevation4dp
+import com.mcssoft.racedaycompose.ui.theme.padding4dp
+import com.mcssoft.racedaycompose.ui.theme.twentyPercent
 
 @Composable
 fun SummaryHeader(
@@ -28,7 +31,7 @@ fun SummaryHeader(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(padding16dp),
+                    .padding(padding4dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
@@ -46,7 +49,7 @@ fun SummaryHeader(
                 // Column 2 (venue name).
                 Column(
                     modifier = Modifier.fillMaxWidth(eightyPercent),
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.Start
                 ) {
                     Text(
                         text = venueName,
