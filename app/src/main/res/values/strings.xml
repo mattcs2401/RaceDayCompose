@@ -31,6 +31,7 @@
     <string name="dlg_loading_msg">Please wait ..</string>>
 
     <string name="dlg_error_title">An Error Occurred</string>
+    <string name="dlg_error_msg_unknown">An unknown error occurred</string>
     <string name="dlg_error_title_no_conn">No Connectivity</string>
     <string name="dlg_error_msg_no_conn">Check the internet connection or mobile data status.</string>
 

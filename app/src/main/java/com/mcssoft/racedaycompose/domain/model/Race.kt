@@ -10,12 +10,14 @@ import androidx.room.PrimaryKey
  */
 @Entity(
     tableName = "Race",
+    indices = [Index(value = ["mtgId"])],
     foreignKeys = [
         ForeignKey(
-            entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mtgId"],
+            entity = Meeting::class,
+            parentColumns = ["_id"],
+            childColumns = ["mtgId"],
             onDelete = ForeignKey.CASCADE
-        )],
-    indices = [Index(value = ["mtgId"])]
+        )]
 )
 data class Race(
     @PrimaryKey(autoGenerate = true)

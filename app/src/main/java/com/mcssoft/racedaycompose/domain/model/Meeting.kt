@@ -1,15 +1,13 @@
 package com.mcssoft.racedaycompose.domain.model
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
  * Cache adaptation of domain.dto.MeetingDto.
  */
 @Entity(
-    tableName = "Meeting",
-    indices = [Index(value = ["_id"])]
+    tableName = "Meeting"
 )
 data class Meeting(
     @PrimaryKey(autoGenerate = true)

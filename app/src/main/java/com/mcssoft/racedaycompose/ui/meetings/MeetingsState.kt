@@ -9,7 +9,6 @@ data class MeetingsState(
     var data: List<Meeting>?
 ) {
     companion object {
-
         // Simply a Flow initializer.
         fun initialise(): MeetingsState {
             return MeetingsState(

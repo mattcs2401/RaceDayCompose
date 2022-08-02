@@ -81,11 +81,11 @@ class MeetingsViewModel @Inject constructor(
                 }
             }
             is MeetingsEvent.Cancel -> {
-                _state.update { state ->
-                    state.copy(
-                        data = emptyList()
-                    )
-                }
+//                _state.update { state ->
+//                    state.copy(
+//                        data = emptyList()
+//                    )
+//                }
             }
         }
     }

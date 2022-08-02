@@ -49,7 +49,7 @@ class SetupBaseFromApi @Inject constructor(
                 }
                 response.error -> {
                     val bp = "bp"
-                    // TBA - Not an exception, but no data in the response.
+                    // TODO - Not an exception, but something else, e.g. no data etc.
                 }
             }
 

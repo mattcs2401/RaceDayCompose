@@ -51,13 +51,13 @@ interface IDbRepo {
     /**
      * Delete all from Meetings.
      */
-    @Query("delete from meeting")
+    @Query("delete from Meeting")
     suspend fun deleteMeetings(): Int       // CASCADE should take care of Races/Runners etc.
 
     /**
      * Get a count of the Meeting records.
      */
-    @Query("select count(*) from meeting")
+    @Query("select count(*) from Meeting")
     suspend fun meetingCount(): Int
     //</editor-fold>
 

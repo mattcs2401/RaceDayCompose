@@ -1,16 +1,36 @@
 package com.mcssoft.racedaycompose.domain.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Summary",
+    indices = [
+        Index(value = ["mId"]),
+        Index(value = ["rcId"]),
+        Index(value = ["rrId"])
+    ],
     foreignKeys = [
-        ForeignKey(entity = Meeting::class, parentColumns = ["_id"], childColumns = ["mId"]),
-        ForeignKey(entity = Race::class, parentColumns = ["_id"], childColumns = ["rcId"]),
-        ForeignKey(entity = Runner::class, parentColumns = ["_id"], childColumns = ["rrId"])
+        ForeignKey(
+            entity = Meeting::class,
+            parentColumns = ["_id"],
+            childColumns = ["mId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Race::class,
+            parentColumns = ["_id"],
+            childColumns = ["rcId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Runner::class,
+            parentColumns = ["_id"],
+            childColumns = ["rrId"],
+            onDelete = ForeignKey.CASCADE
+        )
     ]
 )
 data class Summary(
@@ -20,11 +40,8 @@ data class Summary(
     @PrimaryKey(autoGenerate = true)
     var _id: Long = 0L,
 
-    @ColumnInfo(index = true)
     var mId: Long = 0L,      // foreign key Meeting_id.
-    @ColumnInfo(index = true)
     var rcId: Long = 0L,     // foreign key Race_id.
-    @ColumnInfo(index = true)
     var rrId: Long = 0L,     // foreign key Runner_id.
 
     // Meeting related.

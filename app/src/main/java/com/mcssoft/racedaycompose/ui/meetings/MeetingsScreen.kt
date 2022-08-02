@@ -37,7 +37,8 @@ fun MeetingsScreen(
     val appState by viewModel.appState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
-    val showRefresh = remember { mutableStateOf(false) }
+    val showRefreshDialog = remember { mutableStateOf(false) }
+    val showErrorDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -47,7 +48,7 @@ fun MeetingsScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 actions = {
                     IconButton(onClick = {
-                        showRefresh.value = true
+                        showRefreshDialog.value = true
                     }) {
                         Icon(
                             painterResource(id = R.drawable.ic_refresh_24),
@@ -84,7 +85,8 @@ fun MeetingsScreen(
                 mtgsState = state,
                 appState = appState,
                 viewModel = viewModel,
-                showRefresh = showRefresh
+                showRefresh = showRefreshDialog,
+                showError = showErrorDialog
             )
         }
     }
@@ -99,10 +101,9 @@ private fun ManageState(
     mtgsState: MeetingsState,
     appState: AppState,
     viewModel: MeetingsViewModel,
-    showRefresh: MutableState<Boolean>
+    showRefresh: MutableState<Boolean>,
+    showError: MutableState<Boolean>,
 ) {
-    val errorDialogShow = remember { mutableStateOf(false) }
-
     if (showRefresh.value) {
         ShowRefreshDialog(show = showRefresh, viewModel = viewModel)
     }
@@ -117,11 +118,8 @@ private fun ManageState(
         }
         is Failure -> {
             showRefresh.value = false
-            errorDialogShow.value = true
-            ShowErrorDialog(
-                errorDialogShow,
-                viewModel = viewModel
-            )
+            showError.value = true
+            ShowErrorDialog(show = showError, viewModel = viewModel, mtgsState.exception)
         }
         is Success -> {
             if (appState.isRefreshing && appState.meetingsDownloaded) {
@@ -160,26 +158,26 @@ private fun ShowRefreshDialog(
 
 @Composable
 private fun ShowErrorDialog(
-    showError: MutableState<Boolean>,
-    viewModel: MeetingsViewModel
+    show: MutableState<Boolean>,
+    viewModel: MeetingsViewModel,
+    exception: Exception?  // message from any exception.
 ) {
-    if (showError.value) {
+    if (show.value) {
         CommonDialog(
             icon = R.drawable.ic_error_48,
-            dialogTitle = stringResource(id = R.string.dlg_error_title_no_conn),
-            dialogText = stringResource(id = R.string.dlg_error_msg_no_conn),
+            dialogTitle = stringResource(id = R.string.dlg_error_title),
+            dialogText = stringResource(id = R.string.dlg_error_msg_unknown),
             dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
             onDismissClicked = {
-                showError.value = !showError.value
+                show.value = !show.value
             },
             confirmButtonText = stringResource(id = R.string.lbl_btn_refresh),
             onConfirmClicked = {
-                showError.value = !showError.value
+                show.value = !show.value
                 viewModel.onEvent(MeetingsEvent.RefreshFromDb)
             }
-
         )
-    }
+   }
 }
 /*
   SnackBar example:
