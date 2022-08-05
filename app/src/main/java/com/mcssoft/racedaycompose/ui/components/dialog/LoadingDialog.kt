@@ -1,7 +1,7 @@
 package com.mcssoft.racedaycompose.ui.components.dialog
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,9 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mcssoft.racedaycompose.ui.theme.*
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.layoutId
+import com.mcssoft.racedaycompose.ui.theme.fontSize12sp
+import com.mcssoft.racedaycompose.ui.theme.width2dp
 
 /**
 A dialog with a title on the 1st line, and a circular progress indicator and message text on the
@@ -23,63 +29,72 @@ A dialog with a title on the 1st line, and a circular progress indicator and mes
 fun LoadingDialog(
     titleText: String,
     msgText: String,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
-    Dialog(
-        onDismissRequest = {
-            onDismiss()
-        },
-        properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = false
-        )
+    Box(
+        Modifier.border(
+            width = width2dp,
+            color = Color.Blue
+        ),
+        contentAlignment = Alignment.Center
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(eightyPercent)
-                .border(
-                    width = width2dp,
-                    color = Color.Blue
-                ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start
+        Dialog(
+            onDismissRequest = {
+                onDismiss()
+            },
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = false,
+            )
         ) {
-            Row(
-                modifier = Modifier.padding(
-                    start = padding16dp,
-                    top = padding16dp,
-                    bottom = padding8dp
+            ConstraintLayout(
+                constraintSet
+            ) {
+                Text(
+                    text = titleText,
+                    Modifier.layoutId("idDialogTitle")
                 )
-            ) {
-                Text(titleText)
-            }
-            Row(
-                modifier = Modifier.padding(
-                    start = padding16dp,
-                    top = padding8dp,
-                    bottom = padding16dp
-                ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(thirtyPercent),
-                ) {
-                    CircularProgressIndicator()
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(seventyPercent),
-                ) {
-                    Text(
-                        msgText,
-                        fontSize = fontSize12sp,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
-                }
+                CircularProgressIndicator(
+                    Modifier.layoutId("idDialogIndicator")
+                )
+                Text(
+                    text = msgText,
+                    Modifier.layoutId("idDialogText"),
+                    fontSize = fontSize12sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
             }
         }
     }
 }
+
+private val constraintSet = ConstraintSet {
+    val idDialogTitle = createRefFor("idDialogTitle")
+    val idDialogIndicator = createRefFor("idDialogIndicator")
+    val idDialogText = createRefFor("idDialogText")
+
+    constrain(idDialogTitle) {
+        top.linkTo(parent.top, margin = 16.dp)
+        start.linkTo(parent.start, margin = 16.dp)
+    }
+    constrain(idDialogIndicator) {
+        top.linkTo(idDialogTitle.bottom, margin = 16.dp)
+        start.linkTo(idDialogTitle.start, margin = 0.dp)
+        bottom.linkTo(parent.bottom, margin = 16.dp)            // padding match top.
+    }
+    constrain(idDialogText) {
+        top.linkTo(idDialogIndicator.top, margin = 8.dp)       // bring down a bit.
+        start.linkTo(idDialogIndicator.end, margin = 16.dp)
+        end.linkTo(parent.end, margin = 16.dp)                  // padding match start.
+//        bottom.linkTo(parent.bottom, margin = 16.dp)            // padding match top.
+    }
+}
+
+@Preview
+@Composable
+fun ShowDialog() {
+    LoadingDialog(titleText = "Initialising", msgText = "Setup base from API.", {})
+}
+
 

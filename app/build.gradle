@@ -50,6 +50,9 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    lintOptions {
+        disable 'UnusedMaterialScaffoldPaddingParameter'
+    }
 }
 
 dependencies {
@@ -58,28 +61,27 @@ dependencies {
     def retrofit_ver = '2.9.0'
     def okhttp_ver = '5.0.0-alpha.3'
     def hilt_models_ver = '1.0.0-alpha03'
-    def compose_ver = '1.3.0-alpha01'
+    def compose_ver = '1.3.0-alpha02'
 
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 
     /* Compose.
      * Not sure all these actually required.
      */
     implementation "androidx.compose.ui:ui:$compose_ver"
-    implementation 'androidx.activity:activity-compose:1.5.0'
-//    implementation "androidx.compose.ui:ui-tooling:$compose_ver"
-//    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ver"
+    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation "androidx.compose.ui:ui-tooling:$compose_ver"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ver"
     implementation "androidx.compose.material:material:$compose_ver"
     implementation "androidx.compose.foundation:foundation:$compose_ver"
-    implementation "androidx.navigation:navigation-compose:2.5.0"
+    implementation "androidx.navigation:navigation-compose:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha01"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
-//    debugImplementation "androidx.compose.ui:ui-tooling:1.1.1"
 //    implementation "androidx.compose.material3:material3:1.0.0-alpha12"
 
     /* Room database. */
@@ -110,16 +112,17 @@ dependencies {
     /* WorkManager with coroutines. */
     implementation "androidx.work:work-runtime-ktx:2.7.1"
 
-    /* Leak Canary. */
-    // debugImplementation because LeakCanary should only run in debug builds.
+    /* Leak Canary.
+     * debugImplementation because LeakCanary should only run in debug builds.
+     */
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
     //implementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.7'
 
     /* ComposeDestinations.
-    * Doco: "A KSP library that processes annotations and generates code that uses Official Jetpack
-    *       Compose Navigation under the hood. It hides the complex, non-type-safe and boilerplate
-    *       code you would have to write otherwise..."
-    *  */
-    implementation 'io.github.raamcosta.compose-destinations:core:1.6.13-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.6.13-beta'
+     * Doco: "A KSP library that processes annotations and generates code that uses Official Jetpack
+     *       Compose Navigation under the hood. It hides the complex, non-type-safe and boilerplate
+     *       code you would have to write otherwise..."
+     */
+    implementation 'io.github.raamcosta.compose-destinations:core:1.7.15-beta'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.7.15-beta'
 }

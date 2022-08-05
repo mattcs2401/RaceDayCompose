@@ -1,6 +1,5 @@
 package com.mcssoft.racedaycompose.ui.summary
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,13 +29,12 @@ import com.mcssoft.racedaycompose.ui.theme.twentyPercent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@OptIn(ExperimentalFoundationApi::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalFoundationApi::class)    // sticky header.
 @Composable
 @Destination
 fun SummaryScreen(
     navigator: DestinationsNavigator,
-    viewModel: SummaryViewModel = hiltViewModel()
+    viewModel: SummaryViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val scaffoldState = rememberScaffoldState()
@@ -59,7 +57,7 @@ fun SummaryScreen(
         },
         backgroundColor = Color.LightGray
     ) {
-        if(state.count > 0) {
+        if (state.count > 0) {
             // Only if there is something to display.
             Box(
                 modifier = Modifier

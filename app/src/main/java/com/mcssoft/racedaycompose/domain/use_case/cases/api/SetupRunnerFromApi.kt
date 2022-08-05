@@ -9,7 +9,7 @@ import com.mcssoft.racedaycompose.utility.WorkerState
 import kotlinx.coroutines.flow.*
 import java.util.*
 
-class SetupRunnerFromApi {
+class SetupRunnerFromApi(context: Context) {
 
     private lateinit var workManager: WorkManager
 
