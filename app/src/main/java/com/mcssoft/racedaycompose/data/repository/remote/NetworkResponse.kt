@@ -9,15 +9,16 @@ import retrofit2.Response
 data class NetworkResponse<T>(
     val status: Status,
     val data: Response<T>?,
-    val ex: Exception?
-
+    val ex: Exception?,
+    val err: String,
 ) {
     companion object {
         fun <T> success(data: Response<T>): NetworkResponse<T> {
             return NetworkResponse(
                 status = Status.Success,
                 data = data,
-                ex = null
+                ex = null,
+                err = ""
             )
         }
 
@@ -25,15 +26,17 @@ data class NetworkResponse<T>(
             return NetworkResponse(
                 status = Status.Exception,
                 data = null,
-                ex = exception
+                ex = exception,
+                err = ""
             )
         }
 
-        fun <T> error(message: String): NetworkResponse<T> {
+        fun <T> error(message: String = ""): NetworkResponse<T> {
             return NetworkResponse(
                 status = Status.Error,
                 data = null,
-                ex = null
+                ex = null,
+                err = message
             )
         }
     }
@@ -41,7 +44,7 @@ data class NetworkResponse<T>(
     sealed class Status {
         object Success : Status()
         object Exception : Status()
-        object Error: Status()
+        object Error : Status()
     }
 
     val exception: Boolean
@@ -49,6 +52,9 @@ data class NetworkResponse<T>(
 
     val error: Boolean
         get() = !exception && this.data?.isSuccessful == false
+
+    val errorMsg: String
+        get() = this.err
 
     val successful: Boolean
         get() = !exception && this.data?.isSuccessful == true

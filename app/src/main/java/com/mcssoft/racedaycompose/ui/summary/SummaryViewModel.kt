@@ -34,7 +34,8 @@ class SummaryViewModel @Inject constructor(
                 result.failed -> {
                     _state.update { state ->
                         state.copy(
-                            exception = result.exception ?: Exception("An unknown error has occurred."),
+                            exception = result.exception
+                                ?: Exception("An unknown error has occurred."),
                             status = SummaryState.Status.Failure,
                             loading = false
                         )
@@ -54,44 +55,6 @@ class SummaryViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-//    /**
-//     * Class to ensure the backing data for the Summary is set (if exists).
-//     */
-//    fun setForSummary(context: Context) {
-//        viewModelScope.launch {
-//            raceDayUseCases.setForSummary(context).collect { result ->
-//                when {
-//                    result.loading -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = null,
-//                                status = SummaryState.Status.Loading,
-//                                loading = true
-//                            )
-//                        }
-//                    }
-//                    result.failed -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = state.exception,
-//                                status = SummaryState.Status.Failure,
-//                                loading = false
-//                            )
-//                        }
-//                    }
-//                    result.successful -> {
-//                        _state.update { state ->
-//                            state.copy(
-//                                exception = null,
-//                                status = SummaryState.Status.Success,
-//                                loading = false
-//                            )
-//                        }
-//                    }
-//                } // when
-//            } // collect.
-//        } // view model scope.
-//    }
 }
 
 

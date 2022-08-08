@@ -25,14 +25,13 @@ import com.mcssoft.racedaycompose.ui.theme.padding4dp
 @Composable
 fun MeetingItem(
     meeting: Meeting,
-    onItemClick: (Meeting) -> Unit
+    onItemClick: (Meeting) -> Unit,
 ) {
-//    val backgroundColour = if (meeting.abandoned) {
-//        MaterialTheme.colors.error
-//    } else {
-//        MaterialTheme.colors.primaryVariant
-//    }
-    val backgroundColour = MaterialTheme.colors.primaryVariant
+    val backgroundColour = if (meeting.abandoned) {
+        MaterialTheme.colors.error
+    } else {
+        MaterialTheme.colors.primaryVariant
+    }
 
     var expandedState by remember { mutableStateOf(false) }
 
@@ -76,12 +75,12 @@ fun MeetingItem(
                     .layoutId("idArrow")
                     .rotate(rotationState)
             ) {
-//                if (!meeting.abandoned) {
+                if (!meeting.abandoned) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "Drop-Down Arrow"
                     )
-//                }
+                }
             }
         }
         if (expandedState) {

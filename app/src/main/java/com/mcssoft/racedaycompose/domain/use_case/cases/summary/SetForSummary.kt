@@ -11,32 +11,33 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
- * Class to set a Summary object.
+ * Class to set a Summary object. Invoked in the RunnersViewModel.
  */
 class SetForSummary @Inject constructor(
-    private val iDbRepo: IDbRepo
+    private val iDbRepo: IDbRepo,
 ) {
-    operator fun invoke(raceId: Long, runnerId: Long, checked: Boolean): Flow<DataResult<String>> = flow {
-        try {
-            emit(DataResult.loading())
+    operator fun invoke(raceId: Long, runnerId: Long, checked: Boolean): Flow<DataResult<String>> =
+        flow {
+            try {
+                emit(DataResult.loading())
 
-            val race = iDbRepo.getRace(raceId)
-            val meeting = iDbRepo.getMeeting(race.mtgId)
-            val runner = iDbRepo.getRunner(runnerId)
+                val race = iDbRepo.getRace(raceId)
+                val meeting = iDbRepo.getMeeting(race.mtgId)
+                val runner = iDbRepo.getRunner(runnerId)
 
-            if(checked) {
-                val summary = createSummaryEntry(race, meeting, runner)
-                iDbRepo.insertSummary(summary)
-            } else {
-                iDbRepo.deleteSummary(runnerId)
+                if (checked) {
+                    val summary = createSummaryEntry(race, meeting, runner)
+                    iDbRepo.insertSummary(summary)
+                } else {
+                    iDbRepo.deleteSummary(runnerId)
+                }
+
+                emit(DataResult.success(""))
+
+            } catch (exception: Exception) {
+                emit(DataResult.failure(exception))
             }
-
-            emit(DataResult.success(""))
-
-        } catch (exception: Exception) {
-            emit(DataResult.failure(exception))
         }
-    }
 }
 
 private fun createSummaryEntry(race: Race, meeting: Meeting, runner: Runner): Summary {

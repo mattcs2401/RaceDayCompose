@@ -1,41 +1,26 @@
----------
-App Notes
----------
+|===================|
+| Application Notes |
+|===================|
 
 In no particular order.
 -----------------------
+>> Save scroll position/state, for listings.
+   -> e.g. when navigate from Runners back to Races.
 
--> If navigating back to the Meetings screen from anything but the Settings screen, there's no need
-   for the Meetings view model to do the preference check.
-   -- is it really that big an overhead ?
-      -- maybe if we start getting a whole list of preferences ?
-         -- what about some sort of preference manager ?
-            -- TBA
+>> Summary / Notifications actions when:
+   -> Race time is nearing.
+   -> Race time is past.
 
--> Save scroll position/state, for listings.
-   -- e.g. when navigate from Runners back to Races.
+>> Implement an Admin screen:
+   -> TBA - what would we do here ?
 
--> Implement a 'Summary' screen of selected Races.
-
--> Summaries are grouped by 'meetingCode' (hard coded):
-   -- can we make this more dynamic ?
-
--> Summary / Notifications actions when:
-   -- Race time is nearing.
-   -- Race time is past.
-
--> Implement an Admin screen:
-   -- TBA.
-
--> Implement a search function:
-   -- horse
-   -- jockey
-   -- ??
+>> Implement a search function:
+   -> horse
+   -> jockey
+   -> ??
 
 
 
-
--------------
 Useful links:
 -------------
 https://material-foundation.github.io/material-theme-builder/#/custom

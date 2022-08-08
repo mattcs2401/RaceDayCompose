@@ -70,7 +70,10 @@ fun SummaryScreen(
                 ) {
                     state.grouped.forEach { (mtgCode, listing) ->
                         stickyHeader {
-                            SummaryHeader(mtgCode = mtgCode, venueName = listing[0].venueName)
+                            SummaryHeader(
+                                mtgCode = mtgCode,
+                                venueName = listing[0].venueName
+                            )
                         }
                         items(
                             items = listing

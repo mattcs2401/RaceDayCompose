@@ -51,6 +51,8 @@ android {
         }
     }
     lintOptions {
+        quiet false
+        abortOnError true
         disable 'UnusedMaterialScaffoldPaddingParameter'
     }
 }

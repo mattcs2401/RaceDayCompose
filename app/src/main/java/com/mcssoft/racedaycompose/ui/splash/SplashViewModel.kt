@@ -23,8 +23,6 @@ class SplashViewModel @Inject constructor(
     val state: StateFlow<SplashState> = _state
 
     init {
-//        Log.d("TAG", "enter SplashViewModel")
-
         val date = DateUtils().getDateToday()
         _state.update { state -> state.copy(date = date) }
 

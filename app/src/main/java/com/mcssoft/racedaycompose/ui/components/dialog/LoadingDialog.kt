@@ -1,13 +1,10 @@
 package com.mcssoft.racedaycompose.ui.components.dialog
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,8 +13,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
+import com.mcssoft.racedaycompose.ui.theme.RoundedCornerShapes
 import com.mcssoft.racedaycompose.ui.theme.fontSize12sp
-import com.mcssoft.racedaycompose.ui.theme.width2dp
 
 /**
 A dialog with a title on the 1st line, and a circular progress indicator and message text on the
@@ -31,21 +28,17 @@ fun LoadingDialog(
     msgText: String,
     onDismiss: () -> Unit,
 ) {
-    Box(
-        Modifier.border(
-            width = width2dp,
-            color = Color.Blue
-        ),
-        contentAlignment = Alignment.Center
+    Dialog(
+        onDismissRequest = {
+            onDismiss()
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = false,
+        )
     ) {
-        Dialog(
-            onDismissRequest = {
-                onDismiss()
-            },
-            properties = DialogProperties(
-                dismissOnBackPress = true,
-                dismissOnClickOutside = false,
-            )
+        Card(
+            shape = RoundedCornerShapes.small
         ) {
             ConstraintLayout(
                 constraintSet

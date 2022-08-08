@@ -21,7 +21,7 @@ import javax.inject.Inject
  */
 class SetupBaseFromApi @Inject constructor(
     private val iRemoteRepo: IRemoteRepo,
-    private val iDbRepo: IDbRepo
+    private val iDbRepo: IDbRepo,
 ) {
     /**
      * @param mtgDate: The date to use in the Api Url.
@@ -48,8 +48,11 @@ class SetupBaseFromApi @Inject constructor(
                     iDbRepo.deleteMeetings()
                 }
                 response.error -> {
-                    val bp = "bp"
-                    // TODO - Not an exception, but something else, e.g. no data etc.
+                    if (response.errorMsg != "") {
+                        throw Exception("An error occurred: ${response.errorMsg}")
+                    } else {
+                        throw Exception("An unknown error occurred.")
+                    }
                 }
             }
 

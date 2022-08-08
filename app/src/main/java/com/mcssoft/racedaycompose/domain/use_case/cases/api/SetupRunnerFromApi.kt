@@ -2,14 +2,17 @@ package com.mcssoft.racedaycompose.domain.use_case.cases.api
 
 import android.content.Context
 import androidx.lifecycle.asFlow
-import androidx.work.*
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.mcssoft.racedaycompose.utility.DataResult
 import com.mcssoft.racedaycompose.utility.RunnersWorker
 import com.mcssoft.racedaycompose.utility.WorkerState
 import kotlinx.coroutines.flow.*
 import java.util.*
 
-class SetupRunnerFromApi(context: Context) {
+class SetupRunnerFromApi {
 
     private lateinit var workManager: WorkManager
 

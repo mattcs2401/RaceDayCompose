@@ -90,11 +90,11 @@ object AppModule {
         remote: IRemoteRepo,
         local: IDbRepo,
         prefs: IPreferences,
-        context: Context
+        context: Context,
     ): RaceDayUseCases {
         return RaceDayUseCases(
             setupBaseFromApi = SetupBaseFromApi(remote, local),
-            setupRunnerFromApi = SetupRunnerFromApi(context),
+            setupRunnerFromApi = SetupRunnerFromApi(),//context),
             getMeeting = GetMeeting(local),
             getMeetings = GetMeetings(local),
             getRaces = GetRaces(local),
