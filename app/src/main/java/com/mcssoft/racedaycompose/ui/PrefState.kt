@@ -1,7 +1,7 @@
 package com.mcssoft.racedaycompose.ui
 
 data class PrefState(
-    var byAuNzPref: Boolean,           // the OnlAuNz preference is enabled/selected.
+    val byAuNzPref: Boolean,           // the OnlAuNz preference is enabled/selected.
 ) {
     companion object {
         /**

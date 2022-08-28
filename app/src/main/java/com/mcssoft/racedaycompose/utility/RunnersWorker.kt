@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.data.repository.database.IDbRepo
 import com.mcssoft.racedaycompose.data.repository.remote.IRemoteRepo
 import com.mcssoft.racedaycompose.domain.dto.toRunner
@@ -16,7 +17,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
 
 class RunnersWorker(
-    context: Context,
+    private val context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
@@ -31,7 +32,7 @@ class RunnersWorker(
 
     override suspend fun doWork(): Result {
         val date = inputData.getString("key_date")
-        Log.d("TAG", "[RunnerWorker.doWork] starting.")
+//        Log.d("TAG", "[RunnerWorker.doWork] starting.")
 
         try {
             val iDbRepo = entryPoints.getDbRepo()
@@ -69,10 +70,11 @@ class RunnersWorker(
             }
         } catch (exception: Exception) {
             Log.d("TAG", "[RunnerWorker.doWork] exception.")
-            val output = workDataOf("key_exception" to exception.localizedMessage)
+            val key = context.resources.getString(R.string.key_exception)
+            val output = workDataOf(key to exception.localizedMessage)
             return Result.failure(output)
         }
-        Log.d("TAG", "[RunnerWorker.doWork] ending.")
+//        Log.d("TAG", "[RunnerWorker.doWork] ending.")
         return Result.success()
     }
 }

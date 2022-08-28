@@ -56,12 +56,16 @@ fun SplashScreen(
                 is SplashState.Status.Success -> {
                     if (state.baseFromApi && (!state.runnerFromApi)) {
                         viewModel.setupRunnersFromApi(LocalContext.current)
-                    }
-                    if (state.baseFromApi && state.runnerFromApi) {
+                        // Runners will continue to load in the background.
                         LaunchedEffect(key1 = true) {
                             navigator.navigate(MeetingsScreenDestination)
                         }
                     }
+//                    if (state.baseFromApi && state.runnerFromApi) {
+//                        LaunchedEffect(key1 = true) {
+//                            navigator.navigate(MeetingsScreenDestination)
+//                        }
+//                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.mcssoft.racedaycompose.ui.meetings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
@@ -62,6 +64,7 @@ fun MeetingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
+                .padding(bottom = 64.dp)                        // TBA - allow for bottom bar.
         ) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(

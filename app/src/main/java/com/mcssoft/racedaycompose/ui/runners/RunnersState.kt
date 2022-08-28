@@ -13,14 +13,14 @@ import com.mcssoft.racedaycompose.domain.model.Runner
  * @param raceId: The id of the Race (passed in the nav args).
  */
 data class RunnersState(
-    var exception: Exception?,
-    var status: Status,
-    var loading: Boolean = false,
-    var lRunners: List<Runner> = emptyList(),
-    var race: Race?,
-    var raceId: Long = 0,    // passed in from the nav args and used to get Race and Runner info.
+    val exception: Exception?,
+    val status: Status,
+    val loading: Boolean = false,
+    val lRunners: List<Runner> = emptyList(),
+    val race: Race?,
+    val raceId: Long = 0,    // passed in from the nav args and used to get Race and Runner info.
     var checkedId: Long = 0,      // the id of the checked Runner.
-    var chked: Boolean = false  // the checked Runner's checked value.
+    var checked: Boolean = false  // the checked Runner's checked value.
 ) {
     companion object {
         fun initialise(): RunnersState {

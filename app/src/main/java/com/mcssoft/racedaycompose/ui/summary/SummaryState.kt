@@ -3,11 +3,11 @@ package com.mcssoft.racedaycompose.ui.summary
 import com.mcssoft.racedaycompose.domain.model.Summary
 
 data class SummaryState(
-    var exception: Exception?,
-    var status: Status,
-    var loading: Boolean = false,
-    var summaries: List<Summary> = emptyList(),
-    var group: Map<String, List<Summary>> = mapOf()
+    val exception: Exception?,
+    val status: Status,
+    val loading: Boolean = false,
+    val summaries: List<Summary> = emptyList(),
+    val group: Map<String, List<Summary>> = mapOf()
 ) {
     companion object {
         fun initialise(): SummaryState {

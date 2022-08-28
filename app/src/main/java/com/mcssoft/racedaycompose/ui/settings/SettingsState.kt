@@ -1,9 +1,9 @@
 package com.mcssoft.racedaycompose.ui.settings
 
 data class FromDbState(
-    var loading: Boolean = false,
-    var exception: Exception?,
-    var currValue: Boolean = false
+    val loading: Boolean = false,
+    val exception: Exception?,
+    val currValue: Boolean = false
 ) {
     companion object {
         // Simply a starting state.

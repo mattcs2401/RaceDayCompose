@@ -3,10 +3,10 @@ package com.mcssoft.racedaycompose.ui.meetings
 import com.mcssoft.racedaycompose.domain.model.Meeting
 
 data class MeetingsState(
-    var exception: Exception?,
-    var status: Status,
-    var loading: Boolean = false,
-    var data: List<Meeting>?
+    val exception: Exception?,
+    val status: Status,
+    val loading: Boolean = false,
+    val data: List<Meeting>?
 ) {
     companion object {
         // Simply a Flow initializer.

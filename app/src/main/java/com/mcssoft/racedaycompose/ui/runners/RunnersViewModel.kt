@@ -45,8 +45,8 @@ class RunnersViewModel @Inject constructor(
      * @param runnerId: The Runner id.
      * @param checked: The checkbox value.
      */
-    private fun checkRunner(runnerId: Long, checked: Boolean) {
-        raceDayUseCases.setRunnerChecked(runnerId, checked).onEach { result ->
+    private fun checkRunner(runnerId: Long, chked: Boolean) {
+        raceDayUseCases.setRunnerChecked(runnerId, chked).onEach { result ->
             when {
                 result.loading -> {}
                 result.failed -> {
@@ -61,9 +61,9 @@ class RunnersViewModel @Inject constructor(
                 result.successful -> {
                     _state.update { state ->
                         state.copy().apply {
-                            lRunners.find { runner -> runner._id == runnerId }?.checked = checked
+                            lRunners.find { runner -> runner._id == runnerId }?.checked = chked
                             checkedId = runnerId
-                            chked = checked
+                            checked = chked
                         }
                     }
                 }

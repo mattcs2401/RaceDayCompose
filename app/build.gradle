@@ -84,7 +84,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha01"
     implementation "androidx.compose.material:material-icons-extended:$compose_ver"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
-//    implementation "androidx.compose.material3:material3:1.0.0-alpha12"
+    implementation  "androidx.compose.runtime:runtime-livedata:$compose_ver"
 
     /* Room database. */
     kapt "androidx.room:room-compiler:$room_ver"

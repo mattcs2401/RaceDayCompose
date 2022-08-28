@@ -110,7 +110,7 @@ fun RunnersScreen(
                         onCheckedChange = { checked ->
                             // Update state.
                             state.checkedId = runner._id
-                            state.chked = checked
+                            state.checked = checked
                             // Update the Runner's checkbox status.
                             viewModel.onEvent(RunnersEvent.CheckRunner(runner._id, checked))
                             //
@@ -118,7 +118,7 @@ fun RunnersScreen(
                             // Create (or remove) Summary item.
                             viewModel.onEvent(
                                 RunnersEvent.SetForSummary(
-                                    state.raceId, state.checkedId, state.chked, context)
+                                    state.raceId, state.checkedId, state.checked, context)
                             )
                         }
                     )

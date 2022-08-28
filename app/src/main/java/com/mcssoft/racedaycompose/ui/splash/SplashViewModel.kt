@@ -82,7 +82,7 @@ class SplashViewModel @Inject constructor(
      */
     fun setupRunnersFromApi(context: Context) {
         viewModelScope.launch {
-            delay(1000) // TBA ?
+            delay(250) // TBA ?
             raceDayUseCases.setupRunnerFromApi(_state.value.date, context).collect { result ->
                 when {
                     result.loading -> {

@@ -57,4 +57,7 @@
     <!-- Error text. -->
     <string name="unknown_error">An unknown error occurred.</string>
 
+    <!-- Keys. -->
+    <string name="key_exception">key_exception</string>
+
 </resources>

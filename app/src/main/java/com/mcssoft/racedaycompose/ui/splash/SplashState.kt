@@ -1,13 +1,13 @@
 package com.mcssoft.racedaycompose.ui.splash
 
 data class SplashState(
-    var date: String = "",
-    var exception: Exception?,
-    var status: Status,
-    var loading: Boolean = false,
-    var loadingMsg: String,
-    var baseFromApi: Boolean = false,
-    var runnerFromApi: Boolean = false,
+    val date: String = "",
+    val exception: Exception?,
+    val status: Status,
+    val loading: Boolean = false,
+    val loadingMsg: String,
+    val baseFromApi: Boolean = false,
+    val runnerFromApi: Boolean = false,
 ) {
     companion object {
         fun initialise(): SplashState {
