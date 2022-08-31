@@ -14,22 +14,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
-import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 
 /**
  * App starting point.
  */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@RootNavGraph(start = true)
-@Destination
+//@RootNavGraph(start = true)
+//@Destination
 @Composable
 fun SplashScreen(
-    navigator: DestinationsNavigator,
+    //navigator: DestinationsNavigator,
+    navController: NavController,
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -58,7 +57,8 @@ fun SplashScreen(
                         viewModel.setupRunnersFromApi(LocalContext.current)
                         // Runners will continue to load in the background.
                         LaunchedEffect(key1 = true) {
-                            navigator.navigate(MeetingsScreenDestination)
+                            //navigator.navigate(MeetingsScreenDestination)
+                            navController.navigate(Screen.MeetingsScreen.route)
                         }
                     }
 //                    if (state.baseFromApi && state.runnerFromApi) {

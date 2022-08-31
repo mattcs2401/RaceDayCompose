@@ -8,12 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun BottomBar(
-    navigator: DestinationsNavigator
+    navController: NavController
 ) {
     val bottomNavItems = listOf(
         BottomNavItem.Admin,
@@ -42,7 +42,7 @@ fun BottomBar(
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
-                    navigator.navigate(item.route, onlyIfResumed = true)
+                    navController.navigate(item.route)
                 }
             )
         }

@@ -11,32 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
-import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
-import com.mcssoft.racedaycompose.ui.destinations.RunnersScreenDestination
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingHeader
 import com.mcssoft.racedaycompose.ui.races.RacesState.Status.*
 import com.mcssoft.racedaycompose.ui.races.components.RaceItem
 import com.mcssoft.racedaycompose.ui.theme.height64dp
 import com.mcssoft.racedaycompose.ui.theme.padding64dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Destination
 @Composable
 /**
- * @param navigator: The Navigation.
- * @param meetingId: Passed here but used by the view model (retrieved through the nav args).
+ * @param navController: The Navigation.
  * @param viewModel: The associated view model.
  */
 fun RacesScreen(
-    navigator: DestinationsNavigator,
-    meetingId: Long = 0,
+    navController: NavController,
     viewModel: RacesViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -50,16 +44,16 @@ fun RacesScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navigator.navigate(MeetingsScreenDestination) {
-                        popUpTo(route = MeetingsScreenDestination) {
+                    navController.navigate(Screen.MeetingsScreen.route) {
+                        popUpTo(route = Screen.MeetingsScreen.route) {
                             inclusive = true
                         }
                     }
                 },
                 actions = {
                     IconButton(onClick = {
-                        navigator.navigate(MeetingsScreenDestination) {
-                            popUpTo(route = MeetingsScreenDestination) {
+                        navController.navigate(Screen.MeetingsScreen.route) {
+                            popUpTo(route = Screen.MeetingsScreen.route) {
                                 inclusive = true
                             }
                         }
@@ -103,7 +97,7 @@ fun RacesScreen(
                     RaceItem(
                         race = race,
                         onItemClick = {
-                            navigator.navigate(RunnersScreenDestination(race._id))
+                            navController.navigate(Screen.RunnersScreen.route + "raceId=${race._id}")
                         }
                     )
                 }

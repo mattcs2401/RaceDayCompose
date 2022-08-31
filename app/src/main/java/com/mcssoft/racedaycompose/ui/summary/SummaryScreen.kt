@@ -17,23 +17,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
-import com.mcssoft.racedaycompose.ui.destinations.MeetingsScreenDestination
 import com.mcssoft.racedaycompose.ui.summary.components.SummaryHeader
 import com.mcssoft.racedaycompose.ui.summary.components.SummaryItem
 import com.mcssoft.racedaycompose.ui.theme.RoundedCornerShapes
 import com.mcssoft.racedaycompose.ui.theme.eightyPercent
 import com.mcssoft.racedaycompose.ui.theme.padding16dp
 import com.mcssoft.racedaycompose.ui.theme.twentyPercent
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalFoundationApi::class)    // sticky header.
 @Composable
-@Destination
 fun SummaryScreen(
-    navigator: DestinationsNavigator,
+    navController: NavController,
     viewModel: SummaryViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -47,8 +45,8 @@ fun SummaryScreen(
                 backgroundColour = MaterialTheme.colors.primary,
                 backNavIcon = R.drawable.ic_arrow_back_24,
                 onBackPressed = {
-                    navigator.navigate(MeetingsScreenDestination.route) {
-                        popUpTo(route = MeetingsScreenDestination.route) {
+                    navController.navigate(Screen.MeetingsScreen.route) {
+                        popUpTo(route = Screen.MeetingsScreen.route) {
                             inclusive = true
                         }
                     }

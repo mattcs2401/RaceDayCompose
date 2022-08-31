@@ -3,8 +3,9 @@ package com.mcssoft.racedaycompose.ui.runners
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.ui.destinations.RunnersScreenDestination
+import com.mcssoft.racedaycompose.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,13 +20,16 @@ class RunnersViewModel @Inject constructor(
     private val _state = MutableStateFlow(RunnersState.initialise())
     val state: StateFlow<RunnersState> = _state
 
-    private var raceId = RunnersScreenDestination.argsFrom(savedStateHandle).raceId
+    private var raceId = 0L
 
     init {
-        _state.update { it.copy(raceId = raceId) }
-        getRace(raceId)
-        getRunners(raceId)
+        savedStateHandle.get<Long>(Constants.KEY_RACE_ID)?.let { raceId ->
+            _state.update { it.copy(raceId = raceId) }
+            getRace(raceId)
+            getRunners(raceId)
+        }
     }
+
 
     fun onEvent(event: RunnersEvent) {
         when(event) {
@@ -43,10 +47,10 @@ class RunnersViewModel @Inject constructor(
     /**
      * Set the checkbox on the Runner record (used for the Summary).
      * @param runnerId: The Runner id.
-     * @param checked: The checkbox value.
+     * @param cheked: The checkbox value.
      */
-    private fun checkRunner(runnerId: Long, chked: Boolean) {
-        raceDayUseCases.setRunnerChecked(runnerId, chked).onEach { result ->
+    private fun checkRunner(runnerId: Long, cheked: Boolean) {
+        raceDayUseCases.setRunnerChecked(runnerId, cheked).onEach { result ->
             when {
                 result.loading -> {}
                 result.failed -> {
@@ -61,9 +65,9 @@ class RunnersViewModel @Inject constructor(
                 result.successful -> {
                     _state.update { state ->
                         state.copy().apply {
-                            lRunners.find { runner -> runner._id == runnerId }?.checked = chked
+                            lRunners.find { runner -> runner._id == runnerId }?.checked = cheked
                             checkedId = runnerId
-                            checked = chked
+                            checked = cheked
                         }
                     }
                 }

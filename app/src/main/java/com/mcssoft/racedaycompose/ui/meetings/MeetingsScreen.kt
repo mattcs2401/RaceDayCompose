@@ -16,22 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mcssoft.racedaycompose.R
 import com.mcssoft.racedaycompose.ui.components.dialog.CommonDialog
 import com.mcssoft.racedaycompose.ui.components.dialog.LoadingDialog
 import com.mcssoft.racedaycompose.ui.components.navigation.BottomBar
+import com.mcssoft.racedaycompose.ui.components.navigation.Screen
 import com.mcssoft.racedaycompose.ui.components.navigation.TopBar
-import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
-import com.mcssoft.racedaycompose.ui.destinations.SplashScreenDestination
 import com.mcssoft.racedaycompose.ui.meetings.MeetingsState.Status.*
 import com.mcssoft.racedaycompose.ui.meetings.components.MeetingItem
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
 @Composable
 fun MeetingsScreen(
-    navigator: DestinationsNavigator,
+    navController: NavController,
     viewModel: MeetingsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -57,7 +54,7 @@ fun MeetingsScreen(
             )
         },
         bottomBar = {
-            BottomBar(navigator = navigator)
+            BottomBar(navController = navController)
         }
     ) {
         Box(
@@ -74,7 +71,7 @@ fun MeetingsScreen(
                         meeting = meeting,
                         onItemClick = {
                             if (!meeting.abandoned) {
-                                navigator.navigate(RacesScreenDestination(meeting._id))
+                                navController.navigate(Screen.RacesScreen.route + "meetingId=${meeting._id}")
                             }
                         }
                     )
@@ -84,7 +81,7 @@ fun MeetingsScreen(
                 mtgsState = state,
                 showRefresh = showRefreshDialog,
                 showError = showErrorDialog,
-                navigator = navigator
+                navController = navController
             )
         }
     }
@@ -99,10 +96,10 @@ private fun ManageState(
     mtgsState: MeetingsState,
     showRefresh: MutableState<Boolean>,
     showError: MutableState<Boolean>,
-    navigator: DestinationsNavigator,
+    navController: NavController,
 ) {
     if (showRefresh.value) {
-        ShowRefreshDialog(show = showRefresh, navigator = navigator)
+        ShowRefreshDialog(show = showRefresh, navController = navController)
     }
     when (mtgsState.status) {
         is Initialise -> {}
@@ -127,7 +124,7 @@ private fun ManageState(
 @Composable
 private fun ShowRefreshDialog(
     show: MutableState<Boolean>,
-    navigator: DestinationsNavigator,
+    navController: NavController,
 ) {
     CommonDialog(
         icon = R.drawable.ic_refresh_48,
@@ -137,7 +134,7 @@ private fun ShowRefreshDialog(
         dismissButtonText = stringResource(id = R.string.lbl_btn_cancel),
         onConfirmClicked = {
             show.value = !show.value
-            navigator.navigate(SplashScreenDestination)
+            navController.navigate(Screen.SplashScreen.route)
         },
         onDismissClicked = {
             show.value = !show.value

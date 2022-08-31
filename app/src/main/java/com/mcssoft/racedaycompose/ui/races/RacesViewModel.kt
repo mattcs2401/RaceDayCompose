@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mcssoft.racedaycompose.data.repository.preferences.Preference
 import com.mcssoft.racedaycompose.domain.use_case.RaceDayUseCases
-import com.mcssoft.racedaycompose.ui.destinations.RacesScreenDestination
+import com.mcssoft.racedaycompose.utility.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -19,11 +19,7 @@ class RacesViewModel @Inject constructor(
     private val _state = MutableStateFlow(RacesState.initialise())
     val state = _state.asStateFlow()
 
-    /*
-      Notes:
-      https://medium.com/codex/type-save-navigation-with-jetpack-compose-destinations-610514e85370
-    */
-    private var mtgId = RacesScreenDestination.argsFrom(savedStateHandle).meetingId
+    private var mtgId = 0L
 
     init {
         /*
@@ -31,18 +27,21 @@ class RacesViewModel @Inject constructor(
           to the RacesScreen). However, when navigating back from the Runners screen, there is no
            need to supply one, so the original is saved into the preferences and reused.
          */
-        if (mtgId > 0) {
-            // Save the Meeting id to the preferences (for back nav from Runners screen).
-            saveMeetingId(Preference.MeetingIdPref, mtgId)
-        } else {
-            // Get the Meeting id from the preferences.
-            getMeetingId(Preference.MeetingIdPref)
-            // Meeting id is returned in the state.
-            mtgId = _state.value.mtgId
+        savedStateHandle.get<Long>(Constants.KEY_MEETING_ID)?.let { mId ->
+            if (mId > 0) {
+                mtgId = mId
+                // Save the Meeting id to the preferences (for back nav from Runners screen).
+                saveMeetingId(Preference.MeetingIdPref, mtgId)
+            } else {
+                // Get the Meeting id from the preferences.
+                getMeetingId(Preference.MeetingIdPref)
+                // Meeting id is returned in the state.
+                mtgId = _state.value.mtgId
+            }
+            // Get Meeting and Races values for the screen.
+            getMeeting(mtgId)
+            getRaces(mtgId)
         }
-        // Get Meeting and Races values for the screen.
-        getMeeting(mtgId)
-        getRaces(mtgId)
     }
 
     fun onEvent(event: RacesEvent) {
