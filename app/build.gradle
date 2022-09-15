@@ -38,14 +38,13 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    lintOptions {
-        quiet false
+    lint {
         abortOnError true
         disable 'UnusedMaterialScaffoldPaddingParameter'
+        quiet false
     }
-//    defaultConfig {
-//        vectorDrawables.useSupportLibrary = true
-//    }
+    namespace 'com.mcssoft.racedaycompose'
+
 }
 
 dependencies {
